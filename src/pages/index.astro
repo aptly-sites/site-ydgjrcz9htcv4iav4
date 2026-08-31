@@ -4,166 +4,279 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 import { site } from '../config';
+
+const FAQS = [
+  { q: 'How much does property management cost in Waco, TX?', a: 'Property management pricing depends on the property and services selected. J R Grace Realty provides a clear management proposal after reviewing the home; the optional Owner Benefit Package is $45 per month per unit.' },
+  { q: 'What services does J R Grace Realty provide?', a: 'J R Grace Realty provides marketing and advertising, tenant screening, lease preparation and enforcement, rent collection, in-house maintenance, inspections, eviction coordination, and financial reporting for Waco-area rental owners.' },
+  { q: 'How do you screen tenants?', a: 'Every applicant goes through a bundled screening package that includes credit evaluation, rental history verification, income verification, and a nationwide eviction history check.' },
+  { q: 'How long does it take to rent out my property in Waco?', a: 'Leasing time depends on pricing, condition, season, and demand. J R Grace Realty markets homes on its website, syndicates listings to major rental sites, and uses professional presentation to reduce avoidable vacancy.' },
+  { q: 'Do you handle evictions?', a: 'Yes. J R Grace Realty coordinates the eviction process when necessary and maintains an attorney relationship for legal support. Thorough screening and consistent rent collection are designed to make evictions rare.' },
+  { q: 'Who handles maintenance and repairs?', a: 'J R Grace Realty has an in-house maintenance team and coordinates work as the general contractor. Residents submit requests through an online portal, and owners receive communication about work performed.' },
+  { q: 'What areas do you serve?', a: 'J R Grace Realty manages rental properties throughout Central Texas, including Waco, Woodway, Hewitt, Robinson, China Spring, Bellmead, and Lacy Lakeview.' },
+  { q: 'How do I get started?', a: `Start with a free rental analysis to understand likely rent, opportunities to improve performance, and whether the property fits J R Grace Realty's services. Call ${site.phone} or complete the form on this page.` },
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
 ---
 
 <BaseLayout>
   <Nav />
 
   <!-- HERO -->
-  <section style="padding:160px 24px 96px;text-align:center;background:linear-gradient(180deg,#eef4ff 0%,var(--color-bg) 100%);">
-    <div class="container" style="max-width:760px;">
-      <div class="section-label">{site.tagline}</div>
-      <h1 class="section-title" style="font-size:clamp(36px,5vw,60px);">{site.hero.headline}</h1>
-      <p class="section-sub" style="font-size:20px;margin:0 auto 40px;">{site.hero.subheadline}</p>
-      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-        <a href={site.hero.ctaHref} class="btn-primary" style="font-size:16px;padding:14px 28px;">
-          {site.hero.cta}
-        </a>
-        <a href={`tel:${site.phone}`} class="btn-ghost" style="font-size:16px;padding:14px 28px;">
-          {site.phone}
-        </a>
+  <section class="hero">
+    <video autoplay muted loop playsinline preload="auto" poster="/images/waco-poster.jpg" aria-hidden="true">
+      <source src="/images/waco-web.mp4" type="video/mp4" />
+    </video>
+    <div class="shade"></div>
+    <div class="hero-copy">
+      <img class="reviews" src="/images/reviews.png" alt={`${site.companyName} — 4.5 stars, 468+ reviews`} />
+      <h1>{site.hero.headline}</h1>
+      <p>{site.tagline}</p>
+      <div class="associations">
+        <img src="/images/narpm.webp" alt="NARPM" />
+        <img src="/images/waor.png" alt="Waco Association of Realtors" />
       </div>
     </div>
   </section>
 
-  <!-- STATS BAR -->
-  <div style="background:var(--color-ink);padding:40px 24px;">
-    <div class="container" style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center;">
-      {site.stats.map(stat => (
-        <div>
-          <div style="font-size:32px;font-weight:800;color:#fff;">{stat.value}</div>
-          <div style="font-size:14px;color:#9ca3b0;margin-top:4px;">{stat.label}</div>
-        </div>
-      ))}
-    </div>
-  </div>
-
-  <!-- SERVICES -->
-  <section class="section" id="services">
+  <!-- ENTITY ANSWER -->
+  <section class="entity-answer">
     <div class="container">
-      <div class="section-label">What We Do</div>
-      <h2 class="section-title">Full-Service Property Management</h2>
-      <p class="section-sub">{site.description}</p>
-      <div class="grid-3">
-        {site.services.map(service => (
-          <div class="card">
-            <div style="font-size:32px;margin-bottom:12px;">{service.icon}</div>
-            <h3 style="font-size:17px;font-weight:700;margin:0 0 8px;">{service.title}</h3>
-            <p style="font-size:14px;color:var(--color-muted);margin:0;line-height:1.6;">{service.description}</p>
+      <h2>{site.seo.title.split('|')[0].trim()}</h2>
+      <p>
+        {site.description} Our office is located at {site.address}. Call <a href={`tel:${site.phone.replace(/[^\d]/g, '')}`}>{site.phone}</a> for a free rental analysis.
+      </p>
+    </div>
+  </section>
+
+  <!-- CHOICE -->
+  <section class="choice container">
+    <article class="floating-card">
+      <h3>Your choice for Waco<br />Property Management</h3>
+      <p>We specialize in full service property management services to fit your needs as a landlord or home owner. We tailor our services to ensure that you have the highest level of service for your home. We treat your home as our own.</p>
+      <a class="btn-primary" href="#analysis">{site.hero.cta}</a>
+    </article>
+    <article class="floating-card">
+      <h3>Interested in a rental?<br />Apply Now!</h3>
+      <p>To set up a showing for any of our properties call <strong>{site.phone}</strong>. Whether you are looking for a single family home, townhouse or condo, we will have one of our dedicated team members work with you.</p>
+      <a class="btn-primary" href="/rentals">View Available Properties</a>
+    </article>
+  </section>
+
+  <!-- LEADERSHIP -->
+  <section class="leadership">
+    <div class="container leadership-grid">
+      <div class="leadership-copy">
+        <h2>{site.about.headline}</h2>
+        <p class="role">{site.about.role}</p>
+        <p>{site.about.body}</p>
+        <p>{site.about.body2}</p>
+        <a class="btn-primary leadership-cta" href="#analysis">{site.hero.cta}</a>
+      </div>
+      <div class="portrait-panel">
+        <img src="/images/portrait.png" alt={`${site.about.headline}, ${site.companyName} Owner and Broker`} />
+      </div>
+    </div>
+  </section>
+
+  <!-- CONNECTED -->
+  <section class="connected">
+    <div class="container center">
+      <h2>Connected Property Management</h2>
+      <div class="connection-grid">
+        <article class="connection-card owners">
+          <img src="/images/mark.png" alt="" />
+          <h3>Owners /<br />Prospective<br />Owners</h3>
+          <span class="rule"></span>
+          <p>We help owners protect and grow their investments through professional management, clear communication, and transparent reporting.</p>
+        </article>
+        <article class="connection-card residents">
+          <img src="/images/mark.png" alt="" />
+          <h3>Residents /<br />Prospective<br />Residents</h3>
+          <span class="rule"></span>
+          <p>We provide residents with a simple, stress-free rental experience from leasing through daily living. With responsive support and clear communication, we make it easy to feel at home.</p>
+        </article>
+        <article class="connection-card realtors">
+          <img src="/images/mark.png" alt="" />
+          <h3>Realtors / Referral<br />Partners</h3>
+          <span class="rule"></span>
+          <p>We partner with realtors to ensure smooth transactions and positive outcomes for their clients. Our focus is on reliability, communication, and long-term trust.</p>
+        </article>
+        <article class="connection-card vendors">
+          <img src="/images/mark.png" alt="" />
+          <h3>Vendors</h3>
+          <span class="rule"></span>
+          <p>We work with vendors through clear communication, organized workflows, and consistent job opportunities. Our process is designed to keep work efficient and coordination simple.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUSTED / STATS -->
+  <section class="trusted">
+    <div class="container center">
+      <h2>Trusted by {site.address.split(',')[1]?.trim() || 'Waco'}, Texas</h2>
+      <p class="intro">Managing a successful rental property requires time, experience, and ongoing attention. {site.companyName} takes that responsibility off your plate, saving you time and eliminating the stress that comes with managing a rental on your own while protecting and growing your investment.</p>
+      <div class="stats">
+        {site.stats.map(stat => (
+          <div>
+            <strong>{stat.value.replace(/\+$/, '')}</strong>
+            <span>{stat.label}</span>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section class="section" id="about" style="background:var(--color-surface);border-top:1px solid #edf0f5;border-bottom:1px solid #edf0f5;">
+  <!-- MANAGE / SERVICES -->
+  <section id="services" class="manage">
     <div class="container">
-      <div class="grid-2">
-        <div>
-          <div class="section-label">About Us</div>
-          <h2 class="section-title">{site.about.headline}</h2>
-          <p style="font-size:17px;color:var(--color-muted);line-height:1.7;margin-bottom:32px;">{site.about.body}</p>
-          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;">
-            {site.about.points.map(point => (
-              <li style="display:flex;align-items:flex-start;gap:12px;font-size:15px;">
-                <svg style="flex-shrink:0;margin-top:2px;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M20 6L9 17l-5-5"/>
-                </svg>
-                {point}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div style="background:linear-gradient(135deg,var(--color-primary) 0%,#1a3a8f 100%);border-radius:20px;padding:48px;color:#fff;display:flex;flex-direction:column;gap:24px;">
-          <div>
-            <div style="font-size:48px;font-weight:800;">{site.stats[0].value}</div>
-            <div style="font-size:16px;opacity:0.8;">{site.stats[0].label}</div>
-          </div>
-          <div style="height:1px;background:rgba(255,255,255,0.2);"></div>
-          <div style="font-size:18px;font-weight:600;line-height:1.5;">
-            "{site.tagline}"
-          </div>
-          <a href={`mailto:${site.email}`} style="color:#fff;font-size:14px;opacity:0.8;">{site.email}</a>
-        </div>
+      <h2 class="center">How We'll Manage<br />Your {site.address.split(',')[1]?.trim() || 'Waco'}, Texas Rental Property</h2>
+      <div class="service-answer-grid">
+        {site.services.map(service => (
+          <article>
+            <h3>{service.title}</h3>
+            <p>{service.description}</p>
+          </article>
+        ))}
       </div>
     </div>
   </section>
 
-  <!-- REVIEWS -->
-  <section class="section" id="testimonials" style="text-align:center;">
-    <div class="container">
-      <div class="section-label">Reputation</div>
-      <h2 class="section-title">Trusted Across Waco</h2>
-      <img src="/images/reviews.png" alt="J R Grace Realty — 4.5 stars, 468+ reviews" style="max-width:320px;width:100%;margin:24px auto 0;display:block;" />
+  <!-- DIFFERENCE -->
+  <section class="difference">
+    <div class="container center">
+      <h2>What Makes {site.companyName} the Best Choice?</h2>
+      <p class="intro">Our team understands that the details matter. From financial accuracy to regulatory compliance, we take a precise and thorough approach to property management. Our commitment to accuracy and compliance is what truly sets us apart.</p>
+      <div class="feature-grid">
+        <article>
+          <div class="feature-photo"><img src="/images/features/personalized-service.jpg" alt="A property manager speaking with a homeowner at a rental property" loading="lazy" /></div>
+          <div class="feature-copy">
+            <h3>Personalized Service</h3>
+            <p>We are a technology-forward company that leverages AI to streamline operations and maintain a consistent, reliable cadence of communication with our clients.</p>
+          </div>
+        </article>
+        <article>
+          <div class="feature-photo"><img src="/images/features/experienced-professionals.jpg" alt="Experienced real estate professionals walking through a rental home" loading="lazy" /></div>
+          <div class="feature-copy">
+            <h3>Experienced Professionals</h3>
+            <p>Over 20 years of hands-on experience in building, flipping, rehabbing, wholesaling, and owner financing gives us a well-rounded understanding of the full real estate lifecycle.</p>
+          </div>
+        </article>
+        <article>
+          <div class="feature-photo"><img src="/images/features/efficient-systems.jpg" alt="A property management professional reviewing organized operational reports" loading="lazy" /></div>
+          <div class="feature-copy">
+            <h3>Efficient, Proven Systems</h3>
+            <p>Modern technology streamlines operations and communication, automates routine tasks, and creates an efficient, hassle-free experience.</p>
+          </div>
+        </article>
+      </div>
     </div>
   </section>
 
-  {site.testimonials.length > 0 && (
-    <section class="section" id="testimonials-quotes">
-      <div class="container">
-        <div class="section-label">Testimonials</div>
-        <h2 class="section-title">What Our Owners Say</h2>
-        <div class="grid-3">
-          {site.testimonials.map(t => (
-            <div class="card" style="display:flex;flex-direction:column;gap:16px;">
-              <div style="display:flex;gap:2px;">
-                {[1,2,3,4,5].map(() => (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--color-primary)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                ))}
-              </div>
-              <p style="font-size:15px;color:var(--color-ink);line-height:1.7;margin:0;flex:1;">"{t.quote}"</p>
-              <div>
-                <div style="font-weight:600;font-size:14px;">{t.author}</div>
-                <div style="font-size:13px;color:var(--color-muted);">{t.detail}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
+  <section class="happy center"><h2>We Love When Our Clients Are Happy</h2></section>
 
-  <!-- CONTACT / CTA -->
-  <section class="section" id="contact" style="background:var(--color-ink);">
-    <div class="container" style="text-align:center;max-width:640px;">
-      <h2 class="section-title" style="color:#fff;">{site.contact.headline}</h2>
-      <p style="font-size:18px;color:#9ca3b0;margin-bottom:40px;">{site.contact.subheadline}</p>
-      <div style="background:var(--color-surface);border-radius:20px;padding:40px;text-align:left;">
-        <form id="contact-form" style="display:flex;flex-direction:column;gap:16px;">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <input name="name" placeholder="Your name" required style="padding:12px 14px;border:1.5px solid #dde1ea;border-radius:8px;font-size:14px;font-family:inherit;outline:none;" />
-            <input name="email" type="email" placeholder="Email address" required style="padding:12px 14px;border:1.5px solid #dde1ea;border-radius:8px;font-size:14px;font-family:inherit;outline:none;" />
-          </div>
-          <input name="phone" placeholder="Phone number" style="padding:12px 14px;border:1.5px solid #dde1ea;border-radius:8px;font-size:14px;font-family:inherit;outline:none;" />
-          <textarea name="message" placeholder="Tell us about your property..." rows="4" style="padding:12px 14px;border:1.5px solid #dde1ea;border-radius:8px;font-size:14px;font-family:inherit;resize:vertical;outline:none;"></textarea>
-          <button type="submit" class="btn-primary" style="justify-content:center;font-size:16px;padding:14px;">
-            Send Message
-          </button>
-          <div id="form-success" style="display:none;color:#15a05a;font-size:14px;text-align:center;font-weight:600;">
+  <!-- ANALYSIS / CONTACT FORM -->
+  <section id="analysis" class="analysis">
+    <div class="container">
+      <h2 class="center">Get Your FREE Property Management Rental Analysis</h2>
+      <div class="analysis-grid">
+        <form id="contact-form">
+          <p>Tell us about you and your property:</p>
+          <input name="name" placeholder="Full Name" required />
+          <input name="email" type="email" placeholder="Email Address" required />
+          <input name="phone" type="tel" placeholder="Phone" />
+          <input name="address" placeholder="Property Address" />
+          <textarea name="message" placeholder="What help do you need with your property?" rows="3"></textarea>
+          <button type="submit"><span>Get A Free Rental Analysis</span></button>
+          <div id="form-success" style="display:none;color:#fff;font-weight:700;text-align:center;margin-top:12px;">
             ✓ Message sent! We'll be in touch within 24 hours.
           </div>
         </form>
+        <div class="benefits">
+          <div><b>⌂</b><h3>Valuation</h3><p>Learn what your property should rent out for</p></div>
+          <div><b>↗</b><h3>Optimization</h3><p>More details how we can maximize your profitability</p></div>
+          <div><b>✓</b><h3>Compatibility</h3><p>See if your property is a good fit for our services</p></div>
+          <small>The free rental property analysis is provided as an informational service. Actual results may vary based on market conditions, property specifics, and other variables. This service is non-binding and does not create any contractual relationship.</small>
+        </div>
       </div>
-      <div style="display:flex;gap:32px;justify-content:center;margin-top:32px;flex-wrap:wrap;">
-        <a href={`tel:${site.phone}`} style="color:#9ca3b0;font-size:14px;text-decoration:none;">📞 {site.phone}</a>
-        <a href={`mailto:${site.email}`} style="color:#9ca3b0;font-size:14px;text-decoration:none;">✉️ {site.email}</a>
-        <span style="color:#9ca3b0;font-size:14px;">📍 {site.address}</span>
+    </div>
+  </section>
+
+  <!-- BENEFIT CARDS -->
+  <section class="benefit-cards">
+    <div class="container center">
+      <h2>Discover How {site.companyName} Can Benefit You</h2>
+      <div class="card-grid">
+        <article>
+          <img src="/images/expert.jpg" alt={`${site.address.split(',')[1]?.trim() || 'Waco'} rental property`} />
+          <h3>Expert Insights</h3>
+          <p>With over 20 years of hands-on experience in {site.address.split(',')[1]?.trim() || 'Waco'}, we know what it takes to keep rentals performing.</p>
+        </article>
+        <article>
+          <img src="/images/systems.jpg" alt={`${site.address.split(',')[1]?.trim() || 'Waco'} home`} />
+          <h3>Smart Systems</h3>
+          <p>Our modern management platform handles rent collection, maintenance requests, and reporting.</p>
+        </article>
+        <article>
+          <img src="/images/stress.jpg" alt={`${site.address.split(',')[1]?.trim() || 'Waco'} rental home`} />
+          <h3>Stress Less,<br />Earn More</h3>
+          <p>We take care of the day-to-day details so you can enjoy steady cash flow and peace of mind.</p>
+        </article>
       </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <h2>Frequently Asked Questions About Property Management in {site.address.split(',')[1]?.trim() || 'Waco'}</h2>
+      <div class="faq-grid">
+        {FAQS.map(f => (
+          <article>
+            <h3>{f.q}</h3>
+            <p set:html={f.a.replace(new RegExp(site.phone.replace(/[^\d]/g, ''), 'g'), site.phone)} />
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- AREAS BAND -->
+  <section class="areas-band center">
+    <div class="shade"></div>
+    <div>
+      <h2>Areas We Serve</h2>
+      <p>
+        {site.areas.map((area, i) => (
+          <>
+            {i > 0 && ' · '}
+            <a href={`/areas/${area.slug}`}>{area.name}</a>
+          </>
+        ))}
+      </p>
     </div>
   </section>
 
   <Footer />
 </BaseLayout>
 
+<script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
 <script>
-  // Contact form (customize endpoint as needed)
   const form = document.getElementById('contact-form') as HTMLFormElement;
   const success = document.getElementById('form-success');
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(form));
-    // Replace with your form endpoint (Formspree, Netlify Forms, etc.)
     console.log('Form submission:', data);
     form.style.display = 'none';
     if (success) success.style.display = 'block';
@@ -171,9 +284,122 @@ import { site } from '../config';
 </script>
 
 <style>
-  @media (max-width: 600px) {
-    .grid-stats { grid-template-columns: repeat(2, 1fr) !important; }
-    input[name="name"], input[name="email"] { grid-column: span 1; }
-    form > div:first-child { grid-template-columns: 1fr !important; }
+  .hero { height: 590px; position: relative; overflow: hidden; color: #fff; }
+  .hero video { position: absolute; width: 100%; height: 100%; object-fit: cover; top: 0; left: 0; }
+  .hero .shade { position: absolute; inset: 0; background: linear-gradient(#10213d77, #10213dbb); }
+  .hero-copy { position: relative; z-index: 1; text-align: center; padding-top: 96px; }
+  .hero-copy .reviews { width: 190px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5)); }
+  .hero-copy h1 { font-size: clamp(2.4rem, 5vw, 4.5rem); margin: 20px 0 5px; color: #fff; }
+  .hero-copy p { font-size: clamp(1.2rem, 2.4vw, 2rem); margin: 0; }
+  .associations { display: flex; justify-content: center; align-items: center; gap: 25px; margin-top: 18px; }
+  .associations img { max-width: 150px; max-height: 68px; object-fit: contain; }
+
+  .entity-answer { padding: 56px 24px 0; }
+  .entity-answer h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--color-primary); }
+  .entity-answer p { max-width: 900px; color: var(--color-muted); line-height: 1.7; }
+
+  .choice { display: flex; justify-content: center; gap: 24px; position: relative; margin-top: -60px; z-index: 2; padding: 0 24px; flex-wrap: wrap; }
+  .floating-card { width: 320px; background: #fff; padding: 34px 30px 28px; border-radius: 8px; box-shadow: 0 15px 35px rgba(0,0,0,0.12); text-align: center; }
+  .floating-card h3 { color: var(--color-primary); }
+  .floating-card p { font-size: 0.9rem; color: var(--color-muted); }
+
+  .leadership { position: relative; margin-top: 85px; padding: 0; background: #f5f6f7; overflow: hidden; }
+  .leadership-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: stretch; padding: 0 24px; }
+  .leadership-copy { padding: 68px 0; color: var(--color-primary); text-align: left; }
+  .leadership-copy h2 { font-size: clamp(2.2rem, 3.5vw, 3.25rem); margin-bottom: 12px; }
+  .leadership-copy .role { font-size: 1.2rem; margin-bottom: 30px; color: var(--color-muted); }
+  .leadership-copy p:not(.role) { max-width: 640px; font-size: 1.05rem; line-height: 1.6; color: var(--color-ink); }
+  .portrait-panel { min-height: 460px; display: flex; align-items: flex-end; justify-content: center; background: linear-gradient(#1d477f 0%, #aebbd0 72%, #f6f6f6 100%); overflow: hidden; }
+  .portrait-panel img { display: block; width: 100%; height: 100%; max-height: 460px; object-fit: contain; object-position: center bottom; }
+  @media (max-width: 900px) {
+    .leadership-grid { grid-template-columns: 1fr; gap: 0; }
+    .leadership-copy { padding: 48px 24px; }
   }
+
+  .connected { padding: 85px 0; background: #fff; }
+  .connected h2 { font-size: clamp(2.2rem, 4vw, 3.5rem); margin-bottom: 42px; text-align: center; color: var(--color-ink); }
+  .connection-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .connection-card { position: relative; min-height: 420px; padding: 38px 28px 42px; border-radius: 11px; box-shadow: 0 7px 22px rgba(0,0,0,0.08); background: #fff; overflow: hidden; }
+  .connection-card:after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 18px; }
+  .connection-card.owners:after { background: #7ca140; }
+  .connection-card.residents:after { background: #ed3c2f; }
+  .connection-card.realtors:after { background: #cabe8d; }
+  .connection-card.vendors:after { background: #ff681e; }
+  .connection-card img { width: 50px; height: 49px; object-fit: contain; margin-bottom: 10px; }
+  .connection-card h3 { font-size: 1.4rem; margin: 0 auto 14px; line-height: 1.1; color: var(--color-ink); }
+  .connection-card .rule { display: block; width: 105px; border-top: 1px dotted var(--color-primary); margin: 0 auto 18px; }
+  .connection-card p { font-size: 0.95rem; line-height: 1.45; margin: 0; color: var(--color-muted); }
+  @media (max-width: 900px) { .connection-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .connection-grid { grid-template-columns: 1fr; } }
+
+  .trusted { background: var(--color-bg); padding: 70px 24px; }
+  .trusted h2 { text-align: center; color: var(--color-ink); }
+  .trusted .intro { max-width: 850px; margin: 0 auto 35px; text-align: center; color: var(--color-muted); }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; max-width: 1080px; margin: 0 auto; }
+  .stats div { background: var(--color-primary); color: #fff; padding: 28px 10px; border-radius: 16px; text-align: center; }
+  .stats strong { display: block; font-size: 2.5rem; }
+  .stats strong:after { content: "+"; }
+  .stats span { font-size: 0.9rem; }
+  @media (max-width: 800px) { .stats { grid-template-columns: 1fr 1fr; } }
+
+  .manage { padding: 80px 24px; }
+  .manage h2 { color: var(--color-ink); }
+  .service-answer-grid { margin-top: 50px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .service-answer-grid h3 { font-size: 1.15rem; color: var(--color-primary); margin-bottom: 10px; }
+  .service-answer-grid p { color: var(--color-muted); font-size: 0.95rem; line-height: 1.6; }
+  @media (max-width: 900px) { .service-answer-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .service-answer-grid { grid-template-columns: 1fr; } }
+
+  .difference { background: #050505; color: #fff; padding: 75px 24px; }
+  .difference h2 { color: #fff; }
+  .difference .intro { max-width: 750px; margin: 0 auto 40px; opacity: 0.75; }
+  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .feature-grid article { background: #fff; color: #333; border-radius: 20px; overflow: hidden; text-align: left; }
+  .feature-photo { height: 200px; position: relative; overflow: hidden; }
+  .feature-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .feature-copy { padding: 25px; }
+  .feature-copy h3 { color: var(--color-primary); font-size: 1.4rem; margin-bottom: 12px; }
+  .feature-copy p { color: var(--color-muted); font-size: 0.95rem; }
+  @media (max-width: 900px) { .feature-grid { grid-template-columns: 1fr; } }
+
+  .happy { padding: 65px 20px; }
+  .happy h2 { color: var(--color-ink); }
+
+  .analysis { background: var(--color-primary); color: #fff; padding: 65px 24px; }
+  .analysis h2 { color: #fff; }
+  .analysis-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 50px; align-items: center; max-width: 1080px; margin: 0 auto; }
+  .analysis form { background: #fff; color: #333; padding: 34px; border-radius: 8px; }
+  .analysis form p { margin: 0 0 12px; font-weight: 600; }
+  .analysis form input, .analysis form textarea { display: block; width: 100%; border: 0; border-bottom: 1px solid #aaa; padding: 12px 5px; margin: 7px 0; font: inherit; background: transparent; }
+  .analysis form input:focus, .analysis form textarea:focus { outline: none; border-bottom-color: var(--color-primary); }
+  .analysis form button { width: 100%; background: var(--color-primary); color: #fff; border: 0; border-radius: 6px; padding: 13px; font: inherit; font-weight: 700; cursor: pointer; margin-top: 8px; }
+  .benefits > div { display: grid; grid-template-columns: 45px 1fr; column-gap: 10px; margin: 22px 0; }
+  .benefits b { grid-row: 1 / 3; font-size: 2rem; }
+  .benefits h3 { color: #fff; margin: 0; }
+  .benefits p { margin: 0; opacity: 0.9; }
+  .benefits small { display: block; margin-top: 24px; opacity: 0.7; }
+  @media (max-width: 900px) { .analysis-grid { grid-template-columns: 1fr; } }
+
+  .benefit-cards { padding: 75px 24px; }
+  .benefit-cards h2 { color: var(--color-ink); }
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .card-grid article { border-radius: 18px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); padding-bottom: 25px; background: #fff; text-align: left; }
+  .card-grid img { width: 100%; height: 180px; object-fit: cover; display: block; }
+  .card-grid h3 { font-size: 1.35rem; margin: 20px 20px 10px; color: var(--color-primary); }
+  .card-grid p { padding: 0 20px; margin: 0; color: var(--color-muted); font-size: 0.95rem; }
+  @media (max-width: 900px) { .card-grid { grid-template-columns: 1fr; } }
+
+  .faq-section { padding: 75px 24px; background: var(--color-bg); }
+  .faq-section h2 { text-align: center; margin-bottom: 40px; color: var(--color-ink); }
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; max-width: 1080px; margin: 0 auto; }
+  .faq-grid h3 { font-size: 1.05rem; color: var(--color-primary); margin-bottom: 8px; }
+  .faq-grid p { font-size: 0.92rem; color: var(--color-muted); margin: 0; line-height: 1.6; }
+  @media (max-width: 800px) { .faq-grid { grid-template-columns: 1fr; } }
+
+  .areas-band { height: 300px; background: url('/images/areas.jpg') center 60% / cover; position: relative; color: #fff; display: grid; place-items: center; }
+  .areas-band .shade { position: absolute; inset: 0; background: rgba(16,33,61,0.55); }
+  .areas-band > div:last-child { position: relative; padding: 0 24px; text-align: center; }
+  .areas-band h2 { color: #fff; }
+  .areas-band p { font-size: 1.1rem; }
+  .areas-band a { color: #fff; text-decoration: underline; }
 </style>

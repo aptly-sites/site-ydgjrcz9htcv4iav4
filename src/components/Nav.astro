@@ -11,28 +11,39 @@ interface Props {
 
 const { homepage = true, activeHref = '' } = Astro.props;
 const linkHref = (href: string) => (!homepage && href.startsWith('#') ? `/${href}` : href);
-const ctaHref = homepage ? site.hero.ctaHref : '/#contact';
+
+const NAV_LINKS = [
+  { label: 'Property Management', href: '#services' },
+  { label: 'Rental Search', href: '/rentals' },
+  { label: 'Service Areas', href: '/areas' },
+  { label: 'About', href: '#about' },
+  { label: 'Contact', href: '#contact' },
+];
 ---
+
+<div class="topbar">
+  <div class="container topbar-inner">
+    <span>☎ <a href={`tel:${site.phone.replace(/[^\d]/g, '')}`}>{site.phone}</a></span>
+    <span>✉ <a href={`mailto:${site.email}`}>{site.email}</a></span>
+  </div>
+</div>
 
 <nav class="nav" id="nav">
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
     <a href="/" style="text-decoration:none;display:flex;align-items:center;gap:10px;">
       {site.logoPath
-        ? <img src={site.logoPath} alt={site.companyName} style="height:56px;width:auto;object-fit:contain;" />
+        ? <img src={site.logoPath} alt={site.companyName} style="height:52px;width:auto;object-fit:contain;" />
         : <span style="font-size:18px;font-weight:800;color:var(--color-ink);">{site.companyName}</span>
       }
     </a>
-    <div style="display:flex;align-items:center;gap:32px;" class="nav-links">
-      {site.nav.map(link => (
+    <div style="display:flex;align-items:center;gap:28px;" class="nav-links">
+      {NAV_LINKS.map(link => (
         <a
           href={linkHref(link.href)}
           class="nav-link"
           style={link.href === activeHref ? 'color:var(--color-primary);font-weight:600;' : ''}
         >{link.label}</a>
       ))}
-      <a href={ctaHref} class="btn-primary" style="padding:9px 18px;font-size:14px;">
-        Get Started
-      </a>
     </div>
     <button id="nav-toggle" style="display:none;background:none;border:none;cursor:pointer;padding:4px;" aria-label="Menu">
       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -41,12 +52,9 @@ const ctaHref = homepage ? site.hero.ctaHref : '/#contact';
     </button>
   </div>
   <div id="mobile-menu" style="display:none;padding:16px 24px 20px;border-top:1px solid #edf0f5;">
-    {site.nav.map(link => (
+    {NAV_LINKS.map(link => (
       <a href={linkHref(link.href)} class="nav-link" style="display:block;padding:10px 0;">{link.label}</a>
     ))}
-    <a href={ctaHref} class="btn-primary" style="margin-top:12px;width:100%;justify-content:center;">
-      Get Started
-    </a>
   </div>
 </nav>
 
@@ -63,8 +71,8 @@ const ctaHref = homepage ? site.hero.ctaHref : '/#contact';
   });
   const navLinks = document.querySelector('.nav-links') as HTMLElement;
   const updateNav = () => {
-    if (navLinks) navLinks.style.display = window.innerWidth < 700 ? 'none' : 'flex';
-    if (toggle) (toggle as HTMLElement).style.display = window.innerWidth < 700 ? 'block' : 'none';
+    if (navLinks) navLinks.style.display = window.innerWidth < 800 ? 'none' : 'flex';
+    if (toggle) (toggle as HTMLElement).style.display = window.innerWidth < 800 ? 'block' : 'none';
   };
   updateNav();
   window.addEventListener('resize', updateNav);

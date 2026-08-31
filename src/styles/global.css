@@ -10,20 +10,30 @@ body {
   margin: 0;
 }
 
+h1, h2, h3 {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
 /* Smooth scroll */
 html { scroll-behavior: smooth; }
 
+/* Topbar */
+.topbar { background: #364a6a; color: #fff; font-size: 13.5px; }
+.topbar a { color: #fff; text-decoration: none; }
+.topbar-inner { display: flex; gap: 20px; padding: 7px 24px; }
+
 /* Nav */
 .nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
+  position: sticky;
+  top: 0;
   z-index: 100;
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid #edf0f5;
-  transition: box-shadow 0.2s;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 .nav.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+@media (max-width: 800px) {
+  .topbar-inner { flex-wrap: wrap; gap: 6px 16px; }
+}
 
 /* Buttons */
 .btn-primary {
