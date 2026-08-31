@@ -1,0 +1,426 @@
+---
+// One real, static HTML page per rental — generated at build time via
+// getStaticPaths from the company's public Aptly listings feed. This is the
+// core SEO deliverable: unlike a client-side widget, crawlers see the actual
+// address, price, photos, and structured data with no JS required.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import '../../styles/global.css';
+import { site } from '../../config';
+import {
+  fetchListings,
+  street,
+  cityStateZip,
+  photos,
+  money,
+  tourUrl,
+  applyUrl,
+  similarListings,
+  type Listing,
+} from '../../lib/listings';
+import ListingCard from '../../components/ListingCard.astro';
+
+export async function getStaticPaths() {
+  const listings = await fetchListings(site.companyId);
+  return listings.map(listing => ({
+    params: { id: listing._id },
+    props: { listing, allListings: listings },
+  }));
+}
+
+interface Props {
+  listing: Listing;
+  allListings: Listing[];
+}
+
+const { listing, allListings } = Astro.props;
+const addr = street(listing);
+const location = cityStateZip(listing);
+const imgs = photos(listing);
+const tour = tourUrl(listing, site.listingsWidgetUrl);
+const apply = applyUrl(listing, site.listingsWidgetUrl);
+const similar = similarListings(allListings, listing);
+
+const features: Array<[string, string]> = [
+  ['Bedrooms', String(listing.beds ?? '—')],
+  ['Bathrooms', String(listing.baths ?? '—')],
+  ['Square feet', listing.totalArea ? Number(listing.totalArea).toLocaleString() : '—'],
+  ['Property type', listing.buildingType || listing.rentalCategory || 'Home'],
+  ['Pets', listing.petsAllowed ? 'Allowed — restrictions may apply' : 'Contact us for pet policy'],
+  ['Parking', listing.parkingType || 'Contact us for details'],
+  ['Laundry', listing.laundryType || 'Contact us for details'],
+].filter(([, value]) => value);
+
+const description =
+  listing.marketingDescription ||
+  `${addr} is a ${listing.beds ?? ''} bedroom, ${listing.baths ?? ''} bathroom rental home in ${location}, managed by ${site.companyName}. Contact us for full details on this property.`;
+
+const pageTitle = `${addr} | ${money(listing.marketRent?.amount)}/mo Rental in ${listing.address?.city || ''} | ${site.companyName}`;
+const pageDescription = `${addr} — ${money(listing.marketRent?.amount)}/mo, ${listing.beds ?? '—'} bd, ${listing.baths ?? '—'} ba in ${location}. Managed by ${site.companyName}.`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'RealEstateListing',
+  name: addr,
+  description,
+  url: Astro.url.toString(),
+  ...(imgs.length ? { image: imgs } : {}),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: addr,
+    addressLocality: listing.address?.city,
+    addressRegion: listing.address?.stateCode,
+    postalCode: listing.address?.postalCode,
+  },
+  ...(listing.address?.geopoint
+    ? {
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: listing.address.geopoint[1],
+          longitude: listing.address.geopoint[0],
+        },
+      }
+    : {}),
+  offers: {
+    '@type': 'Offer',
+    price: (listing.marketRent?.amount || 0) / 100,
+    priceCurrency: 'USD',
+    availability: 'https://schema.org/InStock',
+  },
+};
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} ogImage={imgs[0] || site.seo.ogImage}>
+  <Fragment slot="head">
+    {listing.address?.geopoint && (
+      <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""
+      />
+    )}
+  </Fragment>
+  <Nav homepage={false} activeHref="/rentals" />
+
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <div class="container" style="padding:80px 24px 0;font-size:13px;color:var(--color-muted);">
+    <a href="/rentals" style="color:var(--color-muted);text-decoration:none;">Available Rentals</a>
+    <span> › </span>
+    <span>{addr}</span>
+  </div>
+
+  <!-- GALLERY -->
+  <section class="container" style="padding:20px 24px 0;">
+    {imgs.length ? (
+      <div style={`display:grid;grid-template-columns:${imgs.length > 1 ? '2fr 1fr' : '1fr'};gap:8px;height:420px;border-radius:16px;overflow:hidden;`}>
+        <button type="button" class="gallery-tile" data-photo-index="0" style="all:unset;cursor:pointer;display:block;">
+          <img src={imgs[0]} alt={addr} style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </button>
+        {imgs.length > 1 && (
+          <div style="display:grid;grid-template-rows:1fr 1fr;gap:8px;">
+            <button type="button" class="gallery-tile" data-photo-index="1" style="all:unset;cursor:pointer;display:block;">
+              <img src={imgs[1]} alt={addr} style="width:100%;height:100%;object-fit:cover;display:block;" />
+            </button>
+            {imgs[2] ? (
+              <button type="button" class="gallery-tile" data-photo-index="2" style="all:unset;cursor:pointer;display:block;position:relative;">
+                <img src={imgs[2]} alt={addr} style="width:100%;height:100%;object-fit:cover;display:block;" />
+                {imgs.length > 3 && (
+                  <div style="position:absolute;inset:0;background:rgba(10,20,35,0.55);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;">
+                    +{imgs.length - 3} photos
+                  </div>
+                )}
+              </button>
+            ) : (
+              <div style="background:var(--color-bg);" />
+            )}
+          </div>
+        )}
+      </div>
+    ) : (
+      <div style="height:320px;border-radius:16px;background:linear-gradient(135deg,var(--color-primary) 0%,#1a3a8f 100%);display:flex;align-items:center;justify-content:center;font-size:56px;">🏠</div>
+    )}
+  </section>
+
+  {imgs.length > 0 && (
+    <dialog id="photo-viewer" class="photo-viewer">
+      <button type="button" id="photo-viewer-close" class="photo-viewer-close" aria-label="Close">×</button>
+      <button type="button" id="photo-viewer-prev" class="photo-viewer-arrow photo-viewer-prev" aria-label="Previous photo">‹</button>
+      <img id="photo-viewer-image" src={imgs[0]} alt={addr} />
+      <button type="button" id="photo-viewer-next" class="photo-viewer-arrow photo-viewer-next" aria-label="Next photo">›</button>
+      <div class="photo-viewer-count"><span id="photo-viewer-count-current">1</span> / {imgs.length}</div>
+      {imgs.length > 1 && (
+        <div class="photo-viewer-thumbs" id="photo-viewer-thumbs">
+          {imgs.map((src, i) => (
+            <img src={src} alt="" data-photo-index={i} class="photo-viewer-thumb" />
+          ))}
+        </div>
+      )}
+    </dialog>
+  )}
+
+  <script define:vars={{ photoUrls: imgs }}>
+    const dialog = document.getElementById('photo-viewer');
+    if (dialog) {
+      const image = document.getElementById('photo-viewer-image');
+      const counter = document.getElementById('photo-viewer-count-current');
+      const thumbs = document.querySelectorAll('.photo-viewer-thumb');
+      let current = 0;
+
+      const show = index => {
+        current = (index + photoUrls.length) % photoUrls.length;
+        image.src = photoUrls[current];
+        if (counter) counter.textContent = String(current + 1);
+        thumbs.forEach(t => t.classList.toggle('active', Number(t.dataset.photoIndex) === current));
+      };
+
+      document.querySelectorAll('.gallery-tile').forEach(tile => {
+        tile.addEventListener('click', () => {
+          show(Number(tile.dataset.photoIndex));
+          dialog.showModal();
+        });
+      });
+      document.getElementById('photo-viewer-close')?.addEventListener('click', () => dialog.close());
+      document.getElementById('photo-viewer-prev')?.addEventListener('click', () => show(current - 1));
+      document.getElementById('photo-viewer-next')?.addEventListener('click', () => show(current + 1));
+      thumbs.forEach(t => t.addEventListener('click', () => show(Number(t.dataset.photoIndex))));
+      // Clicking the backdrop (the <dialog> element itself, outside its content) closes it.
+      dialog.addEventListener('click', e => {
+        if (e.target === dialog) dialog.close();
+      });
+    }
+  </script>
+
+  <!--
+    These two scripts are deliberately UNCONDITIONAL in the template, even though the map only
+    renders for listings with geopoint data — Astro's compiler only hoists/bundles <script>
+    tags it can find unconditionally in the template; one nested inside a {condition && <script>}
+    block gets dumped into the page as raw, unprocessed text instead (its `import` statement
+    included verbatim, which is a SyntaxError in a plain inline script). The runtime guard below
+    (`if (mapEl && ...)`) makes this a no-op on listings without a map, at the cost of always
+    loading the Leaflet library.
+  -->
+  <script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    // Data comes from the #listing-map element's own data-* attributes so this can stay a real,
+    // Vite-processed module script (supporting `import`) rather than a define:vars script,
+    // which Astro emits as a plain inline (non-module) script where `import` would be invalid.
+    import { homePinIconHtml } from '../../lib/map-marker';
+
+    const mapEl = document.getElementById('listing-map');
+    if (mapEl && typeof L !== 'undefined') {
+      const lat = Number(mapEl.dataset.lat);
+      const lon = Number(mapEl.dataset.lon);
+      const map = L.map(mapEl, { scrollWheelZoom: false }).setView([lat, lon], 14);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors',
+      }).addTo(map);
+      const icon = L.divIcon({
+        html: homePinIconHtml(),
+        className: '',
+        iconSize: [34, 34],
+        iconAnchor: [17, 17],
+      });
+      L.marker([lat, lon], { icon }).addTo(map).bindPopup(mapEl.dataset.addr);
+      setTimeout(() => map.invalidateSize(), 50);
+    }
+  </script>
+
+  <!-- CONTENT -->
+  <section class="container listing-content" style="padding:40px 24px 96px;display:grid;grid-template-columns:1fr 340px;gap:48px;">
+    <article>
+      <div class="section-label">Available Now</div>
+      <h1 class="section-title" style="font-size:32px;">{addr}</h1>
+      <p style="font-size:16px;color:var(--color-muted);margin:0 0 32px;">{location}</p>
+
+      <div class="grid-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:24px;background:var(--color-surface);border:1px solid #edf0f5;border-radius:16px;margin-bottom:40px;">
+        <div style="text-align:center;">
+          <div style="font-size:20px;font-weight:800;">{money(listing.marketRent?.amount)}</div>
+          <div style="font-size:12px;color:var(--color-muted);">MONTHLY RENT</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:20px;font-weight:800;">{listing.beds ?? '—'}</div>
+          <div style="font-size:12px;color:var(--color-muted);">BEDROOMS</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:20px;font-weight:800;">{listing.baths ?? '—'}</div>
+          <div style="font-size:12px;color:var(--color-muted);">BATHROOMS</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:20px;font-weight:800;">{listing.totalArea ? Number(listing.totalArea).toLocaleString() : '—'}</div>
+          <div style="font-size:12px;color:var(--color-muted);">SQUARE FEET</div>
+        </div>
+      </div>
+
+      <h2 style="font-size:20px;font-weight:700;margin-bottom:16px;">Rental features</h2>
+      <div class="grid-3" style="margin-bottom:40px;">
+        {features.map(([label, value]) => (
+          <div class="card-flat">
+            <div style="font-size:13px;color:var(--color-muted);margin-bottom:4px;">{label}</div>
+            <div style="font-size:15px;font-weight:600;">{value}</div>
+          </div>
+        ))}
+      </div>
+
+      <h2 style="font-size:20px;font-weight:700;margin-bottom:16px;">About this rental</h2>
+      <p style="font-size:15px;line-height:1.8;color:var(--color-ink);margin-bottom:40px;">{description}</p>
+
+      <h2 style="font-size:20px;font-weight:700;margin-bottom:16px;">Pricing breakdown</h2>
+      <div class="card-flat">
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #edf0f5;">
+          <span style="font-weight:700;">Monthly rent</span>
+          <strong>{money(listing.marketRent?.amount)}</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #edf0f5;">
+          <span style="font-weight:700;">Security deposit</span>
+          <strong>{money(listing.deposit?.amount)}</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;">
+          <span style="font-weight:800;">Estimated move-in total</span>
+          <strong style="color:var(--color-accent);">
+            {money((listing.marketRent?.amount || 0) + (listing.deposit?.amount || 0))}
+          </strong>
+        </div>
+        <p style="font-size:13px;color:var(--color-muted);margin:12px 0 0;">
+          Amounts are loaded from the current {site.companyName} listing and are for planning purposes. The final approved lease and fee disclosure control.
+        </p>
+      </div>
+    </article>
+
+    <aside>
+      <div class="card" style="position:sticky;top:88px;display:flex;flex-direction:column;gap:16px;">
+        <div class="section-label" style="margin:0;">Ready to see it?</div>
+        <h3 style="font-size:18px;font-weight:700;margin:0;">Make this your next home.</h3>
+        <p style="font-size:14px;color:var(--color-muted);margin:0;">Schedule a tour or start your application through our secure Aptly portal.</p>
+        <a href={tour} class="btn-accent" style="justify-content:center;" target="_blank" rel="noopener">Schedule a Tour</a>
+        <a href={apply} class="btn-ghost" style="justify-content:center;" target="_blank" rel="noopener">Apply Now</a>
+        <hr style="width:100%;border:none;border-top:1px solid #edf0f5;margin:4px 0;" />
+        <div style="font-weight:700;">{site.companyName}</div>
+        <a href={`tel:${site.phone}`} style="color:var(--color-ink);font-size:14px;text-decoration:none;">{site.phone}</a>
+        <a href={`mailto:${site.email}`} style="color:var(--color-ink);font-size:14px;text-decoration:none;">{site.email}</a>
+      </div>
+    </aside>
+  </section>
+
+  {listing.address?.geopoint && (
+    <section class="section" style="padding-top:0;">
+      <div class="container">
+        <div class="section-label">Location</div>
+        <h2 class="section-title" style="font-size:26px;">Where this home is</h2>
+        <div
+          id="listing-map"
+          data-lat={listing.address.geopoint[1]}
+          data-lon={listing.address.geopoint[0]}
+          data-addr={addr}
+          style="height:360px;border-radius:16px;overflow:hidden;border:1px solid #edf0f5;"
+        ></div>
+      </div>
+    </section>
+  )}
+
+  {similar.length > 0 && (
+    <section class="section" style="background:var(--color-surface);border-top:1px solid #edf0f5;">
+      <div class="container">
+        <div class="section-label">More Homes Nearby</div>
+        <h2 class="section-title">Similar rentals you may like</h2>
+        <div class="grid-3">
+          {similar.map(p => (
+            <ListingCard listing={p} compact />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  @media (max-width: 900px) {
+    .listing-content { grid-template-columns: 1fr !important; }
+    .listing-content aside .card { position: static !important; }
+  }
+
+  /* Photo lightbox */
+  .photo-viewer {
+    border: none;
+    border-radius: 12px;
+    padding: 0;
+    background: #0a0e16;
+    width: min(92vw, 1100px);
+    max-width: 92vw;
+    max-height: 88vh;
+    position: relative;
+  }
+  .photo-viewer::backdrop { background: rgba(8, 12, 20, 0.85); }
+  .photo-viewer img#photo-viewer-image {
+    display: block;
+    width: 100%;
+    height: min(70vh, 640px);
+    object-fit: contain;
+    background: #0a0e16;
+  }
+  .photo-viewer-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+  }
+  .photo-viewer-close:hover { background: rgba(255, 255, 255, 0.22); }
+  .photo-viewer-arrow {
+    position: absolute;
+    top: calc(min(70vh, 640px) / 2 - 20px);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 2;
+  }
+  .photo-viewer-arrow:hover { background: rgba(255, 255, 255, 0.22); }
+  .photo-viewer-prev { left: 12px; }
+  .photo-viewer-next { right: 12px; }
+  .photo-viewer-count {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.35);
+    padding: 3px 10px;
+    border-radius: 12px;
+  }
+  .photo-viewer-thumbs {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    overflow-x: auto;
+  }
+  .photo-viewer-thumb {
+    width: 68px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0.55;
+    flex-shrink: 0;
+  }
+  .photo-viewer-thumb:hover { opacity: 0.85; }
+  .photo-viewer-thumb.active { opacity: 1; outline: 2px solid var(--color-accent); }
+</style>

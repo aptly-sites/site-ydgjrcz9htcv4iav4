@@ -1,0 +1,17 @@
+---
+import { site } from '../config';
+---
+
+<footer style="background:#0a0c14;padding:32px 24px;text-align:center;">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <div style="font-weight:700;color:#fff;">{site.companyName}</div>
+    <div style="font-size:13px;color:#6b7280;">
+      © {new Date().getFullYear()} {site.companyName}. All rights reserved.
+    </div>
+    <div style="display:flex;gap:16px;">
+      {site.social.facebook && <a href={site.social.facebook} style="color:#6b7280;font-size:13px;text-decoration:none;" target="_blank">Facebook</a>}
+      {site.social.instagram && <a href={site.social.instagram} style="color:#6b7280;font-size:13px;text-decoration:none;" target="_blank">Instagram</a>}
+      {site.social.linkedin && <a href={site.social.linkedin} style="color:#6b7280;font-size:13px;text-decoration:none;" target="_blank">LinkedIn</a>}
+    </div>
+  </div>
+</footer>

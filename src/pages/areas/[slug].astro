@@ -1,0 +1,197 @@
+---
+// One static page per configured service area (src/config.ts's `areas` array) — same
+// getStaticPaths pattern as src/pages/rentals/[id].astro. Empty `areas` (the default) means
+// zero pages generated here, so this is fully opt-in per customer.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import ListingCard from '../../components/ListingCard.astro';
+import '../../styles/global.css';
+import { site } from '../../config';
+import { fetchListings } from '../../lib/listings';
+
+export async function getStaticPaths() {
+  return site.areas.map(area => ({ params: { slug: area.slug }, props: { area } }));
+}
+
+const { area } = Astro.props;
+
+const allListings = await fetchListings(site.companyId);
+const areaListings = allListings
+  .filter(p => (p.address?.city || '').toLowerCase() === area.name.toLowerCase())
+  .slice(0, 6);
+
+const pageTitle = `Property Management in ${area.name} | ${site.companyName}`;
+const pageDescription = `${site.companyName} provides property management services in ${area.name}. ${area.overview}`.slice(
+  0,
+  300
+);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Place',
+  name: area.name,
+  geo: { '@type': 'GeoCoordinates', latitude: area.lat, longitude: area.lon },
+};
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Fragment slot="head">
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+  </Fragment>
+  <Nav homepage={false} activeHref="/areas" />
+
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- Same script-hoisting caveat as rentals/[id].astro: these two <script> tags must stay
+       unconditional in the template (Astro won't bundle/process a <script> nested inside a
+       {condition && ...} block), so they always load even though every area always has geo
+       data by construction. -->
+  <script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    import { homePinIconHtml } from '../../lib/map-marker';
+
+    const mapEl = document.getElementById('area-map');
+    if (mapEl && typeof L !== 'undefined') {
+      const lat = Number(mapEl.dataset.lat);
+      const lon = Number(mapEl.dataset.lon);
+      const map = L.map(mapEl, { scrollWheelZoom: false }).setView([lat, lon], 12);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors',
+      }).addTo(map);
+      const icon = L.divIcon({
+        html: homePinIconHtml(),
+        className: '',
+        iconSize: [34, 34],
+        iconAnchor: [17, 17],
+      });
+      L.marker([lat, lon], { icon }).addTo(map).bindPopup(mapEl.dataset.addr);
+      setTimeout(() => map.invalidateSize(), 50);
+    }
+  </script>
+
+  <section style="padding:128px 24px 64px;text-align:center;background:linear-gradient(180deg,#eef4ff 0%,var(--color-bg) 100%);">
+    <div class="container" style="max-width:760px;">
+      <div class="section-label">Service Area</div>
+      <h1 class="section-title">{area.name}</h1>
+      {area.access && <p class="section-sub" style="margin:0 auto;">{area.access}</p>}
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:48px;">
+    <div class="container">
+      <div class="grid-2">
+        <div>
+          <h2 style="font-size:22px;font-weight:700;margin-bottom:16px;">
+            Property management in {area.name}
+          </h2>
+          <p style="font-size:15px;line-height:1.8;color:var(--color-ink);">{area.overview}</p>
+        </div>
+        <div class="card-flat">
+          {area.population && (
+            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #edf0f5;">
+              <span style="color:var(--color-muted);">Population</span>
+              <strong>{area.population}</strong>
+            </div>
+          )}
+          {area.district && (
+            <div style="display:flex;justify-content:space-between;padding:10px 0;">
+              <span style="color:var(--color-muted);">School district</span>
+              <strong>{area.district}</strong>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {area.neighborhoods?.length > 0 && (
+    <section class="section" style="background:var(--color-surface);border-top:1px solid #edf0f5;border-bottom:1px solid #edf0f5;">
+      <div class="container">
+        <div class="section-label">Neighborhoods</div>
+        <h2 class="section-title">Where to live in {area.name}</h2>
+        <div class="grid-3">
+          {area.neighborhoods.map(n => (
+            <div class="card-flat">
+              <h3 style="font-size:16px;font-weight:700;margin:0 0 8px;">{n.title}</h3>
+              <p style="font-size:14px;color:var(--color-muted);margin:0;line-height:1.6;">{n.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {area.attractions?.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <div class="section-label">Things to Do</div>
+        <h2 class="section-title">Local attractions</h2>
+        <div class="grid-3">
+          {area.attractions.map(a => (
+            <a
+              href={a.url || undefined}
+              target={a.url ? '_blank' : undefined}
+              rel={a.url ? 'noopener noreferrer' : undefined}
+              class="card-flat"
+              style="display:block;text-decoration:none;color:inherit;"
+            >
+              <h3 style="font-size:16px;font-weight:700;margin:0 0 8px;">{a.title}</h3>
+              <p style="font-size:14px;color:var(--color-muted);margin:0;line-height:1.6;">{a.description}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {area.tips?.length > 0 && (
+    <section class="section" style="background:var(--color-surface);border-top:1px solid #edf0f5;border-bottom:1px solid #edf0f5;">
+      <div class="container" style="max-width:760px;">
+        <div class="section-label">Relocation Tips</div>
+        <h2 class="section-title">Moving to {area.name}?</h2>
+        <ol style="padding-left:20px;display:flex;flex-direction:column;gap:12px;">
+          {area.tips.map(tip => (
+            <li style="font-size:15px;line-height:1.7;color:var(--color-ink);">{tip}</li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="container">
+      <div class="section-label">Location</div>
+      <h2 class="section-title" style="font-size:26px;">Where {area.name} is</h2>
+      <div
+        id="area-map"
+        data-lat={area.lat}
+        data-lon={area.lon}
+        data-addr={area.name}
+        style="height:360px;border-radius:16px;overflow:hidden;border:1px solid #edf0f5;"
+      ></div>
+    </div>
+  </section>
+
+  {areaListings.length > 0 && (
+    <section class="section" style="background:var(--color-surface);border-top:1px solid #edf0f5;">
+      <div class="container">
+        <div class="section-label">Available Now</div>
+        <h2 class="section-title">Homes for rent in {area.name}</h2>
+        <div class="grid-3">
+          {areaListings.map(p => (
+            <ListingCard listing={p} compact />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,77 @@
+---
+import { site } from '../config';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = site.seo.title,
+  description = site.seo.description,
+  ogImage = site.seo.ogImage,
+} = Astro.props;
+
+const canonicalURL = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site)
+  : Astro.url;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS vars from config -->
+    <style define:vars={{
+      colorPrimary: site.colors.primary,
+      colorPrimaryDark: site.colors.primaryDark,
+      colorBg: site.colors.bg,
+      colorSurface: site.colors.surface,
+      colorInk: site.colors.ink,
+      colorMuted: site.colors.muted,
+      colorAccent: site.colors.accent,
+      colorAccentInk: site.colors.accentInk,
+    }}>
+      :root {
+        --color-primary: var(--colorPrimary);
+        --color-primary-dark: var(--colorPrimaryDark);
+        --color-bg: var(--colorBg);
+        --color-surface: var(--colorSurface);
+        --color-ink: var(--colorInk);
+        --color-muted: var(--colorMuted);
+        --color-accent: var(--colorAccent);
+        --color-accent-ink: var(--colorAccentInk);
+      }
+    </style>
+
+    <!-- Per-page extra head tags (e.g. Leaflet's stylesheet on pages with a map) -->
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

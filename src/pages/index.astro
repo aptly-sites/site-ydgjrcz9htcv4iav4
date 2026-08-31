@@ -1,0 +1,169 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import { site } from '../config';
+---
+
+<BaseLayout>
+  <Nav />
+
+  <!-- HERO -->
+  <section style="padding:160px 24px 96px;text-align:center;background:linear-gradient(180deg,#eef4ff 0%,var(--color-bg) 100%);">
+    <div class="container" style="max-width:760px;">
+      <div class="section-label">{site.tagline}</div>
+      <h1 class="section-title" style="font-size:clamp(36px,5vw,60px);">{site.hero.headline}</h1>
+      <p class="section-sub" style="font-size:20px;margin:0 auto 40px;">{site.hero.subheadline}</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a href={site.hero.ctaHref} class="btn-primary" style="font-size:16px;padding:14px 28px;">
+          {site.hero.cta}
+        </a>
+        <a href={`tel:${site.phone}`} class="btn-ghost" style="font-size:16px;padding:14px 28px;">
+          {site.phone}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div style="background:var(--color-ink);padding:40px 24px;">
+    <div class="container" style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center;">
+      {site.stats.map(stat => (
+        <div>
+          <div style="font-size:32px;font-weight:800;color:#fff;">{stat.value}</div>
+          <div style="font-size:14px;color:#9ca3b0;margin-top:4px;">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-label">What We Do</div>
+      <h2 class="section-title">Full-Service Property Management</h2>
+      <p class="section-sub">{site.description}</p>
+      <div class="grid-3">
+        {site.services.map(service => (
+          <div class="card">
+            <div style="font-size:32px;margin-bottom:12px;">{service.icon}</div>
+            <h3 style="font-size:17px;font-weight:700;margin:0 0 8px;">{service.title}</h3>
+            <p style="font-size:14px;color:var(--color-muted);margin:0;line-height:1.6;">{service.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about" style="background:var(--color-surface);border-top:1px solid #edf0f5;border-bottom:1px solid #edf0f5;">
+    <div class="container">
+      <div class="grid-2">
+        <div>
+          <div class="section-label">About Us</div>
+          <h2 class="section-title">{site.about.headline}</h2>
+          <p style="font-size:17px;color:var(--color-muted);line-height:1.7;margin-bottom:32px;">{site.about.body}</p>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;">
+            {site.about.points.map(point => (
+              <li style="display:flex;align-items:flex-start;gap:12px;font-size:15px;">
+                <svg style="flex-shrink:0;margin-top:2px;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 6L9 17l-5-5"/>
+                </svg>
+                {point}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div style="background:linear-gradient(135deg,var(--color-primary) 0%,#1a3a8f 100%);border-radius:20px;padding:48px;color:#fff;display:flex;flex-direction:column;gap:24px;">
+          <div>
+            <div style="font-size:48px;font-weight:800;">{site.stats[0].value}</div>
+            <div style="font-size:16px;opacity:0.8;">{site.stats[0].label}</div>
+          </div>
+          <div style="height:1px;background:rgba(255,255,255,0.2);"></div>
+          <div style="font-size:18px;font-weight:600;line-height:1.5;">
+            "{site.tagline}"
+          </div>
+          <a href={`mailto:${site.email}`} style="color:#fff;font-size:14px;opacity:0.8;">{site.email}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section" id="testimonials">
+    <div class="container">
+      <div class="section-label">Testimonials</div>
+      <h2 class="section-title">What Our Owners Say</h2>
+      <div class="grid-3">
+        {site.testimonials.map(t => (
+          <div class="card" style="display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;gap:2px;">
+              {[1,2,3,4,5].map(() => (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--color-primary)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              ))}
+            </div>
+            <p style="font-size:15px;color:var(--color-ink);line-height:1.7;margin:0;flex:1;">"{t.quote}"</p>
+            <div>
+              <div style="font-weight:600;font-size:14px;">{t.author}</div>
+              <div style="font-size:13px;color:var(--color-muted);">{t.detail}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / CTA -->
+  <section class="section" id="contact" style="background:var(--color-ink);">
+    <div class="container" style="text-align:center;max-width:640px;">
+      <h2 class="section-title" style="color:#fff;">{site.contact.headline}</h2>
+      <p style="font-size:18px;color:#9ca3b0;margin-bottom:40px;">{site.contact.subheadline}</p>
+      <div style="background:var(--color-surface);border-radius:20px;padding:40px;text-align:left;">
+        <form id="contact-form" style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <input name="name" placeholder="Your name" required style="padding:12px 14px;border:1.5px solid #dde1ea;border-radius:8px;font-size:14px;font-family:inherit;outline:none;" />
+            <input name="email" type="email" placeholder="Email address" required style="padding:12px 14px;border:1.5px solid #dde1ea;border-radius:8px;font-size:14px;font-family:inherit;outline:none;" />
+          </div>
+          <input name="phone" placeholder="Phone number" style="padding:12px 14px;border:1.5px solid #dde1ea;border-radius:8px;font-size:14px;font-family:inherit;outline:none;" />
+          <textarea name="message" placeholder="Tell us about your property..." rows="4" style="padding:12px 14px;border:1.5px solid #dde1ea;border-radius:8px;font-size:14px;font-family:inherit;resize:vertical;outline:none;"></textarea>
+          <button type="submit" class="btn-primary" style="justify-content:center;font-size:16px;padding:14px;">
+            Send Message
+          </button>
+          <div id="form-success" style="display:none;color:#15a05a;font-size:14px;text-align:center;font-weight:600;">
+            ✓ Message sent! We'll be in touch within 24 hours.
+          </div>
+        </form>
+      </div>
+      <div style="display:flex;gap:32px;justify-content:center;margin-top:32px;flex-wrap:wrap;">
+        <a href={`tel:${site.phone}`} style="color:#9ca3b0;font-size:14px;text-decoration:none;">📞 {site.phone}</a>
+        <a href={`mailto:${site.email}`} style="color:#9ca3b0;font-size:14px;text-decoration:none;">✉️ {site.email}</a>
+        <span style="color:#9ca3b0;font-size:14px;">📍 {site.address}</span>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  // Contact form (customize endpoint as needed)
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const success = document.getElementById('form-success');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form));
+    // Replace with your form endpoint (Formspree, Netlify Forms, etc.)
+    console.log('Form submission:', data);
+    form.style.display = 'none';
+    if (success) success.style.display = 'block';
+  });
+</script>
+
+<style>
+  @media (max-width: 600px) {
+    .grid-stats { grid-template-columns: repeat(2, 1fr) !important; }
+    input[name="name"], input[name="email"] { grid-column: span 1; }
+    form > div:first-child { grid-template-columns: 1fr !important; }
+  }
+</style>

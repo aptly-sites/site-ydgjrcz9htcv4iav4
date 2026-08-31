@@ -1,0 +1,66 @@
+---
+// Static, crawlable listings grid — generated at build time from the company's
+// public Aptly listings feed. Replaces the old iframe-embedded search widget so
+// search engines can see and index real rental content and links, not just an
+// empty <iframe> shell.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import '../../styles/global.css';
+import { site } from '../../config';
+import { fetchListings } from '../../lib/listings';
+import ListingCard from '../../components/ListingCard.astro';
+
+const listings = await fetchListings(site.companyId);
+
+const itemListJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: listings.map((p, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    url: new URL(`/rentals/${p._id}/`, Astro.site || Astro.url).toString(),
+  })),
+};
+---
+
+<BaseLayout
+  title={`Available Rentals | ${site.companyName}`}
+  description={`Browse current rental homes managed by ${site.companyName}.`}
+>
+  <Nav homepage={false} activeHref="/rentals" />
+
+  <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)} />
+
+  <section style="padding:128px 24px 32px;text-align:center;">
+    <div class="container" style="max-width:760px;">
+      <div class="section-label">Rental Search</div>
+      <h1 class="section-title">Available Rentals</h1>
+      <p class="section-sub" style="margin:0 auto;">
+        {listings.length
+          ? `${listings.length} home${listings.length === 1 ? '' : 's'} currently available through ${site.companyName}.`
+          : `Check back soon — new availability is posted here as it comes on the market.`}
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:16px;">
+    <div class="container">
+      {listings.length ? (
+        <div class="grid-3">
+          {listings.map(p => (
+            <ListingCard listing={p} />
+          ))}
+        </div>
+      ) : (
+        <div class="card" style="text-align:center;padding:48px;">
+          <p style="margin:0;color:var(--color-muted);">
+            No listings are published right now. <a href={`tel:${site.phone}`} style="color:var(--color-primary);">Call us</a> to ask about upcoming availability.
+          </p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>

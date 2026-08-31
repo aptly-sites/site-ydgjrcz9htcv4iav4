@@ -1,0 +1,54 @@
+---
+// Shared listing card — used by the rentals grid, "similar rentals" on a listing's own page,
+// and the "homes for rent in {city}" grid on service-area pages. Extracted so all three don't
+// keep drifting apart as near-identical copies.
+import { street, cityStateZip, photos, money, type Listing } from '../lib/listings';
+
+interface Props {
+  listing: Listing;
+  compact?: boolean;
+}
+
+const { listing, compact = false } = Astro.props;
+const imgs = photos(listing);
+const photoHeight = compact ? 160 : 200;
+---
+
+<a
+  href={`/rentals/${listing._id}/`}
+  class="card"
+  style="text-decoration:none;color:inherit;display:flex;flex-direction:column;overflow:hidden;padding:0;"
+>
+  {imgs[0] ? (
+    <img
+      src={imgs[0]}
+      alt={street(listing)}
+      style={`width:100%;height:${photoHeight}px;object-fit:cover;`}
+      loading="lazy"
+    />
+  ) : (
+    <div
+      style={`width:100%;height:${photoHeight}px;background:linear-gradient(135deg,var(--color-primary) 0%,#1a3a8f 100%);display:flex;align-items:center;justify-content:center;font-size:${
+        compact ? '32px' : '40px'
+      };`}
+    >
+      🏠
+    </div>
+  )}
+  <div style={`padding:${compact ? 16 : 20}px;`}>
+    <div style={`font-size:${compact ? 18 : 22}px;font-weight:800;color:var(--color-ink);`}>
+      {money(listing.marketRent?.amount)}
+      <small style="font-size:13px;font-weight:500;color:var(--color-muted);">/mo</small>
+    </div>
+    {!compact && (
+      <div style="font-size:13px;color:var(--color-muted);margin:6px 0 10px;">
+        {listing.beds ?? '—'} bd &nbsp;·&nbsp; {listing.baths ?? '—'} ba
+        {listing.totalArea ? ` · ${Number(listing.totalArea).toLocaleString()} sq ft` : ''}
+      </div>
+    )}
+    <h3 style={`font-size:${compact ? 15 : 16}px;font-weight:700;margin:${compact ? '6px 0 2px' : '0 0 4px'};`}>
+      {street(listing)}
+    </h3>
+    <p style="font-size:13px;color:var(--color-muted);margin:0;">{cityStateZip(listing)}</p>
+  </div>
+</a>
