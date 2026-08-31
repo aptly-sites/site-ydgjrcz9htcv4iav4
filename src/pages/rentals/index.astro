@@ -2,14 +2,16 @@
 // Static, crawlable listings grid — generated at build time from the company's
 // public Aptly listings feed. Replaces the old iframe-embedded search widget so
 // search engines can see and index real rental content and links, not just an
-// empty <iframe> shell.
+// empty <iframe> shell. Visually matches jrgrace.com's real rental-search page
+// (sticky map + scrollable grid, client-side filters over the already-rendered
+// cards) while keeping listings server-rendered for SEO rather than fetched by
+// client JS the way the real site does it.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import '../../styles/global.css';
 import { site } from '../../config';
-import { fetchListings } from '../../lib/listings';
-import ListingCard from '../../components/ListingCard.astro';
+import { fetchListings, street, cityStateZip, photos, money, tourUrl } from '../../lib/listings';
 
 const listings = await fetchListings(site.companyId);
 
@@ -22,6 +24,12 @@ const itemListJsonLd = {
     url: new URL(`/rentals/${p._id}/`, Astro.site || Astro.url).toString(),
   })),
 };
+
+const areaNames = site.areas.length
+  ? site.areas.map(a => a.name.toUpperCase()).join(' · ')
+  : 'CENTRAL TEXAS';
+
+const buildingTypes = [...new Set(listings.map(p => p.buildingType).filter(Boolean))] as string[];
 ---
 
 <BaseLayout
@@ -32,35 +40,306 @@ const itemListJsonLd = {
 
   <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)} />
 
-  <section style="padding:128px 24px 32px;text-align:center;">
-    <div class="container" style="max-width:760px;">
-      <div class="section-label">Rental Search</div>
-      <h1 class="section-title">Available Rentals</h1>
-      <p class="section-sub" style="margin:0 auto;">
-        {listings.length
-          ? `${listings.length} home${listings.length === 1 ? '' : 's'} currently available through ${site.companyName}.`
-          : `Check back soon — new availability is posted here as it comes on the market.`}
-      </p>
+  <!-- HERO -->
+  <section class="rental-hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">{areaNames}</p>
+        <h1>Find a home that<br />feels like yours.</h1>
+        <p class="lead">Explore professionally managed homes with clear pricing, flexible tours, and a straightforward application process.</p>
+        <a class="primary" href="#properties">Browse available homes</a>
+      </div>
+      <div class="hero-stat">
+        <strong>{listings.length || '—'}</strong>
+        <span>AVAILABLE HOMES</span>
+        <p>Local expertise and responsive service from first tour through move-out.</p>
+      </div>
     </div>
   </section>
 
-  <section class="section" style="padding-top:16px;">
-    <div class="container">
-      {listings.length ? (
-        <div class="grid-3">
-          {listings.map(p => (
-            <ListingCard listing={p} />
-          ))}
+  <!-- PROMISES -->
+  <section class="promises">
+    <div class="container promise-grid">
+      <div><b>Tour on your time</b><span>Convenient self-guided options</span></div>
+      <div><b>Clear next steps</b><span>Property details and fees up front</span></div>
+      <div><b>Local support</b><span>A {site.address.split(',')[1]?.trim() || 'local'} team ready to help</span></div>
+    </div>
+  </section>
+
+  <!-- SEARCH -->
+  <section id="properties" class="search-section">
+    <div class="container heading-shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow blue">LIVE FROM {site.companyName.toUpperCase()}</p>
+          <h2>Available homes</h2>
         </div>
-      ) : (
-        <div class="card" style="text-align:center;padding:48px;">
-          <p style="margin:0;color:var(--color-muted);">
-            No listings are published right now. <a href={`tel:${site.phone}`} style="color:var(--color-primary);">Call us</a> to ask about upcoming availability.
-          </p>
-        </div>
-      )}
+        <p id="resultCount">
+          {listings.length
+            ? `${listings.length} home${listings.length === 1 ? '' : 's'} currently available`
+            : 'Check back soon for new availability.'}
+        </p>
+      </div>
+    </div>
+
+    <div class="filters" aria-label="Rental filters">
+      <label class="searchbox"><span>⌕</span><input id="query" type="search" placeholder="Search by city or address" /></label>
+      <label>Rent Range
+        <select id="rent">
+          <option value="">Any</option>
+          <option value="0-120000">Up to $1,200</option>
+          <option value="120000-160000">$1,200–$1,600</option>
+          <option value="160000-220000">$1,600–$2,200</option>
+          <option value="220000-999999900">$2,200+</option>
+        </select>
+      </label>
+      <label>Beds
+        <select id="beds">
+          <option value="">Any</option>
+          <option value="1">1+ beds</option>
+          <option value="2">2+ beds</option>
+          <option value="3">3+ beds</option>
+          <option value="4">4+ beds</option>
+        </select>
+      </label>
+      <button id="filtersToggle" class="filter-toggle" type="button">Filters <span>＋</span></button>
+    </div>
+    <div id="advancedFilters" class="advanced-filters">
+      <label>Home type
+        <select id="type">
+          <option value="">All types</option>
+          {buildingTypes.map(t => <option value={t}>{t}</option>)}
+        </select>
+      </label>
+      <button id="clear" class="clear" type="button">Clear all filters</button>
+    </div>
+
+    <div class="results-split">
+      <div id="map" aria-label="Map of available homes"></div>
+      <div class="results-panel">
+        {listings.length ? (
+          <div id="listingGrid" class="listing-grid">
+            {listings.map(p => (
+              <div
+                class="listing-item"
+                data-rent={p.marketRent?.amount ?? ''}
+                data-beds={p.beds ?? ''}
+                data-search={`${street(p)} ${cityStateZip(p)}`.toLowerCase()}
+                data-type={p.buildingType ?? ''}
+                data-lat={p.address?.geopoint ? p.address.geopoint[1] : ''}
+                data-lon={p.address?.geopoint ? p.address.geopoint[0] : ''}
+                data-href={`/rentals/${p._id}/`}
+              >
+                <article class="property-card">
+                  <a href={`/rentals/${p._id}/`} class="media">
+                    {photos(p)[0] ? (
+                      <img src={photos(p)[0]} alt={street(p)} loading="lazy" />
+                    ) : (
+                      <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--color-bg);font-size:32px;">🏠</div>
+                    )}
+                    <span class="badge">AVAILABLE</span>
+                  </a>
+                  <div class="card-body">
+                    <div class="price">{money(p.marketRent?.amount)}<small>/mo</small></div>
+                    <div class="facts">
+                      <span>{p.beds ?? '—'} bd</span>
+                      <span>{p.baths ?? '—'} ba</span>
+                      {p.totalArea && <span>{Number(p.totalArea).toLocaleString()} sqft</span>}
+                    </div>
+                    <h3><a href={`/rentals/${p._id}/`} style="color:inherit;text-decoration:none;">{street(p)}</a></h3>
+                    <p class="address">{cityStateZip(p)}</p>
+                    <div class="actions">
+                      <a href={`/rentals/${p._id}/`}>View Details</a>
+                      <a class="apply" href={tourUrl(p, site.listingsWidgetUrl)} target="_blank" rel="noopener noreferrer">Schedule a Tour</a>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div class="empty">
+            <p style="margin:0;color:var(--color-muted);">
+              No listings are published right now. <a href={`tel:${site.phone}`} style="color:var(--color-primary);">Call us</a> to ask about upcoming availability.
+            </p>
+          </div>
+        )}
+        <p id="noMatches" class="empty" style="display:none;">No homes match these filters. Try adjusting your search.</p>
+      </div>
     </div>
   </section>
 
   <Footer />
 </BaseLayout>
+
+<script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+  import { homePinIconHtml } from '../../lib/map-marker';
+
+  const mapEl = document.getElementById('map');
+  const items = Array.from(document.querySelectorAll('.listing-item')) as HTMLElement[];
+  const query = document.getElementById('query') as HTMLInputElement;
+  const rentSel = document.getElementById('rent') as HTMLSelectElement;
+  const bedsSel = document.getElementById('beds') as HTMLSelectElement;
+  const typeSel = document.getElementById('type') as HTMLSelectElement;
+  const toggle = document.getElementById('filtersToggle');
+  const advanced = document.getElementById('advancedFilters');
+  const clearBtn = document.getElementById('clear');
+  const resultCount = document.getElementById('resultCount');
+  const noMatches = document.getElementById('noMatches');
+  const heroCount = document.querySelector('.hero-stat strong');
+  const totalCount = items.length;
+
+  let map: any;
+  let markers: any[] = [];
+
+  if (mapEl && typeof L !== 'undefined' && items.length) {
+    map = L.map(mapEl, { scrollWheelZoom: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors',
+    }).addTo(map);
+  } else if (mapEl) {
+    mapEl.style.display = 'none';
+  }
+
+  function matches(item: HTMLElement) {
+    const q = query.value.trim().toLowerCase();
+    const rentRange = rentSel.value;
+    const minBeds = bedsSel.value ? Number(bedsSel.value) : null;
+    const type = typeSel.value;
+
+    if (q && !(item.dataset.search || '').includes(q)) return false;
+    if (rentRange) {
+      const [min, max] = rentRange.split('-').map(Number);
+      const rent = Number(item.dataset.rent || 0);
+      if (!(rent >= min && rent <= max)) return false;
+    }
+    if (minBeds && Number(item.dataset.beds || 0) < minBeds) return false;
+    if (type && item.dataset.type !== type) return false;
+    return true;
+  }
+
+  function render() {
+    let visibleCount = 0;
+    markers.forEach(m => map?.removeLayer(m));
+    markers = [];
+    const bounds: any[] = [];
+
+    items.forEach(item => {
+      const show = matches(item);
+      item.style.display = show ? '' : 'none';
+      if (show) {
+        visibleCount++;
+        const lat = Number(item.dataset.lat);
+        const lon = Number(item.dataset.lon);
+        if (map && lat && lon) {
+          const icon = L.divIcon({ html: homePinIconHtml(), className: '', iconSize: [30, 30], iconAnchor: [15, 15] });
+          const marker = L.marker([lat, lon], { icon }).addTo(map);
+          marker.on('click', () => { window.location.href = item.dataset.href!; });
+          markers.push(marker);
+          bounds.push([lat, lon]);
+        }
+      }
+    });
+
+    if (resultCount) resultCount.textContent = `${visibleCount} home${visibleCount === 1 ? '' : 's'} currently available`;
+    if (heroCount) heroCount.textContent = String(totalCount);
+    if (noMatches) (noMatches as HTMLElement).style.display = visibleCount === 0 && totalCount > 0 ? 'block' : 'none';
+
+    if (map) {
+      if (bounds.length) {
+        map.fitBounds(bounds, { padding: [40, 40], maxZoom: 15 });
+      } else {
+        map.setView([31.5493, -97.1467], 11);
+      }
+      setTimeout(() => map.invalidateSize(), 50);
+    }
+  }
+
+  [query, rentSel, bedsSel, typeSel].forEach(el => el?.addEventListener('input', render));
+  toggle?.addEventListener('click', () => advanced?.classList.toggle('open'));
+  clearBtn?.addEventListener('click', () => {
+    query.value = '';
+    rentSel.value = '';
+    bedsSel.value = '';
+    typeSel.value = '';
+    render();
+  });
+
+  render();
+</script>
+
+<style>
+  .rental-hero {
+    background-image: linear-gradient(90deg, rgba(8,27,50,0.92) 0%, rgba(13,37,66,0.84) 52%, rgba(16,43,75,0.72) 100%), url('/images/waco-sunset-river.jpg');
+    background-position: center 48%;
+    background-size: cover;
+    color: #fff;
+    padding: 86px 24px 92px;
+  }
+  .hero-grid { display: grid; grid-template-columns: 1.5fr 0.65fr; gap: 60px; align-items: end; }
+  .rental-hero .eyebrow { font-weight: 800; letter-spacing: 0.13em; font-size: 0.78rem; color: #d8c681; }
+  .rental-hero h1 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; letter-spacing: -0.03em; font-size: clamp(2.4rem, 5vw, 4.4rem); margin: 16px 0; max-width: 700px; color: #fff; }
+  .lead { font-size: 1.1rem; line-height: 1.55; max-width: 600px; color: #e3e9f2; }
+  .primary { display: inline-block; margin-top: 16px; background: #c7b276; color: #112237; text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 800; padding: 15px 23px; font-size: 0.85rem; }
+  .hero-stat { border-left: 1px solid rgba(255,255,255,0.33); padding-left: 32px; }
+  .hero-stat strong { display: block; font: 800 3.5rem/1 'Plus Jakarta Sans', sans-serif; }
+  .hero-stat span { font-weight: 800; letter-spacing: 0.1em; font-size: 0.85rem; }
+  .hero-stat p { line-height: 1.5; color: #dbe4ef; font-size: 0.9rem; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 32px; } .hero-stat { border-left: 0; border-top: 1px solid rgba(255,255,255,0.33); padding: 24px 0 0; } }
+
+  .promises { background: #f6f3ec; border-bottom: 1px solid #e8e2d8; }
+  .promise-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .promise-grid div { padding: 25px 30px; border-right: 1px solid #ddd5c7; }
+  .promise-grid div:first-child { border-left: 1px solid #ddd5c7; }
+  .promise-grid span { display: block; font-size: 0.88rem; margin-top: 5px; color: #5e6470; }
+  @media (max-width: 620px) { .promise-grid { grid-template-columns: 1fr; } }
+
+  .heading-shell { padding: 56px 24px 32px; }
+  .section-heading { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; }
+  .section-heading h2 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; color: var(--color-primary); font-size: clamp(2rem, 4vw, 3rem); margin: 8px 0 0; }
+  .section-heading p { margin: 0; color: var(--color-muted); }
+  .blue { color: var(--color-primary); }
+
+  .filters { display: grid; grid-template-columns: 2fr 0.7fr 0.7fr auto; border-top: 1px solid #dfe2e6; border-bottom: 1px solid #dfe2e6; background: #fff; }
+  .filters label { height: 60px; border-right: 1px solid #dfe2e6; padding: 8px 20px; font-size: 0.75rem; color: #5f6876; display: flex; flex-direction: column; justify-content: center; gap: 2px; }
+  .filters select, .filters input { display: block; width: 100%; border: 0; background: transparent; outline: 0; color: var(--color-ink); font: 600 0.95rem 'Inter Tight', sans-serif; padding: 0; }
+  .searchbox { display: flex !important; flex-direction: row !important; align-items: center; gap: 10px; padding-left: max(24px, calc((100vw - 1120px)/2)) !important; }
+  .searchbox span { font-size: 1.3rem; color: #a8945c; }
+  .filter-toggle { height: 60px; border: 0; background: #fff; color: var(--color-ink); padding: 0 22px; display: flex; justify-content: space-between; align-items: center; gap: 10px; font: 700 0.82rem 'Inter Tight', sans-serif; cursor: pointer; }
+  .filter-toggle span { color: #a8945c; font-size: 1rem; }
+  .advanced-filters { display: none; justify-content: flex-end; gap: 14px; padding: 14px max(24px, calc((100vw - 1120px)/2)); border-bottom: 1px solid #dfe2e6; background: #f7f7f5; }
+  .advanced-filters.open { display: flex; flex-wrap: wrap; }
+  .advanced-filters label { font-size: 0.75rem; color: #5f6876; }
+  .advanced-filters select { display: block; min-width: 180px; padding: 8px; border: 1px solid #d6d9df; font: inherit; }
+  .clear { border: 1px solid #d6d9df; background: #fff; padding: 0 18px; font: 700 0.85rem 'Inter Tight', sans-serif; cursor: pointer; }
+  @media (max-width: 760px) {
+    .filters { grid-template-columns: 1fr 1fr; }
+    .searchbox { grid-column: 1 / -1; padding-left: 20px !important; }
+    .filter-toggle { grid-column: 1 / -1; border-top: 1px solid #dfe2e6; }
+  }
+
+  .results-split { display: grid; grid-template-columns: 50% 50%; background: #f4f5f6; min-height: 700px; }
+  #map { height: 700px; position: sticky; top: 65px; border-right: 1px solid #d9dde3; }
+  .results-panel { padding: 18px; background: #f6f7f8; }
+  .listing-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+  @media (max-width: 1050px) { .results-split { grid-template-columns: 1fr; } #map { height: 400px; position: relative; top: 0; } .listing-grid { grid-template-columns: 1fr; } }
+
+  .property-card { border: 1px solid #d9dde3; background: #fff; display: flex; flex-direction: column; height: 100%; }
+  .media { position: relative; display: block; height: 200px; background: #e9edf3; overflow: hidden; text-decoration: none; }
+  .media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .badge { position: absolute; top: 12px; left: 12px; background: #fff; color: var(--color-primary); font-size: 0.63rem; font-weight: 800; letter-spacing: 0.1em; padding: 6px 8px; }
+  .badge:before { content: '●'; color: #54a86b; margin-right: 6px; }
+  .card-body { padding: 18px; flex: 1; display: flex; flex-direction: column; }
+  .price { font: 800 1.4rem 'Plus Jakarta Sans', sans-serif; color: var(--color-primary); }
+  .price small { font-size: 0.75rem; font-weight: 500; color: var(--color-muted); }
+  .facts { display: flex; gap: 16px; margin: 10px 0 14px; padding-bottom: 12px; border-bottom: 1px solid #edf0f5; font-size: 0.85rem; color: var(--color-muted); }
+  .facts span { font-weight: 700; color: var(--color-ink); }
+  .property-card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; margin: 0 0 4px; }
+  .address { color: var(--color-muted); font-size: 0.85rem; margin: 0 0 auto; }
+  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+  .actions a { padding: 10px 6px; text-align: center; text-decoration: none; text-transform: uppercase; font: 800 0.7rem 'Inter Tight', sans-serif; letter-spacing: 0.04em; border: 1px solid var(--color-primary); background: #fff; color: var(--color-primary); }
+  .actions a.apply { background: var(--color-primary); color: #fff; }
+  .empty { text-align: center; padding: 48px 20px; background: #f6f3ec; color: var(--color-muted); }
+</style>
