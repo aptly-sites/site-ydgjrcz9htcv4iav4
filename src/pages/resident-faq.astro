@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import { site } from '../config';
+
+const FAQS = [
+  { q: 'Can you hold a place before I apply?', a: 'A property is held only after an application is complete and approved and the security deposit has been paid. Delayed move-in holds are limited to 14 days, and prorated holding days may be deducted if the applicant does not move forward.' },
+  { q: "Do I pay first and last month's rent with the security deposit?", a: `No. ${site.companyName} does not collect the last month's rent, and security deposits are not used for rent payments.` },
+  { q: 'How old must an applicant be?', a: 'Applicants must be at least 18 years old to apply for a lease.' },
+  { q: 'Is the security deposit refundable?', a: 'Yes. Security deposits are refundable subject to the lease, property condition, outstanding charges, and applicable law.' },
+  { q: 'Who may need a cosigner?', a: 'An applicant who cannot qualify through the standard credit, financial, history, or rental-history review may need a guarantor who can qualify.' },
+  { q: 'How do I apply for a property?', a: 'Open the home in Rental Search and use its Apply Now link to continue through the secure application portal.' },
+  { q: 'How do I pay rent?', a: 'Residents can pay online by bank account or credit card, or use approved cash or check payment locations such as Walmart or H-E-B.' },
+  { q: 'What should I do before getting a pet?', a: 'Request approval in writing. Once approved, complete the required pet addendum, deposits or fees, and screening requirements before bringing the pet to the property.' },
+  { q: 'Who pays for repairs?', a: 'The responsible party depends on the cause. Resident-caused damage is charged to the resident; owner-responsible building or age-related repairs are charged to the owner.' },
+];
+---
+
+<BaseLayout title={`Resident Resources & FAQ | ${site.companyName}`} description={`Rental search, resident portal, maintenance resources, and frequently asked questions for ${site.companyName} residents.`}>
+  <Nav homepage={false} activeHref="/resident-faq" />
+
+  <main class="info-page info-main">
+    <section class="info-hero">
+      <div class="info-shell">
+        <p class="info-eyebrow">Resident resources</p>
+        <h1>A simpler rental experience, from search to move-out.</h1>
+        <p>Find a home, access your resident account, request maintenance, and get clear answers to common rental questions.</p>
+      </div>
+    </section>
+
+    <section class="info-section">
+      <div class="info-shell">
+        <h2>Connected resources for every stage.</h2>
+        <div class="info-grid">
+          <article class="info-card">
+            <h3>Prospective residents</h3>
+            <p>Browse current homes and review each property's details, photos, pricing, tour options, and application link.</p>
+            <div class="info-actions">
+              <a class="info-button gold" href="/rentals">View available homes</a>
+            </div>
+          </article>
+          <article class="info-card">
+            <h3>Current residents</h3>
+            <p>Use Resident Web Access to pay rent, review account information, or submit a maintenance request.</p>
+            <div class="info-actions">
+              <a class="info-button" href="https://jrgrace.twa.rentmanager.com" target="_blank" rel="noopener noreferrer">Resident portal</a>
+              <a class="info-button outline" href="https://jrgrace.twa.rentmanager.com" target="_blank" rel="noopener noreferrer">Maintenance request</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="info-section soft">
+      <div class="info-shell">
+        <p class="info-eyebrow">Frequently asked questions</p>
+        <h2>Quick answers for residents.</h2>
+        <div class="info-faq">
+          {FAQS.map(f => (
+            <details>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

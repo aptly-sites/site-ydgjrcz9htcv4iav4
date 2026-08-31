@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import { site } from '../config';
+---
+
+<BaseLayout title={`Agent Referral Partnership | ${site.companyName}`} description={`Refer a property management client to ${site.companyName} and protect your long-term client relationship with a dedicated management partner.`}>
+  <Nav homepage={false} activeHref="/agents" />
+
+  <main class="info-page info-main">
+    <section class="info-hero">
+      <div class="info-shell">
+        <p class="info-eyebrow">Agent referral partnership</p>
+        <h1>Your client stays your client.</h1>
+        <p>Refer an owner who needs property management and give them dedicated support while you stay focused on sales and the long-term relationship.</p>
+      </div>
+    </section>
+
+    <section class="info-section">
+      <div class="info-shell info-contact">
+        <div>
+          <p class="info-eyebrow">$254 management referral</p>
+          <h2>A property management resource for your clients.</h2>
+          <p class="info-intro">{site.companyName} pays a referring agent's brokerage a one-time $254 referral fee after the referred client enters a management agreement. When that owner is ready to sell, the relationship returns to the referring agent.</p>
+          <div class="info-actions">
+            <a class="info-button gold" href={`mailto:${site.email}?subject=Agent%20Referral`}>Refer a client</a>
+          </div>
+        </div>
+        <aside class="info-quote">
+          <h2>Property management is our focus.</h2>
+          <p>Your client receives market preparation, leasing, screening, rent collection, maintenance coordination, inspections, reporting, and documented support from a dedicated management team.</p>
+          <p><strong>{site.about.headline}</strong><br />Broker / Owner &middot; License #559124</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="info-section soft">
+      <div class="info-shell">
+        <h2>Why real estate professionals partner with us.</h2>
+        <div class="info-grid">
+          <article class="info-card">
+            <h3>We protect the relationship</h3>
+            <p>Your referred owner remains your sales client and is directed back to you when they are ready to buy or sell.</p>
+          </article>
+          <article class="info-card">
+            <h3>Investor-minded management</h3>
+            <p>Hands-on real estate investing experience informs practical decisions about pricing, maintenance, and asset performance.</p>
+          </article>
+          <article class="info-card">
+            <h3>Reliable communication</h3>
+            <p>Modern systems support consistent communication with owners, residents, vendors, and referral partners.</p>
+          </article>
+          <article class="info-card">
+            <h3>Full-service support</h3>
+            <p>From listing preparation through move-out, one connected team manages the operational details.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
