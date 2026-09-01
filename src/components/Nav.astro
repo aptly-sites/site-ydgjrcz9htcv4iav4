@@ -10,7 +10,12 @@ interface Props {
 }
 
 const { homepage = true, activeHref = '' } = Astro.props;
-const linkHref = (href: string) => (!homepage && href.startsWith('#') ? `/${href}` : href);
+// Matches the real site: Contact scrolls to the homepage's own footer when already there, but
+// is a real page from anywhere else (About is always the real page, on every page).
+const linkHref = (href: string) => {
+  if (href === '#contact') return homepage ? href : '/contact';
+  return !homepage && href.startsWith('#') ? `/${href}` : href;
+};
 
 const NAV_LINKS = [
   { label: 'Property Management', href: '#services' },
@@ -19,7 +24,7 @@ const NAV_LINKS = [
   { label: 'Resident FAQ', href: '/resident-faq' },
   { label: 'Vendors', href: '/vendors' },
   { label: 'Agents', href: '/agents' },
-  { label: 'About', href: '#about' },
+  { label: 'About', href: '/about' },
   { label: 'Contact', href: '#contact' },
 ];
 ---

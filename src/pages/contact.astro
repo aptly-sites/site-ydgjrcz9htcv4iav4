@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import { site } from '../config';
+
+const city = site.address.split(',')[1]?.trim() || 'Central Texas';
+---
+
+<BaseLayout
+  title={`Contact ${site.companyName} | ${city}, TX`}
+  description={`Contact ${site.companyName} for property management, resident support, leasing, vendor partnerships, and agent referrals in ${city}.`}
+>
+  <Nav homepage={false} activeHref="/contact" />
+
+  <main class="info-page info-main">
+    <section class="info-hero">
+      <div class="info-shell">
+        <p class="info-eyebrow">Contact {site.companyName}</p>
+        <h1>How can our team help?</h1>
+        <p>Connect with the right resource for property management, leasing, resident support, vendor partnerships, or agent referrals.</p>
+      </div>
+    </section>
+
+    <section class="info-section">
+      <div class="info-shell info-contact">
+        <div>
+          <p class="info-eyebrow">Start here</p>
+          <h2>Choose the path that fits your needs.</h2>
+          <div class="info-grid">
+            <article class="info-card">
+              <h3>Property owners</h3>
+              <p>Request a property-specific rental analysis and management consultation.</p>
+              <div class="info-actions">
+                <a class="info-button gold" href="/#analysis">Free rental analysis</a>
+              </div>
+            </article>
+            <article class="info-card">
+              <h3>Residents</h3>
+              <p>Access resident tools, maintenance resources, and common rental answers.</p>
+              <div class="info-actions">
+                <a class="info-button" href="/resident-faq">Resident resources</a>
+              </div>
+            </article>
+            <article class="info-card">
+              <h3>Homes for rent</h3>
+              <p>Browse available properties, photos, pricing, tours, and applications.</p>
+              <div class="info-actions">
+                <a class="info-button" href="/rentals">Rental search</a>
+              </div>
+            </article>
+            <article class="info-card">
+              <h3>Partners</h3>
+              <p>Learn about vendor relationships and real estate agent referrals.</p>
+              <div class="info-actions">
+                <a class="info-button outline" href="/vendors">Vendors</a>
+                <a class="info-button outline" href="/agents">Agents</a>
+              </div>
+            </article>
+          </div>
+        </div>
+        <aside class="info-contact-card">
+          <p class="info-eyebrow">{site.companyName}</p>
+          <h2>{city} and Central Texas</h2>
+          <a href={`tel:${site.phone.replace(/[^\d]/g, '')}`}>{site.phone}</a>
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+          <p>{site.address}</p>
+          <small>For emergencies involving immediate danger, call 911. Current residents should use Resident Web Access for routine maintenance requests.</small>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
