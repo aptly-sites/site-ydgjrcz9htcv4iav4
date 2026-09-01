@@ -30,6 +30,23 @@ const areaNames = site.areas.length
   : 'CENTRAL TEXAS';
 
 const buildingTypes = [...new Set(listings.map(p => p.buildingType).filter(Boolean))] as string[];
+
+// A handful of listings can carry bad/far-outlier geocoding (or a genuinely distant property),
+// and Leaflet's fitBounds() will zoom the whole map out to include them, making it useless for
+// browsing the actual service area. Compute a bounding box around the known service-area centers
+// (with a buffer) so the map's auto-zoom prefers listings inside it and only falls back to
+// including outliers if nothing is actually in-region.
+const REGION_BUFFER_DEG = 0.35;
+const areaLats = site.areas.map(a => a.lat);
+const areaLons = site.areas.map(a => a.lon);
+const regionBounds = areaLats.length
+  ? {
+      minLat: Math.min(...areaLats) - REGION_BUFFER_DEG,
+      maxLat: Math.max(...areaLats) + REGION_BUFFER_DEG,
+      minLon: Math.min(...areaLons) - REGION_BUFFER_DEG,
+      maxLon: Math.max(...areaLons) + REGION_BUFFER_DEG,
+    }
+  : null;
 ---
 
 <BaseLayout
@@ -115,7 +132,7 @@ const buildingTypes = [...new Set(listings.map(p => p.buildingType).filter(Boole
     </div>
 
     <div class="results-split">
-      <div id="map" aria-label="Map of available homes"></div>
+      <div id="map" aria-label="Map of available homes" data-region={regionBounds ? JSON.stringify(regionBounds) : ''}></div>
       <div class="results-panel">
         {listings.length ? (
           <div id="listingGrid" class="listing-grid">
@@ -131,14 +148,31 @@ const buildingTypes = [...new Set(listings.map(p => p.buildingType).filter(Boole
                 data-href={`/rentals/${p._id}/`}
               >
                 <article class="property-card">
-                  <a href={`/rentals/${p._id}/`} class="media">
-                    {photos(p)[0] ? (
-                      <img src={photos(p)[0]} alt={street(p)} loading="lazy" />
-                    ) : (
-                      <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--color-bg);font-size:32px;">🏠</div>
-                    )}
+                  <div class="media" data-photos={JSON.stringify(photos(p))}>
+                    <a href={`/rentals/${p._id}/`} class="media-link">
+                      {photos(p)[0] ? (
+                        <img class="media-img" src={photos(p)[0]} alt={street(p)} loading="lazy" />
+                      ) : (
+                        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--color-bg);font-size:32px;">🏠</div>
+                      )}
+                    </a>
                     <span class="badge">AVAILABLE</span>
-                  </a>
+                    {photos(p).length > 1 && (
+                      <>
+                        <button class="media-nav prev" type="button" aria-label="Previous photo">‹</button>
+                        <button class="media-nav next" type="button" aria-label="Next photo">›</button>
+                        <span class="photo-count">1/{photos(p).length}</span>
+                      </>
+                    )}
+                    <div class="media-actions">
+                      <button class="media-action share-btn" type="button" data-href={`/rentals/${p._id}/`} data-title={street(p)}>
+                        <span class="icon">↗</span><span>Share</span>
+                      </button>
+                      <button class="media-action compare-btn" type="button" data-id={p._id}>
+                        <span class="icon">+</span><span>Compare</span>
+                      </button>
+                    </div>
+                  </div>
                   <div class="card-body">
                     <div class="price">{money(p.marketRent?.amount)}<small>/mo</small></div>
                     <div class="facts">
@@ -169,6 +203,27 @@ const buildingTypes = [...new Set(listings.map(p => p.buildingType).filter(Boole
     </div>
   </section>
 
+  <div id="compareTray" class="compare-tray" hidden>
+    <div><b><span id="compareCount">0</span> HOME{listings.length === 1 ? '' : 'S'} SELECTED</b><span id="compareNames"></span></div>
+    <button id="clearCompare" type="button">CLEAR</button>
+    <button id="viewCompare" type="button">COMPARE HOMES</button>
+  </div>
+  <dialog id="compareDialog">
+    <button class="close compare-close" type="button" aria-label="Close">×</button>
+    <div id="compareContent"></div>
+  </dialog>
+  <script type="application/json" id="listings-data" set:html={JSON.stringify(listings.map(p => ({
+    id: p._id,
+    street: street(p),
+    location: cityStateZip(p),
+    price: money(p.marketRent?.amount),
+    beds: p.beds ?? '—',
+    baths: p.baths ?? '—',
+    sqft: p.totalArea ? Number(p.totalArea).toLocaleString() : '—',
+    photo: photos(p)[0] || '',
+    href: `/rentals/${p._id}/`,
+  })))} />
+
   <Footer />
 </BaseLayout>
 
@@ -192,6 +247,9 @@ const buildingTypes = [...new Set(listings.map(p => p.buildingType).filter(Boole
 
   let map: any;
   let markers: any[] = [];
+  const region = mapEl?.dataset.region ? JSON.parse(mapEl.dataset.region) : null;
+  const inRegion = (lat: number, lon: number) =>
+    !region || (lat >= region.minLat && lat <= region.maxLat && lon >= region.minLon && lon <= region.maxLon);
 
   if (mapEl && typeof L !== 'undefined' && items.length) {
     map = L.map(mapEl, { scrollWheelZoom: false });
@@ -225,6 +283,7 @@ const buildingTypes = [...new Set(listings.map(p => p.buildingType).filter(Boole
     markers.forEach(m => map?.removeLayer(m));
     markers = [];
     const bounds: any[] = [];
+    const regionBoundsForFit: any[] = [];
 
     items.forEach(item => {
       const show = matches(item);
@@ -239,6 +298,7 @@ const buildingTypes = [...new Set(listings.map(p => p.buildingType).filter(Boole
           marker.on('click', () => { window.location.href = item.dataset.href!; });
           markers.push(marker);
           bounds.push([lat, lon]);
+          if (inRegion(lat, lon)) regionBoundsForFit.push([lat, lon]);
         }
       }
     });
@@ -248,8 +308,13 @@ const buildingTypes = [...new Set(listings.map(p => p.buildingType).filter(Boole
     if (noMatches) (noMatches as HTMLElement).style.display = visibleCount === 0 && totalCount > 0 ? 'block' : 'none';
 
     if (map) {
-      if (bounds.length) {
-        map.fitBounds(bounds, { padding: [40, 40], maxZoom: 15 });
+      // Prefer fitting to listings inside the known service area — a handful of far-outlier
+      // coordinates (bad geocoding, or a genuinely distant property) shouldn't zoom the whole
+      // map out to the point it's useless for browsing the actual area. Only fall back to every
+      // marker if none are actually in-region.
+      const fitTo = regionBoundsForFit.length ? regionBoundsForFit : bounds;
+      if (fitTo.length) {
+        map.fitBounds(fitTo, { padding: [40, 40], maxZoom: 15 });
       } else {
         map.setView([31.5493, -97.1467], 11);
       }
@@ -268,6 +333,131 @@ const buildingTypes = [...new Set(listings.map(p => p.buildingType).filter(Boole
   });
 
   render();
+
+  // Photo carousel: cycle each card's own photo set without navigating the card's link.
+  document.querySelectorAll('.media').forEach(media => {
+    const photoList: string[] = JSON.parse((media as HTMLElement).dataset.photos || '[]');
+    if (photoList.length < 2) return;
+    let index = 0;
+    const img = media.querySelector('.media-img') as HTMLImageElement;
+    const counter = media.querySelector('.photo-count');
+    const show = (i: number) => {
+      index = (i + photoList.length) % photoList.length;
+      if (img) img.src = photoList[index];
+      if (counter) counter.textContent = `${index + 1}/${photoList.length}`;
+    };
+    media.querySelector('.media-nav.prev')?.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      show(index - 1);
+    });
+    media.querySelector('.media-nav.next')?.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      show(index + 1);
+    });
+  });
+
+  // Share: native share sheet where available, otherwise copy the listing link.
+  document.querySelectorAll('.share-btn').forEach(btn => {
+    btn.addEventListener('click', async e => {
+      e.preventDefault();
+      e.stopPropagation();
+      const el = btn as HTMLElement;
+      const url = new URL(el.dataset.href!, window.location.origin).toString();
+      const title = el.dataset.title || document.title;
+      if (navigator.share) {
+        navigator.share({ title, url }).catch(() => {});
+      } else {
+        try {
+          await navigator.clipboard.writeText(url);
+          const label = el.querySelector('span:last-child');
+          if (label) {
+            const original = label.textContent;
+            label.textContent = 'Copied!';
+            setTimeout(() => { label.textContent = original; }, 1500);
+          }
+        } catch {}
+      }
+    });
+  });
+
+  // Compare: select up to a handful of homes, then view them side by side.
+  const listingsData = JSON.parse(document.getElementById('listings-data')?.textContent || '[]');
+  const compareTray = document.getElementById('compareTray');
+  const compareCountEl = document.getElementById('compareCount');
+  const compareNamesEl = document.getElementById('compareNames');
+  const compareDialog = document.getElementById('compareDialog') as HTMLDialogElement;
+  const compareContent = document.getElementById('compareContent');
+  const MAX_COMPARE = 4;
+  let compareIds: string[] = [];
+
+  function updateCompareTray() {
+    document.querySelectorAll('.compare-btn').forEach(btn => {
+      const id = (btn as HTMLElement).dataset.id!;
+      btn.classList.toggle('active', compareIds.includes(id));
+    });
+    if (!compareTray) return;
+    if (compareCountEl) compareCountEl.textContent = String(compareIds.length);
+    if (compareNamesEl) {
+      compareNamesEl.textContent = compareIds
+        .map(id => listingsData.find((l: any) => l.id === id)?.street)
+        .filter(Boolean)
+        .join(', ');
+    }
+    (compareTray as HTMLElement).hidden = compareIds.length === 0;
+  }
+
+  document.querySelectorAll('.compare-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      const id = (btn as HTMLElement).dataset.id!;
+      if (compareIds.includes(id)) {
+        compareIds = compareIds.filter(x => x !== id);
+      } else if (compareIds.length < MAX_COMPARE) {
+        compareIds.push(id);
+      }
+      updateCompareTray();
+    });
+  });
+
+  document.getElementById('clearCompare')?.addEventListener('click', () => {
+    compareIds = [];
+    updateCompareTray();
+  });
+
+  document.getElementById('viewCompare')?.addEventListener('click', () => {
+    const rows: [string, (l: any) => string][] = [
+      ['', l => `<img src="${l.photo}" alt="${l.street}" />`],
+      ['Price', l => `${l.price}/mo`],
+      ['Beds', l => l.beds],
+      ['Baths', l => l.baths],
+      ['Sqft', l => l.sqft],
+      ['Address', l => l.location],
+      ['', l => `<a class="btn-primary" href="${l.href}">View Details</a>`],
+    ];
+    const selected = compareIds.map(id => listingsData.find((l: any) => l.id === id)).filter(Boolean);
+    if (compareContent) {
+      compareContent.innerHTML = `
+        <h2>Compare Homes</h2>
+        <div class="compare-grid" style="grid-template-columns:120px repeat(${selected.length},1fr);">
+          ${rows.map(([label, render]) => `
+            <div class="compare-row-label">${label}</div>
+            ${selected.map((l: any) => `<div class="compare-cell">${render(l)}</div>`).join('')}
+          `).join('')}
+        </div>
+      `;
+    }
+    compareDialog?.showModal();
+  });
+
+  document.querySelectorAll('.compare-close').forEach(btn =>
+    btn.addEventListener('click', () => compareDialog?.close())
+  );
+  compareDialog?.addEventListener('click', e => {
+    if (e.target === compareDialog) compareDialog.close();
+  });
 </script>
 
 <style>
@@ -327,10 +517,28 @@ const buildingTypes = [...new Set(listings.map(p => p.buildingType).filter(Boole
   @media (max-width: 1050px) { .results-split { grid-template-columns: 1fr; } #map { height: 400px; position: relative; top: 0; } .listing-grid { grid-template-columns: 1fr; } }
 
   .property-card { border: 1px solid #d9dde3; background: #fff; display: flex; flex-direction: column; height: 100%; }
-  .media { position: relative; display: block; height: 200px; background: #e9edf3; overflow: hidden; text-decoration: none; }
-  .media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .badge { position: absolute; top: 12px; left: 12px; background: #fff; color: var(--color-primary); font-size: 0.63rem; font-weight: 800; letter-spacing: 0.1em; padding: 6px 8px; }
+  .media { position: relative; height: 200px; background: #e9edf3; overflow: hidden; }
+  .media-link { display: block; width: 100%; height: 100%; text-decoration: none; }
+  .media-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .badge { position: absolute; top: 12px; left: 12px; background: #fff; color: var(--color-primary); font-size: 0.63rem; font-weight: 800; letter-spacing: 0.1em; padding: 6px 8px; pointer-events: none; }
   .badge:before { content: '●'; color: #54a86b; margin-right: 6px; }
+  .media-nav {
+    position: absolute; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; border-radius: 50%;
+    border: none; background: rgba(16,33,61,0.6); color: #fff; font-size: 1.1rem; line-height: 1; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .media-nav.prev { left: 10px; }
+  .media-nav.next { right: 10px; }
+  .photo-count { position: absolute; right: 12px; bottom: 12px; background: rgba(16,33,61,0.75); color: #fff; padding: 5px 9px; font-size: 0.75rem; border-radius: 3px; }
+  .media-actions { position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; opacity: 0; transition: opacity 0.15s; }
+  .media:hover .media-actions { opacity: 1; }
+  .media-action {
+    display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 8px 10px; border: none;
+    background: rgba(16,33,61,0.85); color: #fff; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.04em;
+    text-transform: uppercase; cursor: pointer; border-radius: 4px;
+  }
+  .media-action .icon { font-size: 0.95rem; line-height: 1; }
+  .media-action.compare-btn.active { background: var(--color-primary); }
   .card-body { padding: 18px; flex: 1; display: flex; flex-direction: column; }
   .price { font: 800 1.4rem 'Plus Jakarta Sans', sans-serif; color: var(--color-primary); }
   .price small { font-size: 0.75rem; font-weight: 500; color: var(--color-muted); }
@@ -342,4 +550,28 @@ const buildingTypes = [...new Set(listings.map(p => p.buildingType).filter(Boole
   .actions a { padding: 10px 6px; text-align: center; text-decoration: none; text-transform: uppercase; font: 800 0.7rem 'Inter Tight', sans-serif; letter-spacing: 0.04em; border: 1px solid var(--color-primary); background: #fff; color: var(--color-primary); }
   .actions a.apply { background: var(--color-primary); color: #fff; }
   .empty { text-align: center; padding: 48px 20px; background: #f6f3ec; color: var(--color-muted); }
+
+  .compare-tray {
+    position: fixed; z-index: 90; left: 50%; bottom: 18px; transform: translateX(-50%);
+    width: min(760px, calc(100% - 30px)); background: var(--color-primary); color: #fff;
+    padding: 15px 18px; display: flex; align-items: center; gap: 15px; box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+  }
+  .compare-tray[hidden] { display: none; }
+  .compare-tray > div { flex: 1; overflow: hidden; }
+  .compare-tray b, .compare-tray span { display: block; }
+  .compare-tray > div > span { font-size: 0.72rem; color: #bec8d3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .compare-tray button { border: 1px solid #c7b276; background: transparent; color: #fff; padding: 10px 13px; font: 800 0.7rem 'Inter Tight', sans-serif; cursor: pointer; }
+  .compare-tray #viewCompare { background: #c7b276; color: #112237; }
+  @media (max-width: 480px) { .compare-tray { flex-wrap: wrap; } .compare-tray > div { flex-basis: 100%; } .compare-tray > div > span { display: none; } }
+
+  #compareDialog { position: relative; width: min(1000px, calc(100% - 30px)); max-height: 88vh; padding: 36px; border: none; overflow-y: auto; }
+  #compareDialog::backdrop { background: rgba(18,35,55,0.78); }
+  #compareContent h2 { font: 400 2.4rem Georgia, serif; color: var(--color-primary); margin: 0 0 22px; }
+  .compare-grid { display: grid; gap: 1px; background: #dadddf; border: 1px solid #dadddf; }
+  .compare-row-label { padding: 12px; font-size: 0.72rem; font-weight: 700; color: var(--color-muted); background: #f6f7f8; display: flex; align-items: center; }
+  .compare-cell { padding: 12px; background: #fff; font-size: 0.88rem; color: var(--color-ink); }
+  .compare-cell img { width: 100%; height: 110px; object-fit: cover; display: block; }
+  .close.compare-close { position: absolute; right: 20px; top: 18px; width: 38px; height: 38px; border: 1px solid #dadddf; background: #fff; color: var(--color-primary); font-size: 1.3rem; cursor: pointer; border-radius: 50%; }
+  .close.compare-close:hover { background: var(--color-primary); color: #fff; }
+  @media (max-width: 700px) { .compare-grid { overflow-x: auto; } }
 </style>
