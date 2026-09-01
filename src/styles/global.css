@@ -12,6 +12,11 @@ body {
 
 h1, h2, h3 {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Tailwind's preflight (imported above) resets heading font-weight/line-height to the body's
+     defaults, wiping out the browser's normal bold-heading behavior that jrgrace's real site
+     relies on implicitly (it has no such reset). Restore it explicitly instead. */
+  font-weight: 700;
+  line-height: 1.08;
 }
 
 /* Smooth scroll */
