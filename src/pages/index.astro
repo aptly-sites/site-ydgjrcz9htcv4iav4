@@ -5,6 +5,10 @@ import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 import { site } from '../config';
 
+const addressParts = site.address.split(',').map(p => p.trim());
+const addressCity = addressParts[1] || '';
+const addressState = addressParts[2] || '';
+
 const FAQS = [
   { q: 'How much does property management cost in Waco, TX?', a: 'Property management pricing depends on the property and services selected. J R Grace Realty provides a clear management proposal after reviewing the home; the optional Owner Benefit Package is $45 per month per unit.' },
   { q: 'What services does J R Grace Realty provide?', a: 'J R Grace Realty provides marketing and advertising, tenant screening, lease preparation and enforcement, rent collection, in-house maintenance, inspections, eviction coordination, and financial reporting for Waco-area rental owners.' },
@@ -50,7 +54,7 @@ const faqJsonLd = {
   <!-- ENTITY ANSWER -->
   <section class="entity-answer">
     <div class="container">
-      <h2>{site.seo.title.split('|')[0].trim()}</h2>
+      <h2>{addressCity}, {addressState} Property Management by {site.companyName}</h2>
       <p>
         {site.description} Our office is located at {site.address}. Call <a href={`tel:${site.phone.replace(/[^\d]/g, '')}`}>{site.phone}</a> for a free rental analysis.
       </p>
@@ -185,28 +189,131 @@ const faqJsonLd = {
   <section class="happy center"><h2>We Love When Our Clients Are Happy</h2></section>
 
   <!-- ANALYSIS / CONTACT FORM -->
-  <section id="analysis" class="analysis">
+  <section id="analysis" class="rent-estimate">
     <div class="container">
-      <h2 class="center">Get Your FREE Property Management Rental Analysis</h2>
-      <div class="analysis-grid">
+      <div class="analysis-heading">
+        <p class="analysis-kicker">Free local rental analysis</p>
+        <h2>Get Your FREE Property Management Rental Analysis</h2>
+        <p>Tell us about your property and receive a personalized rent recommendation from the {site.companyName} team.</p>
+      </div>
+      <div class="estimate-shell">
         <form id="contact-form">
-          <p>Tell us about you and your property:</p>
-          <input name="name" placeholder="Full Name" required />
-          <input name="email" type="email" placeholder="Email Address" required />
-          <input name="phone" type="tel" placeholder="Phone" />
-          <input name="address" placeholder="Property Address" />
-          <textarea name="message" placeholder="What help do you need with your property?" rows="3"></textarea>
-          <button type="submit"><span>Get A Free Rental Analysis</span></button>
-          <div id="form-success" style="display:none;color:#fff;font-weight:700;text-align:center;margin-top:12px;">
-            ✓ Message sent! We'll be in touch within 24 hours.
+          <div class="form-section">
+            <div class="form-section-heading">
+              <span>01</span>
+              <div><h3>Tell us about the property</h3><p>Start with the details that shape its rental value.</p></div>
+            </div>
+            <div class="field-grid">
+              <label class="field field-wide">
+                <span>Property address</span>
+                <input required autocomplete="street-address" name="address" placeholder="Paste the full address, including city, state, and ZIP" maxlength="280" />
+                <small class="address-validation">Enter a complete street address.</small>
+              </label>
+              <label class="field">
+                <span>Property type</span>
+                <select required name="propertyType">
+                  <option value="" selected disabled>Select property type</option>
+                  <option>Single-family home</option>
+                  <option>Townhome</option>
+                  <option>Condo</option>
+                  <option>Duplex</option>
+                  <option>Multifamily property</option>
+                  <option>Other</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>Bedrooms</span>
+                <select required name="bedrooms">
+                  <option value="" selected disabled>Select bedrooms</option>
+                  <option>Studio</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5+</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>Bathrooms</span>
+                <select required name="bathrooms">
+                  <option value="" selected disabled>Select bathrooms</option>
+                  <option>1</option>
+                  <option>1.5</option>
+                  <option>2</option>
+                  <option>2.5</option>
+                  <option>3</option>
+                  <option>3.5</option>
+                  <option>4+</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="form-section-heading">
+              <span>02</span>
+              <div><h3>What would you like to accomplish?</h3><p>We'll tailor the analysis to your goals.</p></div>
+            </div>
+            <label class="field">
+              <span>Primary goal</span>
+              <select required name="goal">
+                <option value="" selected disabled>Select your primary goal</option>
+                <option>Determine how much my property could rent for</option>
+                <option>Hire a professional property manager</option>
+                <option>Reduce vacancy and improve performance</option>
+                <option>Prepare a property for the rental market</option>
+                <option>Compare renting the property versus selling</option>
+                <option>Plan for a future investment property</option>
+              </select>
+            </label>
+            <label class="field" style="margin-top:19px;">
+              <span>Anything else we should know? <em>Optional</em></span>
+              <textarea name="message" placeholder="Share recent upgrades, timing, current occupancy, or questions for our team." maxlength="2000"></textarea>
+            </label>
+          </div>
+
+          <div class="form-section contact-section">
+            <div class="form-section-heading">
+              <span>03</span>
+              <div><h3>Where should we send your analysis?</h3><p>Your information stays with {site.companyName}.</p></div>
+            </div>
+            <div class="field-grid">
+              <label class="field">
+                <span>Full name</span>
+                <input required autocomplete="name" name="name" placeholder="Your full name" maxlength="100" />
+              </label>
+              <label class="field">
+                <span>Email address</span>
+                <input required autocomplete="email" type="email" name="email" placeholder="you@example.com" maxlength="160" />
+              </label>
+              <label class="field">
+                <span>Phone number</span>
+                <input required autocomplete="tel" type="tel" name="phone" placeholder={site.phone} maxlength="30" />
+              </label>
+            </div>
+            <label class="privacy">
+              <input type="checkbox" name="smsConsent" value="yes" required />
+              <span>By providing your phone number, you agree to receive recurring SMS messages from {site.companyName}. Message and data rates may apply. Reply STOP to opt out.</span>
+            </label>
+            <button type="submit"><span>Request My Free Rental Analysis</span><b aria-hidden="true">→</b></button>
+            <p id="form-success" class="form-note" style="display:none;">✓ Sent! We'll be in touch within 24 hours.</p>
           </div>
         </form>
-        <div class="benefits">
-          <div><b>⌂</b><h3>Valuation</h3><p>Learn what your property should rent out for</p></div>
-          <div><b>↗</b><h3>Optimization</h3><p>More details how we can maximize your profitability</p></div>
-          <div><b>✓</b><h3>Compatibility</h3><p>See if your property is a good fit for our services</p></div>
-          <small>The free rental property analysis is provided as an informational service. Actual results may vary based on market conditions, property specifics, and other variables. This service is non-binding and does not create any contractual relationship.</small>
-        </div>
+
+        <aside class="estimate-aside">
+          <p class="analysis-kicker">What you'll receive</p>
+          <h3>A local, property-specific rental review.</h3>
+          <ol>
+            <li><span>01</span><div><strong>Rental value range</strong><p>A recommended range based on the home, location, and current competition.</p></div></li>
+            <li><span>02</span><div><strong>Market positioning</strong><p>Practical ways to improve presentation, leasing velocity, and long-term performance.</p></div></li>
+            <li><span>03</span><div><strong>Management fit</strong><p>A straightforward assessment of how {site.companyName} can support your goals.</p></div></li>
+          </ol>
+          <div class="service-area-note">
+            <strong>Serving {site.areas.length ? site.areas[0].name : 'the area'}</strong>
+            <p>{site.areas.map(a => a.name).join(' · ') || 'Contact us to confirm your service area.'}</p>
+          </div>
+          <small>Estimates are informational and may vary with market conditions, property condition, upgrades, seasonality, and other factors. This service is non-binding.</small>
+        </aside>
       </div>
     </div>
   </section>
@@ -232,6 +339,16 @@ const faqJsonLd = {
           <p>We take care of the day-to-day details so you can enjoy steady cash flow and peace of mind.</p>
         </article>
       </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON LINK -->
+  <section class="comparison-link">
+    <div class="container">
+      <p class="eyebrow">Owner resource</p>
+      <h2>Self-managing or hiring a {site.address.split(',')[1]?.trim() || 'local'} property manager?</h2>
+      <p>Compare the direct fees with the hidden costs of vacancy, screening mistakes, maintenance coordination, and compliance.</p>
+      <a class="btn-accent" href="/self-managing-vs-hiring">See the cost breakdown</a>
     </div>
   </section>
 
@@ -294,11 +411,15 @@ const faqJsonLd = {
   .associations { display: flex; justify-content: center; align-items: center; gap: 25px; margin-top: 18px; }
   .associations img { max-width: 150px; max-height: 68px; object-fit: contain; }
 
-  .entity-answer { padding: 56px 24px 76px; }
-  .entity-answer h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--color-primary); }
-  .entity-answer p { max-width: 900px; color: var(--color-muted); line-height: 1.7; }
+  .entity-answer { padding: 58px 24px 155px; background: #f7f8fa; border-bottom: 1px solid #e1e5ec; }
+  .entity-answer .container { max-width: 940px; }
+  .entity-answer h2 { font-size: clamp(2rem, 4vw, 3.25rem); color: var(--color-primary); margin-bottom: 18px; }
+  .entity-answer p { font-size: 1.08rem; color: var(--color-muted); line-height: 1.75; }
+  .entity-answer a { color: var(--color-primary); font-weight: 800; }
+  @media (max-width: 800px) { .entity-answer { padding-bottom: 125px; } }
+  @media (max-width: 520px) { .entity-answer { padding: 42px 24px 115px; } }
 
-  .choice { display: flex; justify-content: center; gap: 24px; position: relative; margin-top: -60px; z-index: 2; padding: 0 24px; flex-wrap: wrap; }
+  .choice { display: flex; justify-content: center; gap: 24px; position: relative; margin-top: -115px; z-index: 2; padding: 0 24px; flex-wrap: wrap; }
   .floating-card { width: 320px; background: #fff; padding: 34px 30px 28px; border-radius: 8px; box-shadow: 0 15px 35px rgba(0,0,0,0.12); text-align: center; }
   .floating-card h3 { color: var(--color-primary); }
   .floating-card p { font-size: 0.9rem; color: var(--color-muted); }
@@ -344,8 +465,9 @@ const faqJsonLd = {
 
   .manage { padding: 80px 24px; }
   .manage h2 { color: var(--color-ink); }
-  .service-answer-grid { margin-top: 50px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-  .service-answer-grid h3 { font-size: 1.15rem; color: var(--color-primary); margin-bottom: 10px; }
+  .service-answer-grid { margin-top: 42px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .service-answer-grid article { padding: 30px; background: #f5f7fb; border-top: 4px solid var(--color-primary); }
+  .service-answer-grid h3 { font-size: 1.2rem; color: var(--color-primary); margin-bottom: 10px; }
   .service-answer-grid p { color: var(--color-muted); font-size: 0.95rem; line-height: 1.6; }
   @media (max-width: 900px) { .service-answer-grid { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 600px) { .service-answer-grid { grid-template-columns: 1fr; } }
@@ -365,20 +487,68 @@ const faqJsonLd = {
   .happy { padding: 65px 20px; }
   .happy h2 { color: var(--color-ink); }
 
-  .analysis { background: var(--color-primary); color: #fff; padding: 65px 24px; }
-  .analysis h2 { color: #fff; }
-  .analysis-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 50px; align-items: center; max-width: 1080px; margin: 0 auto; }
-  .analysis form { background: #fff; color: #333; padding: 34px; border-radius: 8px; }
-  .analysis form p { margin: 0 0 12px; font-weight: 600; }
-  .analysis form input, .analysis form textarea { display: block; width: 100%; border: 0; border-bottom: 1px solid #aaa; padding: 12px 5px; margin: 7px 0; font: inherit; background: transparent; }
-  .analysis form input:focus, .analysis form textarea:focus { outline: none; border-bottom-color: var(--color-primary); }
-  .analysis form button { width: 100%; background: var(--color-primary); color: #fff; border: 0; border-radius: 6px; padding: 13px; font: inherit; font-weight: 700; cursor: pointer; margin-top: 8px; }
-  .benefits > div { display: grid; grid-template-columns: 45px 1fr; column-gap: 10px; margin: 22px 0; }
-  .benefits b { grid-row: 1 / 3; font-size: 2rem; }
-  .benefits h3 { color: #fff; margin: 0; }
-  .benefits p { margin: 0; opacity: 0.9; }
-  .benefits small { display: block; margin-top: 24px; opacity: 0.7; }
-  @media (max-width: 900px) { .analysis-grid { grid-template-columns: 1fr; } }
+  .rent-estimate { padding: 88px 24px 96px; background: var(--color-bg); color: var(--color-ink); }
+  .analysis-heading { max-width: 850px; margin: 0 auto 42px; text-align: center; }
+  .analysis-heading h2 { margin: 4px 0 16px; color: var(--color-primary); font-size: clamp(2rem, 5vw, 3.6rem); letter-spacing: -0.03em; }
+  .analysis-heading > p:last-child { max-width: 680px; margin: 0 auto; color: var(--color-muted); font-size: 1.05rem; }
+  .analysis-kicker { margin: 0; text-transform: uppercase; letter-spacing: 0.17em; font-size: 0.74rem; font-weight: 800; color: #a78539; }
+  .estimate-shell { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.65fr); overflow: hidden; background: #fff; border: 1px solid #dce1e8; box-shadow: 0 24px 60px rgba(19,43,74,0.12); max-width: 1120px; margin: 0 auto; }
+  .rent-estimate form { padding: 0; background: #fff; }
+  .form-section { padding: 32px 36px; border-bottom: 1px solid #dce1e8; }
+  .form-section:last-child { border-bottom: 0; }
+  .form-section-heading { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 22px; }
+  .form-section-heading > span { display: grid; place-items: center; flex: 0 0 40px; height: 40px; border: 1px solid #c4a963; color: var(--color-primary); font-weight: 800; }
+  .form-section-heading h3 { margin: 0 0 4px; color: var(--color-primary); font-size: 1.2rem; }
+  .form-section-heading p { margin: 0; color: var(--color-muted); font-size: 0.88rem; }
+  .field-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px 18px; }
+  .field { display: block; color: var(--color-ink); font-size: 0.84rem; font-weight: 650; }
+  .field-wide { grid-column: 1 / -1; }
+  .field > span { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 7px; }
+  .field em { font-weight: 500; font-style: normal; color: var(--color-muted); }
+  .rent-estimate form .field input, .rent-estimate form .field select, .rent-estimate form .field textarea {
+    display: block; width: 100%; min-height: 46px; margin: 0; padding: 11px 13px; border: 1px solid #cbd2dc;
+    border-radius: 0; background: #fff; color: var(--color-ink); font: 500 0.94rem 'Inter Tight', Arial, sans-serif; outline: none;
+  }
+  .rent-estimate form .field input:focus, .rent-estimate form .field select:focus, .rent-estimate form .field textarea:focus {
+    border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(24,58,112,0.1);
+  }
+  .rent-estimate form .field textarea { min-height: 88px; resize: vertical; }
+  .address-validation { display: block; margin-top: 8px; color: var(--color-muted); font-size: 0.78rem; }
+  .contact-section { background: #faf9f6; }
+  .rent-estimate .privacy { display: flex; gap: 10px; align-items: flex-start; margin: 18px 0; color: var(--color-muted); font-size: 0.76rem; line-height: 1.5; }
+  .rent-estimate .privacy input { flex: 0 0 auto; margin-top: 3px; }
+  .rent-estimate form button {
+    display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 2px;
+    padding: 15px 18px; border: none; border-radius: 0; background: var(--color-primary); color: #fff;
+    font: inherit; font-weight: 800; font-size: 0.95rem; cursor: pointer;
+  }
+  .rent-estimate form button b { font-size: 1.2rem; }
+  .rent-estimate .form-note { color: var(--color-primary); font-weight: 700; margin: 14px 0 0; }
+  .estimate-aside { padding: 44px 34px; background: #10263f; color: #fff; }
+  .estimate-aside h3 { margin: 8px 0 30px; color: #fff; font-size: clamp(1.7rem, 3vw, 2.4rem); line-height: 1.05; }
+  .estimate-aside ol { margin: 0; padding: 0; list-style: none; }
+  .estimate-aside li { display: grid; grid-template-columns: 36px 1fr; gap: 12px; padding: 18px 0; border-top: 1px solid rgba(255,255,255,0.18); }
+  .estimate-aside li > span { font-weight: 800; color: #d1b86e; }
+  .estimate-aside li strong { display: block; margin-bottom: 5px; font-size: 1rem; }
+  .estimate-aside li p { margin: 0; color: #c7d1dc; font-size: 0.86rem; line-height: 1.5; }
+  .service-area-note { margin: 26px 0; padding: 18px; border-left: 3px solid #c4a963; background: rgba(255,255,255,0.07); }
+  .service-area-note strong { display: block; margin-bottom: 6px; }
+  .service-area-note p { margin: 0; color: #d9e0e8; font-size: 0.84rem; line-height: 1.6; }
+  .estimate-aside > small { display: block; color: #aebbc8; line-height: 1.55; }
+  @media (max-width: 900px) {
+    .estimate-shell { grid-template-columns: 1fr; }
+    .estimate-aside ol { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .estimate-aside li { display: block; }
+    .estimate-aside li > span { display: block; margin-bottom: 8px; }
+  }
+  @media (max-width: 650px) {
+    .form-section { padding: 26px 20px; }
+    .field-grid { grid-template-columns: 1fr; }
+    .field-wide { grid-column: auto; }
+    .estimate-aside { padding: 32px 22px; }
+    .estimate-aside ol { display: block; }
+    .analysis-heading { text-align: left; }
+  }
 
   .benefit-cards { padding: 75px 24px; }
   .benefit-cards h2 { color: var(--color-ink); }
@@ -390,9 +560,16 @@ const faqJsonLd = {
   @media (max-width: 900px) { .card-grid { grid-template-columns: 1fr; } }
 
   .faq-section { padding: 75px 24px; background: var(--color-bg); }
-  .faq-section h2 { text-align: center; margin-bottom: 40px; color: var(--color-ink); }
-  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; max-width: 1080px; margin: 0 auto; }
-  .faq-grid h3 { font-size: 1.05rem; color: var(--color-primary); margin-bottom: 8px; }
+  .comparison-link { padding: 70px 24px; background: #0d1e32; color: #fff; }
+  .comparison-link .container { max-width: 760px; }
+  .comparison-link h2 { color: #fff; margin: 8px 0 14px; font-size: clamp(1.8rem, 3.5vw, 2.6rem); }
+  .comparison-link p { max-width: 620px; color: #c7d1dc; margin: 0 0 24px; }
+  .comparison-link .eyebrow { color: #cfbb80; font-weight: 800; letter-spacing: 0.16em; font-size: 0.75rem; text-transform: uppercase; margin: 0 0 12px; }
+
+  .faq-section h2 { max-width: 850px; margin: 0 auto 8px; color: var(--color-ink); }
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; max-width: 1080px; margin: 36px auto 0; }
+  .faq-grid article { padding: 24px 0; border-top: 1px solid #ccd3de; }
+  .faq-grid h3 { font-size: 1.08rem; color: var(--color-primary); margin-bottom: 10px; }
   .faq-grid p { font-size: 0.92rem; color: var(--color-muted); margin: 0; line-height: 1.6; }
   @media (max-width: 800px) { .faq-grid { grid-template-columns: 1fr; } }
 
@@ -401,5 +578,5 @@ const faqJsonLd = {
   .areas-band > div:last-child { position: relative; padding: 0 24px; text-align: center; }
   .areas-band h2 { color: #fff; }
   .areas-band p { font-size: 1.1rem; }
-  .areas-band a { color: #fff; text-decoration: underline; }
+  .areas-band a { color: #fff; font-weight: 800; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 </style>
