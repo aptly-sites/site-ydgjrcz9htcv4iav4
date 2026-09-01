@@ -53,6 +53,15 @@ const regionBounds = areaLats.length
   title={`Available Rentals | ${site.companyName}`}
   description={`Browse current rental homes managed by ${site.companyName}.`}
 >
+  <Fragment slot="head">
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+  </Fragment>
+
   <Nav homepage={false} activeHref="/rentals" />
 
   <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)} />
@@ -209,8 +218,10 @@ const regionBounds = areaLats.length
     <button id="viewCompare" type="button">COMPARE HOMES</button>
   </div>
   <dialog id="compareDialog">
-    <button class="close compare-close" type="button" aria-label="Close">×</button>
-    <div id="compareContent"></div>
+    <div class="compare-dialog-inner">
+      <button class="close compare-close" type="button" aria-label="Close">×</button>
+      <div id="compareContent"></div>
+    </div>
   </dialog>
   <script type="application/json" id="listings-data" set:html={JSON.stringify(listings.map(p => ({
     id: p._id,
@@ -246,6 +257,7 @@ const regionBounds = areaLats.length
   const totalCount = items.length;
 
   let map: any;
+  let tileLayer: any;
   let markers: any[] = [];
   const region = mapEl?.dataset.region ? JSON.parse(mapEl.dataset.region) : null;
   const inRegion = (lat: number, lon: number) =>
@@ -253,10 +265,23 @@ const regionBounds = areaLats.length
 
   if (mapEl && typeof L !== 'undefined' && items.length) {
     map = L.map(mapEl, { scrollWheelZoom: false });
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors',
     }).addTo(map);
+
+    // Guards against any remaining container-size churn during initial layout (font swap, etc.):
+    // ResizeObserver can fire several times in quick succession while things settle, and calling
+    // invalidateSize() on each of those intermediate (wrong) sizes leaves Leaflet's previously
+    // positioned tiles behind uncleared — they don't get re-pruned just because size changed again,
+    // so the map ends up with a scattered mix of tiles positioned for several different past sizes.
+    // Debouncing so only the final, settled size actually triggers invalidateSize avoids that.
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    const resizeObserver = new ResizeObserver(() => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => map.invalidateSize(), 150);
+    });
+    resizeObserver.observe(mapEl);
   } else if (mapEl) {
     mapEl.style.display = 'none';
   }
@@ -308,6 +333,11 @@ const regionBounds = areaLats.length
     if (noMatches) (noMatches as HTMLElement).style.display = visibleCount === 0 && totalCount > 0 ? 'block' : 'none';
 
     if (map) {
+      // Confirm Leaflet has the container's real (CSS-fixed, non-content-dependent) size before
+      // computing zoom/bounds against it — calling this after fitBounds instead invalidates a
+      // view Leaflet already committed tiles for for, which is what caused the scattered/leftover
+      // tile bug (see the ResizeObserver comment above).
+      map.invalidateSize();
       // Prefer fitting to listings inside the known service area — a handful of far-outlier
       // coordinates (bad geocoding, or a genuinely distant property) shouldn't zoom the whole
       // map out to the point it's useless for browsing the actual area. Only fall back to every
@@ -318,7 +348,11 @@ const regionBounds = areaLats.length
       } else {
         map.setView([31.5493, -97.1467], 11);
       }
-      setTimeout(() => map.invalidateSize(), 50);
+      // Belt-and-suspenders against stale tiles left behind from whatever size Leaflet saw at
+      // construction time (before the invalidateSize() above): force every currently-visible tile
+      // to be recomputed for the view actually established above, rather than trusting incremental
+      // pruning to catch up.
+      tileLayer?.redraw();
     }
   }
 
@@ -510,11 +544,16 @@ const regionBounds = areaLats.length
     .filter-toggle { grid-column: 1 / -1; border-top: 1px solid #dfe2e6; }
   }
 
-  .results-split { display: grid; grid-template-columns: 50% 50%; background: #f4f5f6; min-height: 700px; }
-  #map { height: 700px; position: sticky; top: 65px; border-right: 1px solid #d9dde3; }
-  .results-panel { padding: 18px; background: #f6f7f8; }
+  .results-split { display: grid; grid-template-columns: 50% 50%; background: #f4f5f6; height: 700px; }
+  #map { height: 100%; overflow: hidden; position: sticky; top: 65px; border-right: 1px solid #d9dde3; }
+  .results-panel { height: 100%; overflow-y: auto; padding: 18px; background: #f6f7f8; }
   .listing-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
-  @media (max-width: 1050px) { .results-split { grid-template-columns: 1fr; } #map { height: 400px; position: relative; top: 0; } .listing-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 1050px) {
+    .results-split { grid-template-columns: 1fr; height: auto; }
+    #map { height: 400px; position: relative; top: 0; }
+    .results-panel { height: auto; overflow-y: visible; }
+    .listing-grid { grid-template-columns: 1fr; }
+  }
 
   .property-card { border: 1px solid #d9dde3; background: #fff; display: flex; flex-direction: column; height: 100%; }
   .media { position: relative; height: 200px; background: #e9edf3; overflow: hidden; }
@@ -564,14 +603,25 @@ const regionBounds = areaLats.length
   .compare-tray #viewCompare { background: #c7b276; color: #112237; }
   @media (max-width: 480px) { .compare-tray { flex-wrap: wrap; } .compare-tray > div { flex-basis: 100%; } .compare-tray > div > span { display: none; } }
 
-  #compareDialog { position: relative; width: min(1000px, calc(100% - 30px)); max-height: 88vh; padding: 36px; border: none; overflow-y: auto; }
+  #compareDialog { width: min(1000px, calc(100% - 30px)); max-height: 88vh; padding: 36px; border: none; overflow-y: auto; }
   #compareDialog::backdrop { background: rgba(18,35,55,0.78); }
+  .compare-dialog-inner { position: relative; }
+  .close.compare-close { position: absolute; right: -16px; top: -16px; width: 38px; height: 38px; border: 1px solid #dadddf; background: #fff; color: var(--color-primary); font-size: 1.3rem; cursor: pointer; border-radius: 50%; }
+  .close.compare-close:hover { background: var(--color-primary); color: #fff; }
+</style>
+
+<!--
+  These rules target #compareContent's markup, which is set via element.innerHTML from the
+  script below rather than written in this page's template — Astro's scoped styles only stamp
+  their scope attribute onto elements present in the template at compile time, so a normal
+  scoped <style> block here would silently never match this dynamically-injected content.
+  is:global skips that scoping so these rules actually apply.
+-->
+<style is:global>
   #compareContent h2 { font: 400 2.4rem Georgia, serif; color: var(--color-primary); margin: 0 0 22px; }
   .compare-grid { display: grid; gap: 1px; background: #dadddf; border: 1px solid #dadddf; }
   .compare-row-label { padding: 12px; font-size: 0.72rem; font-weight: 700; color: var(--color-muted); background: #f6f7f8; display: flex; align-items: center; }
   .compare-cell { padding: 12px; background: #fff; font-size: 0.88rem; color: var(--color-ink); }
   .compare-cell img { width: 100%; height: 110px; object-fit: cover; display: block; }
-  .close.compare-close { position: absolute; right: 20px; top: 18px; width: 38px; height: 38px; border: 1px solid #dadddf; background: #fff; color: var(--color-primary); font-size: 1.3rem; cursor: pointer; border-radius: 50%; }
-  .close.compare-close:hover { background: var(--color-primary); color: #fff; }
   @media (max-width: 700px) { .compare-grid { overflow-x: auto; } }
 </style>
