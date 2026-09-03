@@ -1,0 +1,2 @@
+/* Keep the overview control available at every zoom level so users can always recover the full map. */
+.reset-map-control{display:block!important}

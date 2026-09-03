@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Browse available rental homes from J R Grace Realty in Waco and Central Texas.">
+  <title>Homes for Rent in Waco, TX | J R Grace Realty</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+  <link rel="stylesheet" href="rental-search.css">
+  <link rel="stylesheet" href="rental-search-match.css?v=20260820-waco-hero">
+  <link rel="stylesheet" href="rental-search-interactions.css">
+  <link rel="stylesheet" href="rental-search-reset.css">
+  <link rel="stylesheet" href="rental-compare-match.css">
+  <link rel="stylesheet" href="rental-compare-final.css">
+  <link rel="stylesheet" href="rental-map-preview.css">
+  <link rel="stylesheet" href="rental-loader.css">
+  <link rel="stylesheet" href="login-menu.css?v=20260820">
+</head>
+<body>
+  <a class="skip" href="#properties">Skip to properties</a>
+  <div class="topbar"><div class="shell topbar-inner"><a href="tel:2544002863">☎ (254) 400-2863</a><a href="mailto:hello@jrgrace.com">✉ hello@jrgrace.com</a><span></span><details class="login-menu"><summary>⌂ Login</summary><div class="login-options"><a href="https://jrgrace.owa.rentmanager.com/">Owner</a><a href="https://jrgrace.twa.rentmanager.com/">Resident</a></div></details></div></div>
+  <header><div class="shell nav-inner"><a href="index.html"><img src="assets/logo.png" alt="J R Grace Realty"></a><button class="menu" aria-label="Toggle navigation">☰</button><nav><a href="index.html">Property Management</a><a class="active" href="rental-search.html">Rental Search</a><a href="resident-faq.html">Resident FAQ</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></div></header>
+
+  <main>
+    <section class="rental-hero"><div class="shell hero-grid"><div><p class="eyebrow">WACO · WOODWAY · HEWITT · CENTRAL TEXAS</p><h1>Find a home that<br>feels like yours.</h1><p class="lead">Explore professionally managed homes with clear pricing, flexible tours, and a straightforward application process.</p><a class="primary" href="#properties">Browse available homes</a></div><div class="hero-stat"><strong id="heroCount">—</strong><span>AVAILABLE HOMES</span><p>Local expertise and responsive service from first tour through move-out.</p></div></div></section>
+
+    <section class="promises"><div class="shell promise-grid"><div><b>Tour on your time</b><span>Convenient self-guided options</span></div><div><b>Clear next steps</b><span>Property details and fees up front</span></div><div><b>Local support</b><span>A Waco team ready to help</span></div></div></section>
+
+    <section id="properties" class="search-section"><div class="shell heading-shell"><div class="section-heading"><div><p class="eyebrow blue">LIVE FROM J R GRACE</p><h2>Available homes</h2></div><p id="resultCount" aria-live="polite">Loading current listings…</p></div></div>
+      <div class="filters" aria-label="Rental filters"><label class="searchbox"><span>⌕</span><input id="query" type="search" placeholder="Search by city or address"></label><label>Rent Range<select id="rent"><option value="">Any</option><option value="0-1200">Up to $1,200</option><option value="1200-1600">$1,200–$1,600</option><option value="1600-2200">$1,600–$2,200</option><option value="2200-99999">$2,200+</option></select></label><label>Beds &amp; Baths<select id="beds"><option value="">Any</option><option value="1">1+ beds</option><option value="2">2+ beds</option><option value="3">3+ beds</option><option value="4">4+ beds</option></select></label><button id="filtersToggle" class="filter-toggle">Filters <span>＋</span></button></div>
+      <div id="advancedFilters" class="advanced-filters"><label>Home type<select id="type"><option value="">All types</option></select></label><button id="clear" class="clear">Clear all filters</button></div>
+      <div class="results-split loading"><div id="map" aria-label="Map of available homes"></div><div class="results-panel"><div id="status" class="status" role="status" aria-live="polite"><div class="jr-loader"><span class="jr-loader-mark"><img src="assets/jr-grace-loader-logo.png" alt=""></span><strong>Finding your next home</strong><span>Loading available JR Grace properties…</span><i aria-hidden="true"><b></b><b></b><b></b></i></div></div><div id="listingGrid" class="listing-grid"></div></div></div>
+    </section>
+  </main>
+
+  <footer><div class="shell footer-grid"><div><img src="assets/logo.png" alt="J R Grace Realty"><p>Professional property management across Waco and Central Texas.</p></div><div><b>LEASING</b><a href="tel:2544002863">(254) 400-2863</a><a href="mailto:hello@jrgrace.com">hello@jrgrace.com</a></div><div><b>EXPLORE</b><a href="#properties">Available homes</a><a href="/privacy-policy.html">Privacy policy</a></div></div><p class="copyright">© 2026 J R Grace Realty · Equal Housing Opportunity</p></footer>
+
+  <dialog id="details"><button class="close" aria-label="Close">×</button><div id="detailContent"></div></dialog>
+  <div id="compareTray" class="compare-tray" hidden><div><b><span id="compareCount">0</span> HOMES SELECTED</b><span id="compareNames"></span></div><button id="clearCompare">CLEAR</button><button id="viewCompare">COMPARE HOMES</button></div>
+  <dialog id="compareDialog"><button class="close compare-close" aria-label="Close">×</button><div id="compareContent"></div></dialog>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="rental-search.js"></script>
+  <link rel="stylesheet" href="global-property-nav.css?v=20260824-7">
+  <script src="global-property-nav.js?v=20260824-7"></script>
+</body>
+</html>

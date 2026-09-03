@@ -1,0 +1,3 @@
+.gallery{grid-template-columns:2fr 1fr 1fr}
+.gallery img{display:block}
+@media(max-width:520px){.gallery{grid-template-columns:1fr}.gallery figure:first-child{grid-row:auto}}

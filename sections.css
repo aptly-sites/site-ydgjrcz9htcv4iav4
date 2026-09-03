@@ -1,0 +1,23 @@
+/* Attachment-matched leadership and connection sections */
+.leadership{position:relative;margin-top:85px;padding:0;background:#f5f6f7;overflow:hidden}
+.leadership:before{content:"";position:absolute;inset:0;background:url('assets/mark.png') 0 0/145px 141px repeat;opacity:.055;pointer-events:none}
+.leadership-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:74px;align-items:stretch}
+.leadership-copy{padding:68px 0 68px 20px;color:#2e4b75;text-align:left}
+.leadership-copy h2{font-size:clamp(2.2rem,3.5vw,3.25rem);margin-bottom:22px}
+.leadership-copy .role{font-size:1.34rem;margin-bottom:48px}
+.leadership-copy p:not(.role){max-width:640px;font-size:1.12rem;line-height:1.55;margin-bottom:22px}
+.leadership-cta{font-size:1.35rem;min-width:305px;text-align:center;border-radius:16px;margin-top:25px;padding:11px 24px}
+.portrait-panel{min-height:520px;display:flex;align-items:flex-end;justify-content:center;background:linear-gradient(#1d477f 0%,#aebbd0 72%,#f6f6f6 100%);border-radius:14px 14px 0 0;overflow:hidden}
+.portrait-panel img{display:block;width:100%;height:100%;max-height:520px;object-fit:contain;object-position:center bottom}
+.connected{padding:85px 0 105px;background:#fff}
+.connected h2{font-size:clamp(2.5rem,4.5vw,4.25rem);margin-bottom:42px}
+.connection-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.connection-card{position:relative;min-height:500px;padding:38px 28px 42px;border-radius:11px;box-shadow:0 7px 22px #0002;background:#fff;overflow:hidden}
+.connection-card:after{content:"";position:absolute;left:0;right:0;bottom:0;height:18px}
+.connection-card.owners:after{background:#7ca140}.connection-card.residents:after{background:#ed3c2f}.connection-card.realtors:after{background:#cabe8d}.connection-card.vendors:after{background:#ff681e}
+.connection-card img{width:58px;height:57px;object-fit:contain;margin-bottom:10px}
+.connection-card h3{font-size:1.55rem;margin:0 auto 14px;line-height:1.02}
+.connection-card .rule{display:block;width:105px;border-top:1px dotted var(--blue);margin:0 auto 18px}
+.connection-card p{font-family:Arial,sans-serif;font-size:1rem;line-height:1.45;margin:0}
+@media(max-width:900px){.leadership-grid{grid-template-columns:1fr;gap:0}.leadership-copy{padding:55px 20px}.portrait-panel{min-height:430px;max-width:620px;width:100%;margin:auto}.connection-grid{grid-template-columns:1fr 1fr}.connection-card{min-height:455px}}
+@media(max-width:560px){.leadership-copy .role{margin-bottom:30px}.leadership-cta{min-width:0;width:100%;font-size:1.05rem}.portrait-panel{min-height:330px}.connection-grid{grid-template-columns:1fr}.connection-card{min-height:0;padding-bottom:60px}.connected{padding:65px 0}}

@@ -1,0 +1,4 @@
+#calculator-form label span{padding-right:12px;transition:background-color .18s ease,border-color .18s ease,box-shadow .18s ease}
+#calculator-form label span input[type=number]{padding-right:5px}
+#calculator-form label span:focus-within{background:#eaf3ff;border-color:#7fa7d8;box-shadow:0 0 0 3px rgba(29,70,125,.12)}
+#calculator-form label:has(input:focus){color:#1d467d}

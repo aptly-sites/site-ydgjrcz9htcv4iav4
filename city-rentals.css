@@ -1,0 +1,21 @@
+.city-rentals-heading{max-width:none;display:flex;align-items:end;justify-content:space-between;gap:30px}
+.city-rentals-heading>div{max-width:780px}
+.city-rentals-all{flex:0 0 auto;margin-bottom:16px;color:#183a70;font-weight:800;text-decoration:none}
+.city-rental-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.city-rental-card{overflow:hidden;background:#fff;border:1px solid #dce1e7;box-shadow:0 12px 28px #183a7012}
+.city-rental-image{display:block;height:220px;position:relative;overflow:hidden}
+.city-rental-image img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+.city-rental-image:hover img{transform:scale(1.035)}
+.city-rental-image span,.city-rental-image b{position:absolute;bottom:12px;background:#fff;color:#183a70;padding:7px 9px;font-size:.66rem;letter-spacing:.08em}
+.city-rental-image span{left:12px;font-weight:800}.city-rental-image b{right:12px}
+.city-rental-copy{padding:22px}.city-rental-price{margin:0;color:#183a70;font-size:1.7rem;font-weight:800}.city-rental-price small{font-size:.8rem}
+.city-rental-facts,.city-rental-address{color:#687382;font-size:.83rem}.city-rental-copy h3{margin:14px 0 5px}
+.city-rental-actions{display:flex;align-items:center;gap:13px;flex-wrap:wrap;padding-top:17px;margin-top:18px;border-top:1px solid #e2e6eb}
+.city-rental-actions a{color:#183a70;font-size:.75rem;font-weight:800;text-decoration:none}.city-rental-actions a:last-child{margin-left:auto}
+.city-rental-loading,.city-rental-empty{grid-column:1/-1;min-height:220px;display:grid;place-content:center;text-align:center;padding:36px;background:#f4f6f8}
+.city-rental-loading span{width:42px;height:42px;margin:auto;border:3px solid #d7dce3;border-top-color:#183a70;border-radius:50%;animation:city-rental-spin .8s linear infinite}
+.city-rental-empty h3{margin-bottom:5px}.city-rental-empty p{color:#687382}.city-rental-empty a{color:#183a70;font-weight:800}
+@keyframes city-rental-spin{to{transform:rotate(360deg)}}
+@media(max-width:950px){.city-rental-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:800px){.city-rental-grid{grid-template-columns:1fr}.city-rentals-heading{display:block}.city-rentals-all{display:inline-block;margin:0 0 20px}}
+@media(prefers-reduced-motion:reduce){.city-rental-image img{transition:none}.city-rental-image:hover img{transform:none}}

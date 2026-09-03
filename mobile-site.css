@@ -1,0 +1,160 @@
+/* Shared mobile safeguards for every JR Grace page family. */
+html,body{max-width:100%;overflow-x:hidden}
+img,video,iframe,canvas{max-width:100%}
+button,a,input,select,textarea{touch-action:manipulation}
+
+@media(max-width:900px){
+  .menu,.nav-toggle,.standard-nav-toggle{display:block!important;margin-left:auto!important}
+  header,.nav,.site-header,.city-nav{isolation:isolate}
+  .standard-site-nav{max-height:calc(100vh - 70px);overflow-y:auto;overscroll-behavior:contain}
+  .standard-site-nav>.global-pm-nav>.global-pm-trigger,.standard-site-nav>a{min-height:46px!important}
+  .global-pm-nav{display:block;align-self:stretch}
+  .global-pm-trigger{width:100%;justify-content:flex-start!important;text-align:left}
+  .global-pm-menu,.global-pm-nav:hover .global-pm-menu,.global-pm-nav:focus-within .global-pm-menu{position:static;display:none;grid-template-columns:1fr;gap:22px;max-height:none;padding:17px;overflow:visible;border:1px solid #d9e0e7;box-shadow:none}
+  .global-pm-nav.open .global-pm-menu{display:grid}
+  .global-service-links,.global-city-links{grid-template-columns:1fr}
+  .global-pm-actions{flex-direction:column}
+  .global-service-links a,.global-city-links a{min-height:42px;display:flex!important;align-items:center}
+  .global-pm-actions a{min-height:46px;display:flex;align-items:center;justify-content:center}
+  .topbar{display:none}
+}
+
+@media(max-width:760px){
+  :root{--mobile-gutter:16px}
+  .wrap,.shell,.detail-shell{width:calc(100% - 32px)!important;max-width:none!important}
+  h1{overflow-wrap:anywhere}
+  .button,.btn,.primary,.gold-button,.outline-button{min-height:46px}
+
+  /* Homepage */
+  .hero{min-height:500px;height:auto}
+  .hero-copy{padding:72px 16px 150px}
+  .choice{margin-top:-105px;padding:0 16px}
+  .floating-card{width:100%;max-width:380px}
+  .leadership{margin-top:55px}
+  .leadership-copy{padding-right:0!important;padding-left:0!important}
+  .portrait-panel{min-height:310px}
+  .rating-panel{flex-direction:column;gap:20px;text-align:center}
+  .manage,.difference,.benefit-cards,.trusted{padding-top:58px;padding-bottom:58px}
+  .big-number{font-size:7rem}
+  .areas{height:auto;min-height:300px;padding:50px 0}
+  .footer-grid{gap:28px!important;padding-top:52px;padding-bottom:52px}
+
+  /* Rental search and map/list view */
+  .rental-hero h1{font-size:clamp(2.7rem,13vw,4.2rem)}
+  .rental-hero:after{width:310px;height:310px;right:-170px;top:-170px}
+  .hero-stat strong{font-size:4rem}
+  .heading-shell{padding-top:45px;padding-bottom:28px}
+  .section-heading h2{font-size:2.65rem}
+  .filters{display:grid;grid-template-columns:1fr!important}
+  .filters .searchbox{grid-column:auto!important;padding-left:16px!important}
+  .filters label,.filter-toggle{height:58px;border-right:0;border-bottom:1px solid #dfe2e6}
+  .filters select{text-align:left}
+  .advanced-filters,.advanced-filters.open{display:none;flex-direction:column;padding:14px 16px}
+  .advanced-filters.open{display:flex}
+  .advanced-filters select{width:100%;min-height:44px}
+  .results-split #map{height:min(56vh,430px);min-height:320px}
+  .results-panel{padding:12px}
+  .property-card .hover-tools,.property-card .photo-arrow{opacity:1;transform:none}
+  .hover-tools button{width:52px;height:48px}
+  .actions a,.actions button{min-height:44px}
+  .compare-tray{bottom:10px;width:calc(100% - 20px);padding:12px;gap:8px}
+  #compareDialog{width:100vw;height:100dvh;max-height:none;margin:0}
+  #compareContent{padding:24px 14px 0}
+  .comparison-grid{grid-template-columns:repeat(3,minmax(260px,82vw));scroll-snap-type:x mandatory}
+  .compare-property{scroll-snap-align:start;min-height:0!important}
+  .compare-media{height:220px;margin:0 10px}
+  .compare-location{min-height:300px}
+  .compare-map{height:220px}
+  .property-map-popup .leaflet-popup-content{width:min(290px,calc(100vw - 70px))!important}
+
+  /* Listing details */
+  .breadcrumbs{overflow-x:auto;white-space:nowrap;padding-top:22px}
+  .gallery{height:390px!important;margin-right:0;margin-left:0}
+  .content-grid{gap:28px;padding-top:36px}
+  .content-grid h1{font-size:2.35rem}
+  .summary,.tour-block,.costs,.sticky-card{padding:24px!important}
+  .stat-grid strong{font-size:1.35rem}
+  article section h2,.nearby h2,.sticky-card h2{font-size:1.95rem}
+  .tour-days{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:5px}
+  .tour-days button{flex:0 0 115px;scroll-snap-align:start}
+  .tour-days button:nth-child(n){display:block}
+  .tour-times{grid-template-columns:repeat(2,1fr)}
+  .schools-section{padding:54px 0}
+  .schools-section h2{font-size:2.35rem}
+  .schools-layout{margin:0;min-height:0}
+  .school-map{min-height:320px}
+  .school-map-legend{max-width:230px;flex-wrap:wrap}
+  .final-cta{padding:58px 0}
+  .final-cta h2{font-size:2.45rem}
+  .final-cta .outline-button{margin:10px 0 0}
+  .photo-viewer{height:100dvh;padding:58px 8px 96px}
+  .photo-viewer figure{height:calc(100dvh - 145px)}
+  .photo-viewer figure img{max-height:calc(100dvh - 205px)}
+
+  /* Owner calculator and lead dialogs */
+  .hero h1,.owner-faq .hero h1{font-size:clamp(2.65rem,12vw,4rem)}
+  .calculator-head h2{font-size:2rem}
+  #calculator-form label{grid-template-columns:1fr;gap:6px;margin-bottom:14px}
+  #calculator-form label span{min-height:46px}
+  .years small{gap:12px;font-size:10px}
+  .recommendation{padding:19px}
+  .recommendation strong{font-size:26px}
+  .chart{min-width:0;gap:3px}
+  .resources a{padding:20px}
+  .rent-lead-modal,.lead-modal{padding:0;align-items:stretch}
+  .rent-lead-dialog,.lead-dialog{width:100%;max-height:100dvh;border-top-width:4px;padding:30px 18px}
+  .rent-lead-dialog h2,.lead-dialog h2{font-size:2rem}
+  .rent-lead-mask,.lead-mask{position:fixed;padding:24px}
+
+  /* City guides, service pages and long-form content */
+  .city-hero,.article-hero,.service-pages .hero{padding-top:64px;padding-bottom:64px}
+  .city-hero h1,.article-hero h1,.service-pages .hero h1{font-size:clamp(2.5rem,12vw,3.8rem)}
+  .city-guide,.city-content,.section{padding-top:58px;padding-bottom:58px}
+  .city-stats{margin:30px 0 54px}
+  .city-stats div,.city-card,.neighborhood-grid article,.attraction-grid a{padding:22px}
+  .guide-block{padding:52px 0}
+  .relocation li{padding-right:0}
+  .city-school-card{grid-template-columns:38px minmax(0,1fr);padding:17px}
+  .city-rental-image{height:210px}
+  .proof-strip strong{font-size:18px}
+  .service-card,.review-panel,.map-list{padding:24px}
+  .check-grid{gap:14px}
+  .area-grid{grid-template-columns:1fr!important}
+  .area-card{min-height:210px}
+  .service-map{min-height:390px}
+  .fee{font-size:50px}
+  .comparison-table{font-size:.85rem}
+  .comparison-table th,.comparison-table td{min-width:170px;padding:13px}
+  .worked-example{padding:24px}
+}
+
+@media(max-width:420px){
+  .wrap,.shell,.detail-shell{width:calc(100% - 24px)!important}
+  .standard-site-nav{padding-right:16px!important;padding-left:16px!important}
+  .standard-site-nav>a,.standard-site-nav>.global-pm-nav>.global-pm-trigger{font-size:13px!important}
+  .global-pm-menu{padding:13px}
+  .hero-copy{padding-right:10px;padding-left:10px}
+  .associations{gap:12px;flex-wrap:wrap}
+  .associations img{max-width:100px}
+  .property-card .media{height:230px}
+  .actions{grid-template-columns:1fr}
+  .details-button{grid-column:auto}
+  .gallery{height:350px!important}
+  .stat-grid div{padding:15px 12px}
+  .stat-grid strong{font-size:1.2rem}
+  .tour-block,.costs,.sticky-card{margin-right:-4px;margin-left:-4px;padding:20px!important}
+  .compare-tray button{flex:1;padding:10px 8px}
+  .school-card{grid-template-columns:40px 1fr;gap:10px;padding:14px 12px}
+  .school-number{width:36px;height:36px}
+}
+
+@media(hover:none){
+  .global-pm-nav:hover .global-pm-menu,.global-pm-nav:focus-within .global-pm-menu{display:none}
+  .global-pm-nav.open .global-pm-menu{display:grid}
+  .area-card:hover,.feature-grid article:hover .feature-photo img{transform:none}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}
+}

@@ -1,0 +1,38 @@
+.city-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: #12263d;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.city-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(10, 28, 49, .94) 0%, rgba(15, 47, 82, .82) 52%, rgba(12, 34, 59, .62) 100%),
+    linear-gradient(0deg, rgba(9, 26, 45, .28), rgba(9, 26, 45, .28));
+}
+
+.city-hero .wrap {
+  position: relative;
+  z-index: 1;
+}
+
+body[data-city="woodway"] .city-hero { background-image: url("assets/city-heroes/woodway.jpg"); background-position: center 46%; }
+body[data-city="waco"] .city-hero { background-image: url("assets/waco-sunset-river.jpg"); background-position: center 52%; }
+body[data-city="hewitt"] .city-hero { background-image: url("assets/city-heroes/hewitt.jpg"); background-position: center; }
+body[data-city="robinson"] .city-hero { background-image: url("assets/city-heroes/robinson.jpg"); background-position: center; }
+body[data-city="china-spring"] .city-hero { background-image: url("assets/city-heroes/china-spring.jpg"); background-position: center; }
+body[data-city="bellmead"] .city-hero { background-image: url("assets/city-heroes/bellmead.jpg"); background-position: center 58%; }
+body[data-city="lacy-lakeview"] .city-hero { background-image: url("assets/city-heroes/lacy-lakeview.jpg"); background-position: center 54%; }
+
+@media (max-width: 760px) {
+  .city-hero::before {
+    background: linear-gradient(90deg, rgba(10, 28, 49, .95), rgba(15, 47, 82, .8));
+  }
+}

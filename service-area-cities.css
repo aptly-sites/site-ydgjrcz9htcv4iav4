@@ -1,0 +1,2 @@
+.area-card{background-image:linear-gradient(#10263f38,#10263fe8),var(--city-image);background-position:center;background-size:cover;transition:transform .2s ease,box-shadow .2s ease}
+.area-card:hover,.area-card:focus-visible{transform:translateY(-4px);box-shadow:0 14px 28px rgba(16,38,63,.25)}
