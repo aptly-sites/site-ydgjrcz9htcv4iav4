@@ -1,5 +1,5 @@
 (() => {
-  const version = "20260908-3";
+  const version = "20260908-4";
   const scriptUrl = document.currentScript?.src || location.href;
   const assetUrl = name => `${new URL(name, scriptUrl).href}?v=${version}`;
   const ensureStylesheet = name => {
@@ -104,7 +104,18 @@
   setActiveLink(location.href);
 
   header = header || nav.closest("header,.nav") || document.querySelector("header,.nav");
-  if (header) positionMenu(header);
+  if (header) {
+    const topbar = header.previousElementSibling?.matches(".topbar") ? header.previousElementSibling : null;
+    if (topbar && !header.closest(".jr-sticky-chrome")) {
+      const chrome = document.createElement("div");
+      chrome.className = "jr-sticky-chrome";
+      topbar.parentElement.insertBefore(chrome, topbar);
+      chrome.append(topbar, header);
+    } else if (!topbar) {
+      header.classList.add("jr-sticky-header");
+    }
+    positionMenu(header);
+  }
 
   let toggle = header?.querySelector(".menu,.nav-toggle,.standard-nav-toggle");
   let ownsToggle = document.body.classList.contains("info-page");

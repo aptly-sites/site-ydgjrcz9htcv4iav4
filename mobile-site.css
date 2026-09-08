@@ -1,5 +1,5 @@
 /* Shared mobile safeguards for every JR Grace page family. */
-html,body{max-width:100%;overflow-x:hidden}
+html,body{max-width:100%;overflow-x:clip}
 img,video,iframe,canvas{max-width:100%}
 button,a,input,select,textarea{touch-action:manipulation}
 
