@@ -1,5 +1,5 @@
 (() => {
-  const version = "20260824-7";
+  const version = "20260908-2";
   const scriptUrl = document.currentScript?.src || location.href;
   const assetUrl = name => `${new URL(name, scriptUrl).href}?v=${version}`;
   const ensureStylesheet = name => {
@@ -14,11 +14,27 @@
   ensureStylesheet("navigation-scroll-fix.css");
   ensureStylesheet("mobile-site.css");
   ensureStylesheet("info-pages.css");
+  ensureStylesheet("site-footer.css");
+
+  const footerMarkup = `<div class="jr-footer-shell"><div class="jr-footer-grid"><section class="jr-footer-brand" aria-label="J R Grace Realty"><a href="/index.html"><img class="jr-footer-logo" src="/assets/logo.png" alt="J R Grace Realty"></a><p>Professional property management with local experience, dependable communication, and practical support throughout Waco and Central Texas.</p></section><section><h2><a href="/contact.html">Contact</a></h2><address><a href="tel:2547775577">Phone: 254-777-5577</a><span>2012 Lake Air Dr.<br>Waco, Texas 76710</span></address><div class="jr-footer-legal-links"><a href="https://drive.google.com/file/d/1Egi37g3YcFlPerfmWEvhC5HxJJAF5Eqa/view" target="_blank" rel="noopener">IABS</a><a href="https://drive.google.com/file/d/1eAh302SyErFPp62zVbIiUM9ROOWzOkTS/view?usp=drive_link" target="_blank" rel="noopener">Consumer Protection</a></div></section><section><h2><a href="/sitemap.html">Sitemap</a></h2><nav aria-label="Footer sitemap"><a href="/index.html">Home</a><a href="/single-family-property-management.html">Property Management</a><a href="/rental-search.html">Homes for Rent</a><a href="/owner-faq.html">Owner FAQ</a><a href="/resident-faq.html">Resident FAQ</a><a class="jr-footer-all-pages" href="/sitemap.html">View full sitemap →</a></nav></section><section><h2>Quick Links</h2><nav aria-label="Portal links"><a href="https://jrgrace.owa.rentmanager.com/" target="_blank" rel="noopener">Owner Login</a><a href="https://jrgrace.twa.rentmanager.com/" target="_blank" rel="noopener">Tenant Login</a></nav></section></div><div class="jr-footer-bottom"><span>© <b data-footer-year></b> J R Grace Realty</span><span>Equal Housing Opportunity</span><a href="/privacy-policy.html">Privacy Policy</a></div></div>`;
+  const renderSiteFooter = () => {
+    let footer = document.querySelector("footer");
+    if (!footer) {
+      footer = document.createElement("footer");
+      document.body.append(footer);
+    }
+    footer.id = "site-footer";
+    footer.className = "jr-site-footer";
+    footer.setAttribute("aria-label", "Website footer");
+    footer.innerHTML = footerMarkup;
+    footer.querySelector("[data-footer-year]").textContent = new Date().getFullYear();
+  };
+  renderSiteFooter();
 
   const menu = '<div><h3>Property Management Services</h3><div class="global-service-links"><a href="/single-family-property-management.html">Single-Family Management</a><a href="/multi-family-property-management.html">Multi-Family Management</a><a href="/tenant-placement.html">Tenant Placement Only</a><a href="/service-areas.html">Service Areas</a><a href="/owner-faq.html">Rent vs. Sell Calculator</a><a href="/index.html#analysis">Free Rental Analysis</a></div></div><div><h3>Central Texas Markets</h3><div class="global-city-links"><a href="/property-management-waco-tx.html">Waco</a><a href="/property-management-woodway-tx.html">Woodway</a><a href="/property-management-hewitt-tx.html">Hewitt</a><a href="/property-management-robinson-tx.html">Robinson</a><a href="/property-management-china-spring-tx.html">China Spring</a><a href="/property-management-bellmead-tx.html">Bellmead</a><a href="/property-management-lacy-lakeview-tx.html">Lacy Lakeview</a></div></div><div class="global-pm-actions"><a href="/index.html#analysis">Schedule a Call</a><a href="/service-areas.html">Explore Service Areas</a></div>';
   const propertyItem = `<div class="global-pm-nav"><button class="global-pm-trigger" type="button" aria-expanded="false">Property Management</button><div class="global-pm-menu">${menu}</div></div>`;
   const standardLinks = `${propertyItem}<a href="/rental-search.html">Rental Search</a><a href="/owner-faq.html">Owners FAQ</a><a href="/resident-faq.html">Resident FAQ</a><a href="/vendors.html">Vendors</a><a href="/agents.html">Agents</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>`;
-  const infoPages = new Set(["resident-faq.html", "vendors.html", "agents.html", "about.html", "contact.html", "privacy-policy.html"]);
+  const infoPages = new Set(["resident-faq.html", "vendors.html", "agents.html", "about.html", "contact.html", "privacy-policy.html", "sitemap.html"]);
   const pageCache = new Map();
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let navigationSequence = 0;
@@ -155,6 +171,7 @@
 
       currentMain.replaceWith(nextMain);
       if (currentFooter && nextFooter) currentFooter.replaceWith(nextFooter);
+      renderSiteFooter();
       document.title = nextDoc.title;
       document.body.className = nextDoc.body.className;
       renderedUrl = url.href;

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jr-grace-realty-review.sshekou.chatgpt.site/sitemap.xml
+Sitemap: https://site-ydgjrcz9htcv4iav4.pages.dev/sitemap.xml

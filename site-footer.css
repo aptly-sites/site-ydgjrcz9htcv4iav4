@@ -1,0 +1,39 @@
+.jr-site-footer{
+  margin:0;
+  padding:0;
+  background:#0b1d31;
+  color:#cbd5df;
+  font-family:Arial,sans-serif;
+  text-align:left;
+}
+.jr-site-footer *{box-sizing:border-box}
+.jr-footer-shell{width:min(1180px,calc(100% - 40px));margin:0 auto}
+.jr-footer-grid{display:grid;grid-template-columns:1.4fr 1.1fr 1fr .85fr;gap:56px;padding:68px 0 54px}
+.jr-site-footer section{min-width:0;margin:0;padding:0;border:0;background:none}
+.jr-footer-logo{display:block;width:178px;max-width:100%;height:auto;margin:0 0 22px;filter:brightness(0) invert(1)}
+.jr-footer-brand p{max-width:330px;margin:0;color:#b8c5d2;font-size:.94rem;line-height:1.7}
+.jr-site-footer h2{margin:2px 0 20px;color:#fff;font:800 .78rem/1.2 Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase}
+.jr-site-footer h2 a{color:inherit}
+.jr-site-footer a{color:#e6edf3;text-decoration:none;transition:color .18s ease}
+.jr-site-footer a:hover,.jr-site-footer a:focus-visible{color:#d7bd75}
+.jr-site-footer nav{display:flex;flex-direction:column;align-items:flex-start;gap:11px;margin:0;padding:0;background:none}
+.jr-site-footer nav a{font-size:.94rem;line-height:1.45}
+.jr-site-footer address{display:flex;flex-direction:column;gap:12px;margin:0;color:#cbd5df;font-size:.94rem;font-style:normal;line-height:1.65}
+.jr-site-footer address span{display:block}
+.jr-footer-legal-links{display:flex;flex-wrap:wrap;gap:9px 16px;margin-top:18px}
+.jr-footer-legal-links a{border-bottom:1px solid #8291a1;font-size:.85rem}
+.jr-footer-all-pages{margin-top:4px;color:#d7bd75!important;font-weight:800}
+.jr-footer-bottom{display:flex;align-items:center;gap:22px;padding:21px 0;border-top:1px solid rgba(255,255,255,.14);color:#96a6b6;font-size:.78rem}
+.jr-footer-bottom span:nth-child(2){margin-left:auto}
+.jr-footer-bottom b{font-weight:inherit}
+.jr-footer-bottom a{color:#b9c5d1}
+@media(max-width:900px){
+  .jr-footer-grid{grid-template-columns:1fr 1fr;gap:42px 50px}
+}
+@media(max-width:560px){
+  .jr-footer-shell{width:calc(100% - 32px)}
+  .jr-footer-grid{grid-template-columns:1fr;gap:36px;padding:52px 0 40px}
+  .jr-footer-bottom{align-items:flex-start;flex-direction:column;gap:8px;padding:20px 0 28px}
+  .jr-footer-bottom span:nth-child(2){margin-left:0}
+}
+@media(prefers-reduced-motion:reduce){.jr-site-footer a{transition:none}}
