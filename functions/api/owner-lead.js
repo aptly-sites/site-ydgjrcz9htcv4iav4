@@ -43,6 +43,10 @@ function findField(fields, names, types) {
   });
 }
 
+function addressComponent(components, type, field = "longText") {
+  return components.find((item) => item.types?.includes(type))?.[field] || "";
+}
+
 async function aptlyFetch(path, token, init = {}) {
   const response = await fetch(`${APTLY_BASE_URL}${path}`, {
     ...init,
@@ -60,7 +64,40 @@ async function aptlyFetch(path, token, init = {}) {
   return data;
 }
 
-async function verifyPropertyAddress(input) {
+async function verifyGoogleProperty(placeId, apiKey) {
+  if (!apiKey || !/^[A-Za-z0-9_-]{8,220}$/.test(placeId)) return null;
+  const response = await fetch(`https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}`, {
+    headers: {
+      Accept: "application/json",
+      "X-Goog-Api-Key": apiKey,
+      "X-Goog-FieldMask": "id,formattedAddress,addressComponents,location",
+    },
+  });
+  if (!response.ok) throw new Error(`Google Place Details returned ${response.status}.`);
+  const place = await response.json();
+  const components = place.addressComponents || [];
+  const city = addressComponent(components, "locality")
+    || addressComponent(components, "postal_town")
+    || addressComponent(components, "administrative_area_level_3");
+  const state = addressComponent(components, "administrative_area_level_1", "shortText");
+  const zip = addressComponent(components, "postal_code");
+  if (!place.formattedAddress || !zip || state !== "TX" || !ALLOWED_CITIES.has(normalized(city))) return null;
+
+  const formattedAddress = place.formattedAddress.replace(/, USA$/, "");
+  return {
+    formattedAddress,
+    street: formattedAddress.split(",")[0],
+    city,
+    state,
+    zip,
+    latitude: Number(place.location?.latitude),
+    longitude: Number(place.location?.longitude),
+    placeId: place.id || placeId,
+  };
+}
+
+async function verifyPropertyAddress(input, placeId, googleApiKey) {
+  if (placeId && googleApiKey) return verifyGoogleProperty(placeId, googleApiKey);
   const url = new URL("https://geocoding.geo.census.gov/geocoder/locations/onelineaddress");
   url.searchParams.set("address", input);
   url.searchParams.set("benchmark", "Public_AR_Current");
@@ -114,7 +151,11 @@ export async function onRequestPost({ request, env }) {
   }
 
   try {
-    const verified = await verifyPropertyAddress(addressInput);
+    const verified = await verifyPropertyAddress(
+      addressInput,
+      clean(body.placeId, 220),
+      env.GOOGLE_MAPS_API_KEY,
+    );
     if (!verified) {
       return Response.json(
         { message: "Please enter a valid property address in JR Grace Realty's service area." },
@@ -124,6 +165,13 @@ export async function onRequestPost({ request, env }) {
 
     const { formattedAddress, street, city, state, zip } = verified;
     const propertyAddress = { address: street, street, city, state, zip, postalCode: zip, formattedAddress };
+    if (Number.isFinite(verified.latitude) && Number.isFinite(verified.longitude)) {
+      propertyAddress.latitude = verified.latitude;
+      propertyAddress.longitude = verified.longitude;
+      propertyAddress.lat = verified.latitude;
+      propertyAddress.lng = verified.longitude;
+    }
+    if (verified.placeId) propertyAddress.googlePlaceId = verified.placeId;
     const [{ firstname, lastname }, schemaResponse, configurationResponse] = await Promise.all([
       Promise.resolve(splitName(name)),
       aptlyFetch(`/api/schema/${encodeURIComponent(boardId)}`, token),
