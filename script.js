@@ -115,4 +115,4 @@ analysisForm?.addEventListener('submit', async event => {
   }
 });
 
-(()=>{if(!document.querySelector('link[href*="global-property-nav"]')){const link=document.createElement('link');link.rel='stylesheet';link.href='global-property-nav.css?v=20260908-5';document.head.append(link)}if(!document.querySelector('script[src*="global-property-nav"]')){const script=document.createElement('script');script.src='global-property-nav.js?v=20260908-5';document.body.append(script)}})();
+(()=>{if(!document.querySelector('link[href*="global-property-nav"]')){const link=document.createElement('link');link.rel='stylesheet';link.href='global-property-nav.css?v=20260908-6';document.head.append(link)}if(!document.querySelector('script[src*="global-property-nav"]')){const script=document.createElement('script');script.src='global-property-nav.js?v=20260908-6';document.body.append(script)}})();

@@ -2,7 +2,7 @@
   if (document.documentElement.dataset.jrGlobalNavReady === "true") return;
   document.documentElement.dataset.jrGlobalNavReady = "true";
 
-  const version = "20260908-5";
+  const version = "20260908-6";
   const scriptUrl = document.currentScript?.src || location.href;
   const assetUrl = name => `${new URL(name, scriptUrl).href}?v=${version}`;
   const ensureStylesheet = name => {
@@ -45,6 +45,7 @@
   const propertyItem = `<div class="global-pm-nav"><button class="global-pm-trigger" type="button" aria-expanded="false">Property Management</button><div class="global-pm-menu">${menu}</div></div>`;
   const standardLinks = `${propertyItem}<a href="/rental-search.html">Rental Search</a><a href="/owner-faq.html">Owners FAQ</a><a href="/resident-faq.html">Resident FAQ</a><a href="/vendors.html">Vendors</a><a href="/agents.html">Agents</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>`;
   const infoPages = new Set(["resident-faq.html", "vendors.html", "agents.html", "about.html", "contact.html", "privacy-policy.html", "sitemap.html"]);
+  const propertyPages = new Set(["index.html", "single-family-property-management.html", "multi-family-property-management.html", "tenant-placement.html", "service-areas.html"]);
   const pageCache = new Map();
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let navigationSequence = 0;
@@ -75,38 +76,49 @@
     window.addEventListener("resize", requestUpdate, { passive: true });
   };
 
-  let nav = document.querySelector(".nav nav,.nav-inner nav,.primary-nav,header nav");
-  let header;
-  if (!nav) {
-    const city = document.querySelector(".city-nav .wrap");
-    if (city) {
-      [...city.children].slice(1).forEach(child => child.remove());
-      nav = document.createElement("nav");
-      city.append(nav);
-      header = document.querySelector(".city-nav");
-    }
-  }
-  if (!nav) return;
+  const originalNav = document.querySelector(".nav nav,.nav-inner nav,.primary-nav,header nav");
+  const originalHeader = originalNav?.closest("header,.nav,.city-nav") || document.querySelector(".city-nav");
+  if (!originalHeader) return;
 
-  nav.classList.add("standard-site-nav");
-  nav.setAttribute("aria-label", "Main navigation");
+  const originalChrome = originalHeader.closest(".jr-sticky-chrome");
+  const originalTopbar = originalChrome?.querySelector(":scope > .topbar") || (originalHeader.previousElementSibling?.matches(".topbar") ? originalHeader.previousElementSibling : null);
+  const insertionPoint = originalChrome || originalTopbar || originalHeader;
+  const chrome = document.createElement("div");
+  chrome.className = "jr-sticky-chrome jr-global-chrome";
+  chrome.innerHTML = `<div class="jr-global-topbar"><div class="jr-global-shell jr-global-topbar-row"><div class="jr-global-contact"><a href="tel:2544002863" aria-label="Call J R Grace Realty at 254-400-2863">☎ <span>(254) 400-2863</span></a><a class="jr-global-email" href="mailto:hello@jrgrace.com">✉ <span>hello@jrgrace.com</span></a></div><details class="jr-global-login"><summary>Login</summary><div class="jr-global-login-options"><a href="https://jrgrace.owa.rentmanager.com/">Owner Login</a><a href="https://jrgrace.twa.rentmanager.com/">Resident Login</a></div></details></div></div><header class="jr-global-header"><div class="jr-global-shell jr-global-header-row"><a class="jr-global-brand" href="/index.html"><img src="/assets/logo.png" alt="J R Grace Realty"></a><button class="standard-nav-toggle" type="button" aria-label="Toggle navigation" aria-controls="jr-site-navigation" aria-expanded="false">☰</button><nav id="jr-site-navigation" class="standard-site-nav" aria-label="Main navigation"></nav></div></header>`;
+  insertionPoint.parentElement.insertBefore(chrome, insertionPoint);
+  if (originalChrome) originalChrome.remove();
+  else {
+    originalTopbar?.remove();
+    originalHeader.remove();
+  }
+
+  let header = chrome.querySelector(".jr-global-header");
+  let nav = chrome.querySelector(".standard-site-nav");
   nav.innerHTML = standardLinks;
 
   const item = nav.querySelector(".global-pm-nav");
   const trigger = item.querySelector(".global-pm-trigger");
+  let toggle = chrome.querySelector(".standard-nav-toggle");
   const closeNavigation = () => {
     nav.classList.remove("open");
     item.classList.remove("open");
     trigger.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-expanded", "false");
   };
   const setActiveLink = value => {
     const current = basename(value);
+    const linkedPage = current === "rental-detail.html" ? "rental-search.html" : current;
     nav.querySelectorAll(":scope > a").forEach(link => {
-      const active = basename(link.href) === current;
+      const active = basename(link.href) === linkedPage;
       link.classList.toggle("active", active);
       if (active) link.setAttribute("aria-current", "page");
       else link.removeAttribute("aria-current");
     });
+    const propertyActive = propertyPages.has(current) || current.startsWith("property-management-") || current === "self-managing-vs-property-manager-waco.html";
+    trigger.classList.toggle("active", propertyActive);
+    if (propertyActive) trigger.setAttribute("aria-current", "page");
+    else trigger.removeAttribute("aria-current");
   };
 
   trigger.addEventListener("click", () => {
@@ -115,32 +127,11 @@
   });
   setActiveLink(location.href);
 
-  header = header || nav.closest("header,.nav") || document.querySelector("header,.nav");
-  if (header) {
-    const topbar = header.previousElementSibling?.matches(".topbar") ? header.previousElementSibling : null;
-    if (topbar && !header.closest(".jr-sticky-chrome")) {
-      const chrome = document.createElement("div");
-      chrome.className = "jr-sticky-chrome";
-      topbar.parentElement.insertBefore(chrome, topbar);
-      chrome.append(topbar, header);
-    } else if (!topbar) {
-      header.classList.add("jr-sticky-header");
-    }
-    positionMenu(header);
-  }
-
-  let toggle = header?.querySelector(".menu,.nav-toggle,.standard-nav-toggle");
-  let ownsToggle = document.body.classList.contains("info-page");
-  if (!toggle && header) {
-    toggle = document.createElement("button");
-    toggle.className = "standard-nav-toggle";
-    toggle.type = "button";
-    toggle.setAttribute("aria-label", "Toggle navigation");
-    toggle.textContent = "☰";
-    nav.parentElement.insertBefore(toggle, nav);
-    ownsToggle = true;
-  }
-  if (ownsToggle) toggle?.addEventListener("click", () => nav.classList.toggle("open"));
+  positionMenu(chrome);
+  toggle.addEventListener("click", () => {
+    const open = nav.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", String(open));
+  });
 
   const fetchPage = url => {
     const key = `${url.pathname}${url.search}`;
