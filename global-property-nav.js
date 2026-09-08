@@ -10,6 +10,7 @@
     document.head.append(link);
   };
 
+  ensureStylesheet("global-property-nav.css");
   ensureStylesheet("navigation-scroll-fix.css");
   ensureStylesheet("mobile-site.css");
   ensureStylesheet("info-pages.css");
