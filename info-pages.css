@@ -16,6 +16,8 @@ main,footer{backface-visibility:hidden}
 .info-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
 .info-card{padding:29px;background:#fff;border-top:4px solid #c4a963;box-shadow:0 9px 26px rgba(16,38,63,.08)}
 .info-card h3{margin:0 0 10px;color:#1d467d;font-size:1.3rem}.info-card p{margin:0;color:#526174;line-height:1.65}
+.info-contact>div>.info-grid .info-card{display:flex;flex-direction:column}
+.info-contact>div>.info-grid .info-actions{margin-top:auto;padding-top:26px}
 .info-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
 .info-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:13px 20px;background:#1d467d;color:#fff!important;font-weight:800;text-decoration:none}
 .info-button.gold{background:#c4a963;color:#10263f!important}.info-button.outline{border:1px solid #1d467d;background:#fff;color:#1d467d!important}
