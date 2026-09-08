@@ -1,5 +1,8 @@
 (() => {
-  const version = "20260908-4";
+  if (document.documentElement.dataset.jrGlobalNavReady === "true") return;
+  document.documentElement.dataset.jrGlobalNavReady = "true";
+
+  const version = "20260908-5";
   const scriptUrl = document.currentScript?.src || location.href;
   const assetUrl = name => `${new URL(name, scriptUrl).href}?v=${version}`;
   const ensureStylesheet = name => {
@@ -47,10 +50,14 @@
   let navigationSequence = 0;
   let renderedUrl = location.href;
 
-  const basename = value => new URL(value, location.href).pathname.split("/").pop() || "index.html";
+  const basename = value => {
+    const segment = new URL(value, location.href).pathname.split("/").filter(Boolean).pop() || "index.html";
+    return /\.[a-z0-9]+$/i.test(segment) ? segment : `${segment}.html`;
+  };
   const normalizedPath = value => {
-    const path = new URL(value, location.href).pathname;
-    return path === "/index.html" ? "/" : path;
+    const path = new URL(value, location.href).pathname.replace(/\/+$/, "") || "/";
+    if (path === "/index.html") return "/";
+    return path.endsWith(".html") ? path.slice(0, -5) || "/" : path;
   };
   const positionMenu = header => {
     let queued = false;
@@ -94,7 +101,12 @@
   };
   const setActiveLink = value => {
     const current = basename(value);
-    nav.querySelectorAll(":scope > a").forEach(link => link.classList.toggle("active", basename(link.href) === current));
+    nav.querySelectorAll(":scope > a").forEach(link => {
+      const active = basename(link.href) === current;
+      link.classList.toggle("active", active);
+      if (active) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    });
   };
 
   trigger.addEventListener("click", () => {
@@ -149,16 +161,16 @@
   const animateOut = elements => {
     if (reducedMotion) return Promise.resolve();
     return Promise.all(elements.filter(Boolean).map(element => element.animate([
-      { opacity: 1, transform: "translateY(0)" },
-      { opacity: 0, transform: "translateY(4px)" }
-    ], { duration: 90, easing: "ease-in", fill: "forwards" }).finished.catch(() => {})));
+      { opacity: 1 },
+      { opacity: 0 }
+    ], { duration: 120, easing: "ease-out", fill: "forwards" }).finished.catch(() => {})));
   };
   const animateIn = elements => {
     if (reducedMotion) return;
     elements.filter(Boolean).forEach(element => element.animate([
-      { opacity: 0, transform: "translateY(7px)" },
-      { opacity: 1, transform: "translateY(0)" }
-    ], { duration: 210, easing: "cubic-bezier(.2,.7,.2,1)", fill: "both" }));
+      { opacity: 0 },
+      { opacity: 1 }
+    ], { duration: 220, easing: "cubic-bezier(.2,.7,.2,1)", fill: "both" }));
   };
 
   const swapInfoPage = async (href, historyMode = "push") => {
@@ -184,24 +196,32 @@
       const nextFooter = nextDoc.querySelector("body > footer");
       if (!currentMain || !nextMain) throw new Error("Page content unavailable");
 
-      await animateOut([currentMain, currentFooter]);
-      if (sequence !== navigationSequence) return true;
+      const updatePage = () => {
+        currentMain.replaceWith(nextMain);
+        if (currentFooter && nextFooter) currentFooter.replaceWith(nextFooter);
+        renderSiteFooter();
+        document.title = nextDoc.title;
+        document.body.className = nextDoc.body.className;
+        if (basename(url) === "agents.html") {
+          ensureStylesheet("agent-referral.css");
+          ensureScript("agent-referral.js");
+        }
+        renderedUrl = url.href;
+        closeNavigation();
+        setActiveLink(url);
+        scrollTo({ top: 0, behavior: "auto" });
+        if (historyMode === "push") history.pushState({ infoPage: true }, "", url);
+      };
 
-      currentMain.replaceWith(nextMain);
-      if (currentFooter && nextFooter) currentFooter.replaceWith(nextFooter);
-      renderSiteFooter();
-      document.title = nextDoc.title;
-      document.body.className = nextDoc.body.className;
-      if (basename(url) === "agents.html") {
-        ensureStylesheet("agent-referral.css");
-        ensureScript("agent-referral.js");
+      if (!reducedMotion && document.startViewTransition) {
+        const transition = document.startViewTransition(updatePage);
+        await transition.finished.catch(() => {});
+      } else {
+        await animateOut([currentMain, currentFooter]);
+        if (sequence !== navigationSequence) return true;
+        updatePage();
+        animateIn([nextMain, nextFooter]);
       }
-      renderedUrl = url.href;
-      closeNavigation();
-      setActiveLink(url);
-      scrollTo({ top: 0, behavior: "instant" });
-      if (historyMode === "push") history.pushState({ infoPage: true }, "", url);
-      animateIn([nextMain, nextFooter]);
       return true;
     } catch (error) {
       location.assign(url.href);
@@ -223,7 +243,8 @@
       fetchPage(url).catch(() => {});
       return;
     }
-    if (!url.hash && (/\.html$/.test(url.pathname) || url.pathname === "/")) {
+    const lastSegment = url.pathname.split("/").filter(Boolean).pop() || "";
+    if (!url.hash && (/\.html$/.test(url.pathname) || !lastSegment.includes("."))) {
       const key = `link[rel="prefetch"][href="${CSS.escape(url.href)}"]`;
       if (!document.head.querySelector(key)) {
         const hint = document.createElement("link");
@@ -243,6 +264,9 @@
     const link = eligibleLink(event.target);
     if (link) preload(link);
   });
+  const warmPrimaryNavigation = () => nav.querySelectorAll(":scope > a").forEach(preload);
+  if ("requestIdleCallback" in window) requestIdleCallback(warmPrimaryNavigation, { timeout: 1600 });
+  else setTimeout(warmPrimaryNavigation, 350);
   document.addEventListener("click", event => {
     const link = eligibleLink(event.target);
     if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;

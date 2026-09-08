@@ -1,8 +1,20 @@
+@view-transition{navigation:auto}
+@keyframes jr-page-out{to{opacity:0}}
+@keyframes jr-page-in{from{opacity:0}}
+::view-transition-old(root){animation:120ms ease-out both jr-page-out}
+::view-transition-new(root){animation:240ms cubic-bezier(.2,.7,.2,1) both jr-page-in}
+.jr-sticky-chrome,.jr-sticky-header{view-transition-name:jr-site-header}
+::view-transition-old(jr-site-header),::view-transition-new(jr-site-header){animation:none}
 .jr-sticky-chrome,.jr-sticky-header{position:sticky!important;top:0!important;z-index:1100!important;isolation:isolate}
 .jr-sticky-chrome{width:100%;background:#fff;box-shadow:0 2px 12px rgba(16,39,66,.08)}
 .jr-sticky-chrome>.topbar,.jr-sticky-chrome>header,.jr-sticky-chrome>.nav{position:relative!important;top:auto!important;z-index:auto!important}
 .jr-sticky-header{background:#fff;box-shadow:0 2px 12px rgba(16,39,66,.08)}
 .skip:focus{z-index:1200!important}
+.site-header{position:relative;z-index:20;width:100%;background:#fff;border-bottom:1px solid #e4e7eb}
+.site-header .header-row{width:min(1180px,calc(100% - 40px));height:82px;margin:auto;display:flex;align-items:center;gap:30px}
+.site-header .brand{display:inline-flex;align-items:center;flex:0 0 auto}
+.site-header .brand img{display:block;width:170px;height:auto}
+.site-header .nav-toggle{display:none;margin-left:auto;border:1px solid #1d467d;background:#fff;color:#1d467d;font-size:24px;line-height:1;padding:8px 10px}
 .global-pm-trigger:after,.nav-trigger:after{content:""!important;display:inline-block;width:7px;height:7px;margin-left:8px;border:0;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);transform-origin:center;transition:transform .18s ease;vertical-align:middle}
 .global-pm-nav.open>.global-pm-trigger:after,.global-pm-nav:focus-within>.global-pm-trigger:after,.nav-item.open>.nav-trigger:after,.nav-item:focus-within>.nav-trigger:after{transform:translateY(2px) rotate(225deg)}
 .global-pm-trigger,.nav-trigger{display:inline-flex!important;align-items:center!important;justify-content:center;line-height:1.25}
@@ -16,10 +28,17 @@
   .standard-site-nav>a,.standard-site-nav>.global-pm-nav>.global-pm-trigger{font-size:12px!important}
 }
 @media(max-width:900px){
-  .standard-nav-toggle{display:block}
+  .standard-nav-toggle,.site-header .nav-toggle{display:block}
   .standard-site-nav{display:none!important;position:absolute!important;top:100%;right:0;left:0;z-index:100;flex-direction:column;align-items:stretch!important;gap:0!important;margin:0!important;padding:14px 24px 22px!important;border-top:1px solid #e4e7eb;box-shadow:0 14px 28px rgba(16,39,66,.16)}
   .rental-detail-page .listing-site-header .standard-site-nav{background:#fff!important}
   .standard-site-nav.open{display:flex!important}
   .standard-site-nav>a,.standard-site-nav>.global-pm-nav>.global-pm-trigger{justify-content:flex-start!important;min-height:42px;width:100%;font-size:14px!important;text-align:left!important}
   .standard-site-nav>a.active{box-shadow:none}
+}
+@media(max-width:560px){
+  .site-header .header-row{width:calc(100% - 28px);height:72px}
+  .site-header .brand img{width:146px}
+}
+@media(prefers-reduced-motion:reduce){
+  ::view-transition-old(root),::view-transition-new(root){animation:none}
 }

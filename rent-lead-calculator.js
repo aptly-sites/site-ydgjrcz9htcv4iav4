@@ -6,13 +6,7 @@
     link.href = href;
     document.head.append(link);
   };
-  addStylesheet("global-property-nav.css?v=20260908-1");
   addStylesheet("google-address.css?v=20260908-1");
-  if (!document.querySelector('script[src*="global-property-nav"]')) {
-    const script = document.createElement("script");
-    script.src = "global-property-nav.js?v=20260908-1";
-    document.body.append(script);
-  }
 
   const calculator = document.querySelector("#calculator-form");
   const recommendation = document.querySelector(".recommendation");
