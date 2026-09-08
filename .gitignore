@@ -1,0 +1,9 @@
+.DS_Store
+.dev.vars
+.env
+.local-preview/
+.next/
+.wrangler/
+dist/
+node_modules/
+npm-debug.log*

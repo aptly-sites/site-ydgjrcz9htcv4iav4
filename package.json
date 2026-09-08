@@ -1,0 +1,9 @@
+{
+  "name": "jr-grace-realty-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/local-server.mjs",
+    "start": "npm run dev"
+  }
+}
