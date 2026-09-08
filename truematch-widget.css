@@ -1,58 +1,77 @@
 .truematch-showcase{
-  padding:70px 0;
-  background:linear-gradient(180deg,#fff 0%,#f4f6f9 100%);
+  padding:42px 0 0;
+  overflow:hidden;
+  border-top:1px solid #e9edf6;
+  background:linear-gradient(108deg,#f7f9ff 0%,#f3f1ff 45%,#fff4ee 100%);
 }
 .tm-br{
-  width:min(100%,980px);
+  width:min(100%,1040px);
   margin:0 auto;
-  overflow:hidden;
-  border:1px solid #dce2e9;
-  border-radius:16px;
-  background:#fff;
-  box-shadow:0 18px 48px rgba(16,38,63,.13);
   color:#111827;
-  font-family:Arial,sans-serif;
+  font-family:"Inter Tight",Arial,sans-serif;
 }
 .tm-br *{box-sizing:border-box}
-.tm-br-main{display:grid;grid-template-columns:1.2fr 1px .8fr;gap:42px;align-items:center;padding:38px 44px 28px}
-.tm-br-badges{display:flex;align-items:center;justify-content:center;gap:32px;min-width:0}
-.tm-br-badge-link{display:flex;align-items:center;justify-content:center;min-width:0;text-decoration:none}
-.tm-br-tier-badge{display:block;width:190px;max-width:52%;height:auto}
-.tm-br-award-badge{display:block;width:116px;max-width:34%;height:auto}
-.tm-br-divider{align-self:stretch;width:1px;min-height:150px;background:#dce2e9}
+.tm-br-main{
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) 1px minmax(210px,.65fr);
+  gap:48px;
+  align-items:center;
+  width:min(100%,790px);
+  margin:0 auto;
+  padding:0 24px 18px;
+}
+.tm-br-badges{display:flex;align-items:center;justify-content:center;gap:28px;min-width:0}
+.tm-br-badge-link{display:flex;flex:0 1 174px;align-items:center;justify-content:center;min-width:0;text-decoration:none}
+.tm-br-tier-badge,.tm-br-award-badge{display:block;width:100%;height:174px;object-fit:contain}
+.tm-br-divider{align-self:stretch;width:1px;min-height:158px;background:#dfe3ed}
 .tm-br-proof{text-align:center}
-.tm-br-name{margin:0 0 17px;color:#183a70;font:800 clamp(1.35rem,2.5vw,2rem)/1.15 "Plus Jakarta Sans",Arial,sans-serif}
+.tm-br-name{margin:0 0 10px;color:#20242d;font:800 1.18rem/1.15 "Plus Jakarta Sans",Arial,sans-serif}
 .tm-br-proof-rank{display:grid;justify-items:center;line-height:1}
-.tm-br-proof-top{color:#4f5f73;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em}
-.tm-br-proof-percent{margin:3px 0;color:#183a70;font:800 clamp(3.4rem,7vw,5.3rem)/.9 "Plus Jakarta Sans",Arial,sans-serif;letter-spacing:-.07em}
-.tm-br-proof-market{color:#4f5f73;font-size:1rem;font-weight:700}
-.tm-br-certs{display:flex;align-items:center;justify-content:center;gap:12px;padding:0 24px 28px}
-.tm-br-cert{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;font-size:.8rem;font-weight:800}
+.tm-br-proof-top{color:#20242d;font-size:1.16rem;font-weight:400}
+.tm-br-proof-percent{margin:3px 0 6px;background:linear-gradient(100deg,#6f85ff,#ff9a6e);-webkit-background-clip:text;background-clip:text;color:transparent;font:800 3.9rem/.9 "Plus Jakarta Sans",Arial,sans-serif;letter-spacing:-.07em}
+.tm-br-proof-market{color:#343943;font-size:1rem;font-weight:400}
+.tm-br-certs{display:flex;align-items:center;justify-content:center;gap:12px;padding:0 24px 29px}
+.tm-br-cert{display:inline-flex;align-items:center;gap:8px;min-height:34px;padding:8px 16px;border-radius:999px;font-size:.8rem;font-weight:600}
 .tm-br-cert-svg{display:block;width:17px;height:17px}
-.tm-br-footer{display:flex;align-items:center;gap:25px;padding:20px 28px;background:#f7f8fb;border-top:1px solid #e1e6ec}
+.tm-br-footer{
+  display:flex;
+  align-items:center;
+  gap:28px;
+  width:min(100%,1040px);
+  margin:0 auto;
+  padding:16px 22px;
+  border:1px solid rgba(223,226,235,.9);
+  border-bottom:0;
+  border-radius:16px 16px 0 0;
+  background:rgba(255,255,255,.78);
+  box-shadow:0 -2px 18px rgba(70,78,110,.05);
+}
 .tm-br-brand{display:flex;align-items:center;max-width:465px;margin-right:auto;color:inherit;text-decoration:none}
-.tm-br-logo{display:block;width:min(100%,360px);line-height:0}
+.tm-br-logo{display:block;width:min(100%,340px);line-height:0}
 .tm-br-logo-svg{display:block;width:100%;height:auto}
 .tm-br-actions{display:flex;flex:0 0 auto;gap:10px}
-.tm-br-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border:1px solid #183a70;border-radius:5px;font-size:.82rem;font-weight:800;text-decoration:none;white-space:nowrap}
-.tm-br-btn-primary{background:#183a70;color:#fff}
-.tm-br-btn-secondary{background:#fff;color:#183a70}
-.tm-br-btn:hover,.tm-br-btn:focus-visible{transform:translateY(-1px);box-shadow:0 7px 16px rgba(16,38,63,.14)}
+.tm-br-btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 18px;border:1px solid #1460ff;border-radius:10px;font-size:.82rem;font-weight:800;text-decoration:none;white-space:nowrap;transition:transform .18s ease,box-shadow .18s ease}
+.tm-br-btn-primary{background:#1460ff;color:#fff}
+.tm-br-btn-secondary{background:#fff;color:#1460ff}
+.tm-br-btn:hover,.tm-br-btn:focus-visible{transform:translateY(-1px);box-shadow:0 7px 16px rgba(20,96,255,.15)}
 @media(max-width:760px){
-  .truematch-showcase{padding:48px 0}
-  .tm-br-main{grid-template-columns:1fr;gap:26px;padding:30px 24px 24px}
+  .truematch-showcase{padding-top:36px}
+  .tm-br-main{grid-template-columns:1fr;gap:24px;padding:0 20px 22px}
   .tm-br-divider{width:100%;min-height:1px;height:1px}
-  .tm-br-badges{gap:22px}
-  .tm-br-tier-badge{width:165px}.tm-br-award-badge{width:102px}
-  .tm-br-certs{flex-wrap:wrap;padding:0 20px 24px}
-  .tm-br-footer{align-items:stretch;flex-direction:column;padding:22px}
+  .tm-br-badges{gap:20px}
+  .tm-br-badge-link{flex-basis:150px}
+  .tm-br-tier-badge,.tm-br-award-badge{height:150px}
+  .tm-br-certs{flex-wrap:wrap;padding:0 16px 25px}
+  .tm-br-footer{align-items:stretch;flex-direction:column;padding:20px;border-radius:14px 14px 0 0}
   .tm-br-brand{max-width:100%;margin:0}
-  .tm-br-logo{width:100%;max-width:360px}
+  .tm-br-logo{width:100%;max-width:340px}
   .tm-br-actions{display:grid;grid-template-columns:1fr 1fr;width:100%}
 }
 @media(max-width:430px){
-  .tm-br{border-radius:12px}
-  .tm-br-main{padding:26px 18px 22px}
+  .tm-br-main{padding-right:12px;padding-left:12px}
+  .tm-br-badges{gap:12px}
+  .tm-br-badge-link{flex-basis:126px}
+  .tm-br-tier-badge,.tm-br-award-badge{height:126px}
   .tm-br-actions{grid-template-columns:1fr}
   .tm-br-btn{width:100%}
 }
