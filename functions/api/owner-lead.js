@@ -1,0 +1,215 @@
+const APTLY_BASE_URL = "https://core-api.getaptly.com";
+const DEFAULT_BOARD_ID = "2phWRbsLuL5pNv9af";
+const ALLOWED_CITIES = new Set([
+  "waco",
+  "woodway",
+  "hewitt",
+  "robinson",
+  "china spring",
+  "bellmead",
+  "lacy lakeview",
+]);
+
+function clean(value, max = 180) {
+  return typeof value === "string" ? value.trim().replace(/\s+/g, " ").slice(0, max) : "";
+}
+
+function normalized(value) {
+  return clean(value).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+function splitName(fullName) {
+  const parts = fullName.split(/\s+/).filter(Boolean);
+  return parts.length === 1
+    ? { firstname: parts[0], lastname: "" }
+    : { firstname: parts.slice(0, -1).join(" "), lastname: parts.at(-1) || "" };
+}
+
+function fieldName(field) {
+  return normalized(field.label || field.name);
+}
+
+function fieldKey(field) {
+  return field.key || field.uuid || "";
+}
+
+function findField(fields, names, types) {
+  const wanted = names.map(normalized);
+  return fields.find((field) => {
+    if (field.archived || !fieldKey(field)) return false;
+    const name = fieldName(field);
+    return (!types || types.includes(normalized(field.type)))
+      && wanted.some((candidate) => name === candidate || name.includes(candidate));
+  });
+}
+
+async function aptlyFetch(path, token, init = {}) {
+  const response = await fetch(`${APTLY_BASE_URL}${path}`, {
+    ...init,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-token": token,
+      ...(init.headers || {}),
+    },
+  });
+  const data = await response.json().catch(() => null);
+  if (!response.ok) {
+    throw new Error(`Aptly ${path} returned ${response.status}: ${JSON.stringify(data)?.slice(0, 500)}`);
+  }
+  return data;
+}
+
+async function verifyPropertyAddress(input) {
+  const url = new URL("https://geocoding.geo.census.gov/geocoder/locations/onelineaddress");
+  url.searchParams.set("address", input);
+  url.searchParams.set("benchmark", "Public_AR_Current");
+  url.searchParams.set("format", "json");
+
+  const response = await fetch(url, { headers: { Accept: "application/json" } });
+  if (!response.ok) throw new Error(`Address validator returned ${response.status}.`);
+
+  const data = await response.json();
+  const match = data?.result?.addressMatches?.[0];
+  const components = match?.addressComponents;
+  if (!match || !components?.zip || components?.state !== "TX" || !ALLOWED_CITIES.has(normalized(components.city))) {
+    return null;
+  }
+
+  const titleCase = (value) => value.toLowerCase().replace(/\b\w/g, (letter) => letter.toUpperCase());
+  const formattedAddress = titleCase(match.matchedAddress.replace(/, ([A-Z]{2}), /, ", $1 ")).replace(/, Tx /, ", TX ");
+  const street = formattedAddress.split(",")[0];
+  return { formattedAddress, street, city: titleCase(components.city), state: components.state, zip: components.zip };
+}
+
+export async function onRequestPost({ request, env }) {
+  const token = env.APTLY_API_TOKEN;
+  const boardId = env.APTLY_OWNER_LEADS_BOARD_ID || DEFAULT_BOARD_ID;
+  if (!token) {
+    console.error("Owner lead integration is missing its hosted Aptly API token.");
+    return Response.json(
+      { message: "We couldn't send your request right now. Please call (254) 400-2863." },
+      { status: 503 },
+    );
+  }
+
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return Response.json({ message: "Please review the form and try again." }, { status: 400 });
+  }
+
+  if (clean(body.website)) return Response.json({ message: "Thank you! Your request has been received." });
+
+  const name = clean(body.name, 120);
+  const email = clean(body.email, 180).toLowerCase();
+  const phone = clean(body.phone, 40);
+  const addressInput = clean(body.address, 280);
+  if (!name || !email || !phone || !addressInput || !/^\S+@\S+\.\S+$/.test(email)) {
+    return Response.json(
+      { message: "Please complete your name, contact details, and full property address." },
+      { status: 400 },
+    );
+  }
+
+  try {
+    const verified = await verifyPropertyAddress(addressInput);
+    if (!verified) {
+      return Response.json(
+        { message: "Please enter a valid property address in JR Grace Realty's service area." },
+        { status: 422 },
+      );
+    }
+
+    const { formattedAddress, street, city, state, zip } = verified;
+    const propertyAddress = { address: street, street, city, state, zip, postalCode: zip, formattedAddress };
+    const [{ firstname, lastname }, schemaResponse, configurationResponse] = await Promise.all([
+      Promise.resolve(splitName(name)),
+      aptlyFetch(`/api/schema/${encodeURIComponent(boardId)}`, token),
+      aptlyFetch(`/api/board/${encodeURIComponent(boardId)}/configuration`, token),
+    ]);
+
+    const contactResponse = await aptlyFetch("/api/contacts", token, {
+      method: "POST",
+      body: JSON.stringify({
+        firstname,
+        lastname,
+        email,
+        phone: [{ number: phone, type: "mobile" }],
+        contactType: "Owner",
+      }),
+    });
+    const contact = contactResponse?.data || contactResponse;
+    const contactId = contact?._id || contact?.uuid;
+    if (!contactId) throw new Error("Aptly created the contact without returning a contact ID.");
+
+    const schemaFields = Array.isArray(schemaResponse) ? schemaResponse : schemaResponse?.data || [];
+    const config = configurationResponse?.data || configurationResponse || {};
+    const configFields = Array.isArray(config.fields) ? config.fields : [];
+    const fields = [...schemaFields, ...configFields].filter(
+      (field, index, all) => index === all.findIndex((candidate) => fieldKey(candidate) === fieldKey(field)),
+    );
+    const addressField = findField(fields, ["Rental Property Address"]);
+    const contactField = findField(fields, ["Owner", "Owner Contact", "Contact"], ["person", "persons"])
+      || fields.find((field) => ["person", "persons"].includes(normalized(field.type)) && !field.archived);
+    const stageField = findField(
+      fields,
+      ["Stage", "Lead Stage", "Status", "Workflow"],
+      ["select", "singleselect", "text", "string"],
+    );
+    if (!addressField) throw new Error("The Owner Leads board does not contain a Rental Property Address field.");
+    if (!contactField) throw new Error("The Owner Leads board does not contain an owner/contact person field.");
+
+    const card = {
+      name: `${name} – ${formattedAddress}`,
+      Stage: "New Lead",
+      Source: "Website",
+    };
+    card[fieldKey(addressField)] = normalized(addressField.type) === "address" ? propertyAddress : formattedAddress;
+    card[fieldKey(contactField)] = normalized(contactField.type) === "persons" ? [contactId] : contactId;
+    if (stageField) card[fieldKey(stageField)] = "New Lead";
+
+    const optionalMappings = [
+      [["Property Type"], clean(body.propertyType, 80)],
+      [["Bedrooms"], clean(body.bedrooms, 20)],
+      [["Bathrooms"], clean(body.bathrooms, 20)],
+      [["Owner Goal", "Goal"], clean(body.goal, 120)],
+      [["Desired Management Service", "Desired Service", "Service Requested"], clean(body.goal, 120)],
+      [["Message", "Notes", "Property Notes"], clean(body.message, 1200)],
+      [["Email"], email],
+      [["Phone", "Mobile Phone"], phone],
+      [["Source", "Lead Source"], "Website"],
+    ];
+    for (const [labels, value] of optionalMappings) {
+      if (!value) continue;
+      const field = findField(fields, labels);
+      if (field && !card[fieldKey(field)]) card[fieldKey(field)] = value;
+    }
+
+    const workflows = Array.isArray(config.workflows) ? config.workflows : [];
+    const newLeadsWorkflow = workflows.find((workflow) =>
+      [workflow.name, workflow.title, workflow.label]
+        .some((value) => ["new lead", "new leads"].includes(normalized(value))),
+    );
+    if (!stageField && newLeadsWorkflow) {
+      const workflowId = newLeadsWorkflow.uuid || newLeadsWorkflow._id || newLeadsWorkflow.id;
+      if (workflowId) {
+        card.workflow = workflowId;
+        card.sequence = workflowId;
+      }
+    }
+
+    await aptlyFetch(`/api/board/${encodeURIComponent(boardId)}`, token, {
+      method: "POST",
+      body: JSON.stringify(card),
+    });
+    return Response.json({ message: "Thank you! Your free rental analysis request has been sent to JR Grace Realty." });
+  } catch (error) {
+    console.error("Unable to create Aptly owner lead:", error instanceof Error ? error.message : error);
+    return Response.json(
+      { message: "We couldn't send your request right now. Please call (254) 400-2863." },
+      { status: 502 },
+    );
+  }
+}
