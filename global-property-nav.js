@@ -1,5 +1,5 @@
 (() => {
-  const version = "20260908-2";
+  const version = "20260908-3";
   const scriptUrl = document.currentScript?.src || location.href;
   const assetUrl = name => `${new URL(name, scriptUrl).href}?v=${version}`;
   const ensureStylesheet = name => {
@@ -8,6 +8,13 @@
     link.rel = "stylesheet";
     link.href = assetUrl(name);
     document.head.append(link);
+  };
+  const ensureScript = name => {
+    if (document.querySelector(`script[src*="${name}"]`)) return;
+    const script = document.createElement("script");
+    script.src = assetUrl(name);
+    script.defer = true;
+    document.head.append(script);
   };
 
   ensureStylesheet("global-property-nav.css");
@@ -174,6 +181,10 @@
       renderSiteFooter();
       document.title = nextDoc.title;
       document.body.className = nextDoc.body.className;
+      if (basename(url) === "agents.html") {
+        ensureStylesheet("agent-referral.css");
+        ensureScript("agent-referral.js");
+      }
       renderedUrl = url.href;
       closeNavigation();
       setActiveLink(url);
