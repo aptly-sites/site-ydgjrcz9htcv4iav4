@@ -1,0 +1,59 @@
+.truematch-showcase{
+  padding:70px 0;
+  background:linear-gradient(180deg,#fff 0%,#f4f6f9 100%);
+}
+.tm-br{
+  width:min(100%,980px);
+  margin:0 auto;
+  overflow:hidden;
+  border:1px solid #dce2e9;
+  border-radius:16px;
+  background:#fff;
+  box-shadow:0 18px 48px rgba(16,38,63,.13);
+  color:#111827;
+  font-family:Arial,sans-serif;
+}
+.tm-br *{box-sizing:border-box}
+.tm-br-main{display:grid;grid-template-columns:1.2fr 1px .8fr;gap:42px;align-items:center;padding:38px 44px 28px}
+.tm-br-badges{display:flex;align-items:center;justify-content:center;gap:32px;min-width:0}
+.tm-br-badge-link{display:flex;align-items:center;justify-content:center;min-width:0;text-decoration:none}
+.tm-br-tier-badge{display:block;width:190px;max-width:52%;height:auto}
+.tm-br-award-badge{display:block;width:116px;max-width:34%;height:auto}
+.tm-br-divider{align-self:stretch;width:1px;min-height:150px;background:#dce2e9}
+.tm-br-proof{text-align:center}
+.tm-br-name{margin:0 0 17px;color:#183a70;font:800 clamp(1.35rem,2.5vw,2rem)/1.15 "Plus Jakarta Sans",Arial,sans-serif}
+.tm-br-proof-rank{display:grid;justify-items:center;line-height:1}
+.tm-br-proof-top{color:#4f5f73;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em}
+.tm-br-proof-percent{margin:3px 0;color:#183a70;font:800 clamp(3.4rem,7vw,5.3rem)/.9 "Plus Jakarta Sans",Arial,sans-serif;letter-spacing:-.07em}
+.tm-br-proof-market{color:#4f5f73;font-size:1rem;font-weight:700}
+.tm-br-certs{display:flex;align-items:center;justify-content:center;gap:12px;padding:0 24px 28px}
+.tm-br-cert{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;font-size:.8rem;font-weight:800}
+.tm-br-cert-svg{display:block;width:17px;height:17px}
+.tm-br-footer{display:flex;align-items:center;gap:25px;padding:20px 28px;background:#f7f8fb;border-top:1px solid #e1e6ec}
+.tm-br-brand{display:flex;align-items:center;max-width:465px;margin-right:auto;color:inherit;text-decoration:none}
+.tm-br-logo{display:block;width:min(100%,360px);line-height:0}
+.tm-br-logo-svg{display:block;width:100%;height:auto}
+.tm-br-actions{display:flex;flex:0 0 auto;gap:10px}
+.tm-br-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border:1px solid #183a70;border-radius:5px;font-size:.82rem;font-weight:800;text-decoration:none;white-space:nowrap}
+.tm-br-btn-primary{background:#183a70;color:#fff}
+.tm-br-btn-secondary{background:#fff;color:#183a70}
+.tm-br-btn:hover,.tm-br-btn:focus-visible{transform:translateY(-1px);box-shadow:0 7px 16px rgba(16,38,63,.14)}
+@media(max-width:760px){
+  .truematch-showcase{padding:48px 0}
+  .tm-br-main{grid-template-columns:1fr;gap:26px;padding:30px 24px 24px}
+  .tm-br-divider{width:100%;min-height:1px;height:1px}
+  .tm-br-badges{gap:22px}
+  .tm-br-tier-badge{width:165px}.tm-br-award-badge{width:102px}
+  .tm-br-certs{flex-wrap:wrap;padding:0 20px 24px}
+  .tm-br-footer{align-items:stretch;flex-direction:column;padding:22px}
+  .tm-br-brand{max-width:100%;margin:0}
+  .tm-br-logo{width:100%;max-width:360px}
+  .tm-br-actions{display:grid;grid-template-columns:1fr 1fr;width:100%}
+}
+@media(max-width:430px){
+  .tm-br{border-radius:12px}
+  .tm-br-main{padding:26px 18px 22px}
+  .tm-br-actions{grid-template-columns:1fr}
+  .tm-br-btn{width:100%}
+}
+@media(prefers-reduced-motion:reduce){.tm-br-btn{transition:none}}

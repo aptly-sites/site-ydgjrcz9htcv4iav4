@@ -18,7 +18,7 @@
 
   const footerMarkup = `<div class="jr-footer-shell"><div class="jr-footer-grid"><section class="jr-footer-brand" aria-label="J R Grace Realty"><a href="/index.html"><img class="jr-footer-logo" src="/assets/logo.png" alt="J R Grace Realty"></a><p>Professional property management with local experience, dependable communication, and practical support throughout Waco and Central Texas.</p></section><section><h2><a href="/contact.html">Contact</a></h2><address><a href="tel:2547775577">Phone: 254-777-5577</a><span>2012 Lake Air Dr.<br>Waco, Texas 76710</span></address><div class="jr-footer-legal-links"><a href="https://drive.google.com/file/d/1Egi37g3YcFlPerfmWEvhC5HxJJAF5Eqa/view" target="_blank" rel="noopener">IABS</a><a href="https://drive.google.com/file/d/1eAh302SyErFPp62zVbIiUM9ROOWzOkTS/view?usp=drive_link" target="_blank" rel="noopener">Consumer Protection</a></div></section><section><h2><a href="/sitemap.html">Sitemap</a></h2><nav aria-label="Footer sitemap"><a href="/index.html">Home</a><a href="/single-family-property-management.html">Property Management</a><a href="/rental-search.html">Homes for Rent</a><a href="/owner-faq.html">Owner FAQ</a><a href="/resident-faq.html">Resident FAQ</a><a class="jr-footer-all-pages" href="/sitemap.html">View full sitemap →</a></nav></section><section><h2>Quick Links</h2><nav aria-label="Portal links"><a href="https://jrgrace.owa.rentmanager.com/" target="_blank" rel="noopener">Owner Login</a><a href="https://jrgrace.twa.rentmanager.com/" target="_blank" rel="noopener">Tenant Login</a></nav></section></div><div class="jr-footer-bottom"><span>© <b data-footer-year></b> J R Grace Realty</span><span>Equal Housing Opportunity</span><a href="/privacy-policy.html">Privacy Policy</a></div></div>`;
   const renderSiteFooter = () => {
-    let footer = document.querySelector("footer");
+    let footer = document.querySelector("body > footer");
     if (!footer) {
       footer = document.createElement("footer");
       document.body.append(footer);
@@ -161,9 +161,9 @@
       const nextDoc = new DOMParser().parseFromString(nextHtml, "text/html");
       if (sequence !== navigationSequence) return true;
       const currentMain = document.querySelector("main");
-      const currentFooter = document.querySelector("footer");
+      const currentFooter = document.querySelector("body > footer");
       const nextMain = nextDoc.querySelector("main");
-      const nextFooter = nextDoc.querySelector("footer");
+      const nextFooter = nextDoc.querySelector("body > footer");
       if (!currentMain || !nextMain) throw new Error("Page content unavailable");
 
       await animateOut([currentMain, currentFooter]);
