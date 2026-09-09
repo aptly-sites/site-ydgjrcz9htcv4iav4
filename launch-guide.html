@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Review guide for the new J R Grace Realty website, prepared by Aptly.">
+<title>J R Grace Launch Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F5F6F2;
+  --surface:#FFFFFF;
+  --surface-2:#EDEFE9;
+  --ink:#141917;
+  --muted:#5B6662;
+  --line:#DDE1D9;
+  --line-strong:#C3CAC0;
+  --accent:#2E5E4E;
+  --accent-ink:#2E5E4E;
+  --accent-soft:#E3EDE7;
+  --flag:#9E5518;
+  --flag-soft:#F5E8DA;
+  --shadow:0 1px 2px rgba(20,25,23,.06), 0 8px 24px rgba(20,25,23,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111411; --surface:#191D1A; --surface-2:#1F241F;
+    --ink:#E8EDE8; --muted:#98A39D; --line:#2A302B; --line-strong:#3A423B;
+    --accent:#83C4A8; --accent-ink:#83C4A8; --accent-soft:#1D2823;
+    --flag:#DDA469; --flag-soft:#2A2119;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111411; --surface:#191D1A; --surface-2:#1F241F;
+  --ink:#E8EDE8; --muted:#98A39D; --line:#2A302B; --line-strong:#3A423B;
+  --accent:#83C4A8; --accent-ink:#83C4A8; --accent-soft:#1D2823;
+  --flag:#DDA469; --flag-soft:#2A2119;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:800px;margin:0 auto;padding:56px 24px 96px;display:flex;flex-direction:column;gap:54px}
+.eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);font-weight:600;margin:0 0 14px}
+h1{font-family:"Newsreader",Georgia,serif;font-weight:500;font-size:clamp(34px,5.4vw,54px);line-height:1.07;letter-spacing:-.015em;margin:0;text-wrap:balance}
+.lede{color:var(--muted);font-size:17.5px;max-width:60ch;margin:18px 0 0}
+.cta{
+  margin-top:26px;display:flex;flex-wrap:wrap;align-items:center;gap:14px;
+  background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);padding:18px 20px;
+}
+.cta .k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;width:100%}
+.cta a{font-family:"IBM Plex Mono",monospace;font-size:14.5px;color:var(--accent-ink);word-break:break-all}
+.factbar{margin-top:22px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+.fact{padding:13px 18px 13px 0}
+.fact + .fact{border-left:1px solid var(--line);padding-left:18px}
+.fact dt{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 4px}
+.fact dd{margin:0;font-size:14px;font-family:"IBM Plex Mono",ui-monospace,monospace}
+section{display:flex;flex-direction:column;gap:18px}
+h2{font-family:"Newsreader",Georgia,serif;font-weight:500;font-size:28px;line-height:1.18;margin:0;letter-spacing:-.01em}
+h2 .num{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);display:block;margin-bottom:7px;letter-spacing:.08em}
+h3{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin:0 0 11px;font-weight:600}
+p{margin:0;max-width:66ch}
+.note{color:var(--muted);font-size:15.5px;max-width:66ch;margin:-4px 0 0}
+.group{margin-top:6px}
+.items{display:flex;flex-direction:column;gap:8px}
+.item{background:var(--surface);border:1px solid var(--line);display:grid;grid-template-columns:auto 1fr;gap:0 13px;align-items:start;padding:13px 15px}
+.item:has(input:checked){background:var(--surface-2)}
+.item:has(input:checked) .label{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line-strong)}
+.item input{appearance:none;width:17px;height:17px;margin:3px 0 0;border:1.5px solid var(--line-strong);border-radius:3px;background:var(--surface);cursor:pointer;position:relative}
+.item input:checked{background:var(--accent);border-color:var(--accent)}
+.item input:checked::after{content:"";position:absolute;left:5px;top:1px;width:4px;height:9px;border:solid var(--surface);border-width:0 2px 2px 0;transform:rotate(43deg)}
+.item input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.item .txt{display:flex;flex-direction:column;gap:3px;min-width:0}
+.label{font-size:15px;line-height:1.45;cursor:pointer}
+.why{font-size:13.5px;color:var(--muted);line-height:1.45}
+.mono{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);word-break:break-word}
+.pagegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px}
+.steps{display:flex;flex-direction:column;border-left:2px solid var(--line-strong)}
+.step{display:grid;grid-template-columns:70px 1fr;gap:0 18px;padding-bottom:24px}
+.step:last-child{padding-bottom:0}
+.step .marker{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;color:var(--muted);padding-left:16px;padding-top:2px;position:relative}
+.step .marker::before{content:"";position:absolute;left:-6px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.step .body{display:flex;flex-direction:column;gap:5px}
+.step h4{font-size:16px;margin:0;font-weight:600}
+.step p{font-size:14.5px;color:var(--muted)}
+.qa{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line)}
+.qa div{background:var(--surface);padding:17px 19px}
+.qa h4{margin:0 0 5px;font-size:15px;font-weight:600}
+.qa p{font-size:14.5px;color:var(--muted)}
+.counter{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted)}
+.head-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.callout{background:var(--accent-soft);border-left:3px solid var(--accent);padding:16px 18px}
+.callout p{font-size:15px;max-width:64ch}
+.sign{border-top:1px solid var(--line);padding-top:20px;color:var(--muted);font-size:14.5px}
+a{color:var(--accent-ink)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+@media (max-width:560px){
+  .fact + .fact{border-left:0;padding-left:0}
+  .step{grid-template-columns:54px 1fr;gap:0 12px}
+}
+</style>
+<style>
+html{color-scheme:light dark}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Prepared for J R Grace Realty by Aptly</p>
+  <h1>Your new website is ready for review</h1>
+  <p class="lede">Everything you need to check, everything we need from you, and exactly what happens on the day we point jrgrace.com at the new site.</p>
+  <div class="cta">
+    <span class="k">Preview your site</span>
+    <a href="https://site-ydgjrcz9htcv4iav4.pages.dev/">https://site-ydgjrcz9htcv4iav4.pages.dev/</a>
+  </div>
+  <dl class="factbar">
+    <div class="fact"><dt>Status</dt><dd>Built, awaiting your review</dd></div>
+    <div class="fact"><dt>Feedback by</dt><dd>[DATE]</dd></div>
+    <div class="fact"><dt>Target go live</dt><dd>[DATE]</dd></div>
+  </dl>
+</header>
+
+<section>
+  <h2><span class="num">01</span>What you are looking at</h2>
+  <p>That link is your real website, fully built and running on our platform. It is not public. Nobody searching for you will find it, and jrgrace.com still points at your current site exactly as it does today.</p>
+  <p>When you tell us it is right, we switch your domain over to it. Until then nothing about your business changes.</p>
+  <div class="callout">
+    <p>Set aside about thirty minutes with the site open on your computer, then five more on your phone. Most of what people catch, they catch on their phone.</p>
+  </div>
+</section>
+
+<section>
+  <div class="head-row">
+    <h2><span class="num">02</span>Read every page</h2>
+    <p class="counter" id="counter">0 of 0 done</p>
+  </div>
+  <p class="note">Read each one the way an owner deciding whether to call you would read it, then the way a resident looking for a home would. Tick them off as you go.</p>
+  <div class="items pagegrid">
+    <div class="item"><input type="checkbox" id="p1"><div class="txt"><label class="label" for="p1">Home</label></div></div>
+    <div class="item"><input type="checkbox" id="p2"><div class="txt"><label class="label" for="p2">Property Management</label></div></div>
+    <div class="item"><input type="checkbox" id="p3"><div class="txt"><label class="label" for="p3">Rental Search</label></div></div>
+    <div class="item"><input type="checkbox" id="p4"><div class="txt"><label class="label" for="p4">Owners FAQ</label></div></div>
+    <div class="item"><input type="checkbox" id="p5"><div class="txt"><label class="label" for="p5">Resident FAQ</label></div></div>
+    <div class="item"><input type="checkbox" id="p6"><div class="txt"><label class="label" for="p6">Vendors</label></div></div>
+    <div class="item"><input type="checkbox" id="p7"><div class="txt"><label class="label" for="p7">Agents</label></div></div>
+    <div class="item"><input type="checkbox" id="p8"><div class="txt"><label class="label" for="p8">About</label></div></div>
+    <div class="item"><input type="checkbox" id="p9"><div class="txt"><label class="label" for="p9">Contact</label></div></div>
+    <div class="item"><input type="checkbox" id="p10"><div class="txt"><label class="label" for="p10">The city pages, such as Woodway and Hewitt</label></div></div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">03</span>Only you can confirm these</h2>
+  <p class="note">We built the site from your existing pages and public sources. That means we can get the design right, but we cannot verify a single fact about your business. These are yours to approve.</p>
+
+  <div class="group">
+    <h3>Your business</h3>
+    <div class="items">
+      <div class="item"><input type="checkbox" id="a1"><div class="txt"><label class="label" for="a1">Your name, title, and how the brokerage is named</label><span class="why">Exactly as you want it to appear, and as it is licensed.</span></div></div>
+      <div class="item"><input type="checkbox" id="a2"><div class="txt"><label class="label" for="a2">Phone, email, office address, and hours</label><span class="mono">(254) 400 2863 &middot; hello@jrgrace.com &middot; 2012 Lake Air Dr, Waco TX 76710</span></div></div>
+      <div class="item"><input type="checkbox" id="a3"><div class="txt"><label class="label" for="a3">Your service area list</label><span class="mono">Waco, Woodway, Hewitt, Robinson, China Spring, Bellmead, Lacy Lakeview</span><span class="why">Anything to add, anything you would rather not be called about?</span></div></div>
+      <div class="item"><input type="checkbox" id="a4"><div class="txt"><label class="label" for="a4">Your credentials and memberships</label><span class="why">NARPM, the Realtor associations, your TRLS and TRPM designations, EPA Lead Safe, and the years you have been managing and licensed.</span></div></div>
+      <div class="item"><input type="checkbox" id="a5"><div class="txt"><label class="label" for="a5">How we describe your services</label><span class="why">Read anything that sounds like a promise, in house maintenance for example, and tell us if you would say it differently.</span></div></div>
+      <div class="item"><input type="checkbox" id="a6"><div class="txt"><label class="label" for="a6">What is missing</label><span class="why">Anything on your old site that customers ask about and that you do not see here.</span></div></div>
+      <div class="item"><input type="checkbox" id="a7"><div class="txt"><label class="label" for="a7">Whether fees should be published</label><span class="why">Some managers put their management and leasing fees on the site, some keep them off. Your call.</span></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3>Things that have to work</h3>
+    <div class="items">
+      <div class="item"><input type="checkbox" id="b1"><div class="txt"><label class="label" for="b1">Submit the free rental analysis form yourself</label><span class="why">Tell us where you want that lead to land and who should be notified.</span></div></div>
+      <div class="item"><input type="checkbox" id="b2"><div class="txt"><label class="label" for="b2">Click the owner and resident portal links</label><span class="why">They should open your Rent Manager portals.</span><span class="mono">jrgrace.owa.rentmanager.com &middot; jrgrace.twa.rentmanager.com</span></div></div>
+      <div class="item"><input type="checkbox" id="b3"><div class="txt"><label class="label" for="b3">Check the rental search page against your actual availability</label><span class="why">Right homes, right rents, right photos.</span></div></div>
+      <div class="item"><input type="checkbox" id="b4"><div class="txt"><label class="label" for="b4">Tap the phone number on your own phone</label><span class="why">Confirm it dials the line you want ringing.</span></div></div>
+      <div class="item"><input type="checkbox" id="b5"><div class="txt"><label class="label" for="b5">Open the schedule a call link</label><span class="why">Make sure it is the calendar you actually watch.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">04</span>What we need from you</h2>
+  <p class="note">We cannot move your domain without the first two. The rest make the site better and can follow.</p>
+
+  <div class="group">
+    <h3>Required before we go live</h3>
+    <div class="items">
+      <div class="item"><input type="checkbox" id="n1"><div class="txt"><label class="label" for="n1">Access to wherever jrgrace.com is registered</label><span class="why">GoDaddy, Network Solutions, wherever it lives. You can add us as a user rather than share a password. If you are not sure who has it, tell us and we will help you find out.</span></div></div>
+      <div class="item"><input type="checkbox" id="n2"><div class="txt"><label class="label" for="n2">Where your email is hosted for that domain</label><span class="why">Google Workspace, Microsoft 365, or something else. We need to know so we leave those settings alone. Your email will not be interrupted.</span></div></div>
+      <div class="item"><input type="checkbox" id="n3"><div class="txt"><label class="label" for="n3">Your broker license number, the IABS form, and the Consumer Protection Notice</label><span class="why">Texas requires these on a brokerage website. Send the PDFs you use today so we link the correct ones.</span></div></div>
+      <div class="item"><input type="checkbox" id="n4"><div class="txt"><label class="label" for="n4">Access to Google Analytics, Search Console, and your Google Business Profile</label><span class="why">So your history carries over and we can update your listing the moment the site goes live. If you do not have these, we will set them up.</span></div></div>
+      <div class="item"><input type="checkbox" id="n5"><div class="txt"><label class="label" for="n5">Your written go ahead</label><span class="why">One reply telling us the site is approved and we can schedule the switch.</span></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3>Makes the site noticeably better</h3>
+    <div class="items">
+      <div class="item"><input type="checkbox" id="n6"><div class="txt"><label class="label" for="n6">Your logo in its original design file</label><span class="why">A vector file if you have it, so it stays sharp at every size.</span></div></div>
+      <div class="item"><input type="checkbox" id="n7"><div class="txt"><label class="label" for="n7">Photos of your office, you, and homes you manage</label><span class="why">Real local photos outperform stock images, both with visitors and in local search. Phone photos are fine.</span></div></div>
+      <div class="item"><input type="checkbox" id="n8"><div class="txt"><label class="label" for="n8">Reviews or testimonials you can publish</label><span class="why">With first names and whether they are an owner or a resident.</span></div></div>
+      <div class="item"><input type="checkbox" id="n9"><div class="txt"><label class="label" for="n9">Your application criteria and any documents owners ask for</label><span class="why">Publishing your criteria cuts down on unqualified applications.</span></div></div>
+      <div class="item"><input type="checkbox" id="n10"><div class="txt"><label class="label" for="n10">Who else should be able to request changes</label><span class="why">And who has final say, so we are never guessing.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">05</span>How to send feedback</h2>
+  <p>Send it all in one reply rather than as you go. For each item give us the page name and what you want it to say instead. Screenshots with an arrow drawn on them are welcome and often faster than typing.</p>
+  <p class="note">If you would rather talk it through, book fifteen minutes and we will walk the site together while you tell us what to change.</p>
+</section>
+
+<section>
+  <h2><span class="num">06</span>What happens on launch day</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="marker">DAY BEFORE</div>
+      <div class="body">
+        <h4>We prepare the switch</h4>
+        <p>We adjust a setting on your domain so the change takes effect in minutes instead of hours. Nothing visible happens to your current site.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="marker">MORNING</div>
+      <div class="body">
+        <h4>We point the domain</h4>
+        <p>Always a Tuesday or Wednesday morning, never a Friday. Within a few minutes jrgrace.com shows the new site. Your email records stay exactly as they are.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="marker">SAME DAY</div>
+      <div class="body">
+        <h4>We check everything from the outside</h4>
+        <p>Security certificate, every form, every phone link, the portals, and the listings feed. We also forward every old page address to its new home so anyone with an old link or bookmark still lands in the right place.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="marker">FIRST 30 DAYS</div>
+      <div class="body">
+        <h4>We watch and report</h4>
+        <p>We tell Google about the new pages, monitor your search rankings and lead volume, and send you a written report at the end of the first month.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">07</span>Questions people ask us</h2>
+  <div class="qa">
+    <div><h4>Will my email stop working?</h4><p>No. Your website and your email are separate settings on the domain. We change only the ones that control the website and we confirm your email records are untouched before and after.</p></div>
+    <div><h4>Will I lose my Google rankings?</h4><p>This is the real risk in any site move, and it is why we forward every old page address to its new one. Rankings can wobble for a week or two while Google recrawls, then settle. We watch it daily and tell you what we see.</p></div>
+    <div><h4>Will the site be down during the switch?</h4><p>There is no gap. Visitors see either the old site or the new one during the changeover, which usually lasts minutes.</p></div>
+    <div><h4>Can I change things after it is live?</h4><p>Yes. Content updates are part of your plan. Send them over and we make them.</p></div>
+    <div><h4>Who owns the site and the domain?</h4><p>You do. The domain stays in your name and your account, and the content is yours.</p></div>
+    <div><h4>What if I spot something after launch?</h4><p>Tell us and we fix it. The first two weeks after a launch are when small things surface, and we plan for that.</p></div>
+  </div>
+</section>
+
+<p class="sign">Questions on any of this, just reply to the email or call. We would rather answer the same question twice than switch your domain over before you are comfortable.</p>
+
+</div>
+
+<script>
+(function(){
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.item input[type=checkbox]'));
+  var counter = document.getElementById('counter');
+  var pageBoxes = Array.prototype.slice.call(document.querySelectorAll('.pagegrid input[type=checkbox]'));
+  var KEY = 'jrgrace-client-guide-v1';
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch(e) { state = {}; }
+  function render(){
+    var done = pageBoxes.filter(function(b){ return b.checked; }).length;
+    counter.textContent = done + ' of ' + pageBoxes.length + ' done';
+  }
+  boxes.forEach(function(b){
+    if (state[b.id]) b.checked = true;
+    b.addEventListener('change', function(){
+      state[b.id] = b.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e) {}
+      render();
+    });
+  });
+  render();
+})();
+</script>
+</body>
+</html>

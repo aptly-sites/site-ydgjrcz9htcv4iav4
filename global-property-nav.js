@@ -292,3 +292,4 @@
     else location.reload();
   });
 })();
+(function(){if(!document.querySelector('script[data-launch-checklist]')){var s=document.createElement('script');s.src='/launch-checklist.js?v=20260909-1';s.dataset.launchChecklist='';document.head.appendChild(s)}})();
