@@ -166,6 +166,40 @@ button,a,input,select,textarea{touch-action:manipulation}
   .area-card:hover,.feature-grid article:hover .feature-photo img{transform:none}
 }
 
+/* Aptly-fed extended tour calendar */
+.tour-days{grid-template-columns:repeat(6,minmax(0,1fr))}
+.tour-other .tour-calendar-icon{display:inline-block;width:17px;height:15px;border:2px solid currentColor;border-radius:2px;position:relative;vertical-align:-2px}
+.tour-other .tour-calendar-icon:before{content:"";position:absolute;left:-2px;right:-2px;top:3px;border-top:2px solid currentColor}
+.tour-other .tour-calendar-icon:after{content:"";position:absolute;top:-4px;left:3px;width:7px;height:4px;border-right:2px solid currentColor;border-left:2px solid currentColor}
+.tour-selected-date{margin:16px 0 0;padding:12px 14px;border-left:3px solid var(--gold,#bca35c);background:#fff;color:var(--ink,#172435)}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.tour-date-dialog{width:min(520px,calc(100% - 30px));max-width:520px;border:0;padding:0;color:var(--ink,#172435);background:#fff;box-shadow:0 24px 70px rgba(10,28,47,.32)}
+.tour-date-dialog::backdrop{background:rgba(10,28,47,.64);backdrop-filter:blur(2px)}
+.tour-date-panel{position:relative;padding:34px}
+.tour-date-close{position:absolute;top:16px;right:16px;width:42px;height:42px;border:0;background:transparent;color:var(--ink,#172435);font-size:31px;line-height:1;cursor:pointer}
+.tour-date-panel h3{margin:4px 48px 5px 0;font:700 2rem/1.1 "Inter Tight",sans-serif;color:var(--ink,#172435)}
+.tour-date-help{margin:0 0 24px;color:var(--muted,#66717f)}
+.tour-calendar-head{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;margin-bottom:10px}
+.tour-calendar-head strong{text-align:center;font:700 1rem/1.2 "Inter Tight",sans-serif}
+.tour-calendar-head button{width:44px;height:44px;border:1px solid #c9d2d9;background:#fff;color:var(--ink,#172435);font-size:26px;cursor:pointer}
+.tour-calendar-head button:disabled{opacity:.3;cursor:not-allowed}
+.tour-calendar-weekdays,.tour-calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.tour-calendar-weekdays span{padding:7px 0;text-align:center;color:#65717c;font-size:11px;font-weight:800;text-transform:uppercase}
+.tour-calendar-empty,.tour-calendar-day{min-height:44px}
+.tour-calendar-day{border:1px solid #d7dde2;background:#fff;color:var(--ink,#172435);font:700 14px/1 "Plus Jakarta Sans",sans-serif;cursor:pointer;transition:background-color .15s ease,border-color .15s ease,color .15s ease}
+.tour-calendar-day:not(:disabled):hover,.tour-calendar-day:not(:disabled):focus-visible{border-color:#244b84;background:#e9f1fb;outline:0}
+.tour-calendar-day.is-selected{border-color:#244b84;background:#244b84;color:#fff}
+.tour-calendar-day:disabled{border-color:transparent;background:#f5f5f3;color:#b2b8bd;cursor:not-allowed}
+.tour-date-footnote{margin:20px 0 0;color:#65717c;font-size:12px;line-height:1.5}
+
+@media(max-width:520px){
+  .tour-date-dialog{width:calc(100% - 20px);max-width:none}
+  .tour-date-panel{padding:27px 18px 22px}
+  .tour-date-panel h3{font-size:1.55rem}
+  .tour-calendar-weekdays,.tour-calendar-grid{gap:2px}
+  .tour-calendar-empty,.tour-calendar-day{min-height:40px}
+}
+
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}
