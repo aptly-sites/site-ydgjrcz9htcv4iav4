@@ -4,7 +4,7 @@ const clean = (value, max = 250) =>
   String(value ?? "").trim().replace(/[\u0000-\u001f\u007f]/g, "").slice(0, max);
 
 export async function onRequestGet({ request, env }) {
-  const key = env.GREATSCHOOLS_API_KEY;
+  const key = env.GREAT_SCHOOLS;
   const url = new URL(request.url);
   const lat = Number(url.searchParams.get("lat"));
   const lon = Number(url.searchParams.get("lon"));
