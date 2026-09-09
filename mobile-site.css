@@ -5,8 +5,9 @@ button,a,input,select,textarea{touch-action:manipulation}
 
 @media(max-width:900px){
   .menu,.nav-toggle,.standard-nav-toggle{display:block!important;margin-left:auto!important}
+  .standard-nav-toggle,.nav-toggle,.menu{min-width:44px;min-height:44px}
   header,.nav,.site-header,.city-nav{isolation:isolate}
-  .standard-site-nav{max-height:calc(100vh - 70px);overflow-y:auto;overscroll-behavior:contain}
+  .standard-site-nav{justify-content:flex-start!important;max-height:calc(100dvh - 102px);overflow-y:auto;overscroll-behavior:contain}
   .standard-site-nav>.global-pm-nav>.global-pm-trigger,.standard-site-nav>a{min-height:46px!important}
   .global-pm-nav{display:block;align-self:stretch}
   .global-pm-trigger{width:100%;justify-content:flex-start!important;text-align:left}
@@ -14,8 +15,13 @@ button,a,input,select,textarea{touch-action:manipulation}
   .global-pm-nav.open .global-pm-menu{display:grid}
   .global-service-links,.global-city-links{grid-template-columns:1fr}
   .global-pm-actions{flex-direction:column}
-  .global-service-links a,.global-city-links a{min-height:42px;display:flex!important;align-items:center}
+  .global-service-links a,.global-city-links a{min-height:44px;display:flex!important;align-items:center}
   .global-pm-actions a{min-height:46px;display:flex;align-items:center;justify-content:center}
+  .calculator-grid form#calculator-form{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .calculator-grid form#calculator-form fieldset{min-width:0}
+  .calculator-grid form#calculator-form input[type=number],.calculator-grid input[type=range],.affordability-ratio input[type=range]{min-height:44px}
+  .filters input,.filters select{min-height:44px}
+  .reset-map-control button{min-height:44px}
   .topbar{display:none}
 }
 
@@ -47,8 +53,8 @@ button,a,input,select,textarea{touch-action:manipulation}
   .section-heading h2{font-size:2.65rem}
   .filters{display:grid;grid-template-columns:1fr!important}
   .filters .searchbox{grid-column:auto!important;padding-left:16px!important}
-  .filters label,.filter-toggle{height:58px;border-right:0;border-bottom:1px solid #dfe2e6}
-  .filters select{text-align:left}
+  .filters label,.filter-toggle{height:auto;min-height:64px;border-right:0;border-bottom:1px solid #dfe2e6}
+  .filters input,.filters select{min-height:44px;text-align:left}
   .advanced-filters,.advanced-filters.open{display:none;flex-direction:column;padding:14px 16px}
   .advanced-filters.open{display:flex}
   .advanced-filters select{width:100%;min-height:44px}
@@ -56,9 +62,13 @@ button,a,input,select,textarea{touch-action:manipulation}
   .results-panel{padding:12px}
   .property-card .hover-tools,.property-card .photo-arrow{opacity:1;transform:none}
   .hover-tools button{width:52px;height:48px}
+  .photo-arrow,.map-photo-arrow,.viewer-arrow,.viewer-close,.rent-lead-close,.agent-referral-close{min-width:44px;min-height:44px}
+  .map-preview-actions a{min-height:44px}
+  .school-map .leaflet-bar a{width:44px;height:44px;line-height:44px}
   .actions a,.actions button{min-height:44px}
   .compare-tray{bottom:10px;width:calc(100% - 20px);padding:12px;gap:8px}
-  #compareDialog{width:100vw;height:100dvh;max-height:none;margin:0}
+  #compareDialog{width:100vw!important;max-width:none!important;height:100dvh;max-height:none;margin:0}
+  .compare-close{min-width:44px;min-height:44px}
   #compareContent{padding:24px 14px 0}
   .comparison-grid{grid-template-columns:repeat(3,minmax(260px,82vw));scroll-snap-type:x mandatory}
   .compare-property{scroll-snap-align:start;min-height:0!important}
@@ -69,13 +79,14 @@ button,a,input,select,textarea{touch-action:manipulation}
 
   /* Listing details */
   .breadcrumbs{overflow-x:auto;white-space:nowrap;padding-top:22px}
-  .gallery{height:390px!important;margin-right:0;margin-left:0}
-  .content-grid{gap:28px;padding-top:36px}
+  .gallery{height:390px!important;margin-right:auto;margin-left:auto}
+  .content-grid{grid-template-columns:minmax(0,1fr)!important;gap:28px;padding-top:36px}
+  .content-grid>article,.content-grid>aside{min-width:0;width:100%}
   .content-grid h1{font-size:2.35rem}
   .summary,.tour-block,.costs,.sticky-card{padding:24px!important}
   .stat-grid strong{font-size:1.35rem}
   article section h2,.nearby h2,.sticky-card h2{font-size:1.95rem}
-  .tour-days{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:5px}
+  .tour-days{display:flex;min-width:0;width:100%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:5px}
   .tour-days button{flex:0 0 115px;scroll-snap-align:start}
   .tour-days button:nth-child(n){display:block}
   .tour-times{grid-template-columns:repeat(2,1fr)}
@@ -96,6 +107,7 @@ button,a,input,select,textarea{touch-action:manipulation}
   .calculator-head h2{font-size:2rem}
   #calculator-form label{grid-template-columns:1fr;gap:6px;margin-bottom:14px}
   #calculator-form label span{min-height:46px}
+  #calculator-form input[type=number],#calculator-form input[type=range],.affordability-ratio input[type=range]{min-height:44px}
   .years small{gap:12px;font-size:10px}
   .recommendation{padding:19px}
   .recommendation strong{font-size:26px}
