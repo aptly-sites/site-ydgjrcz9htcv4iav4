@@ -290,7 +290,6 @@ export function renderRentalHtml(sourceHtml, listing, allListings, origin) {
   html = setContents(html, "div", "description", listing.marketingDescription || "Contact J R Grace Realty for details about this available home.");
   html = setContents(html, "div", "listingFaq", faq, true);
   html = setContents(html, "strong", "costRent", meta.rent);
-  html = setContents(html, "b", "baseRent", meta.rent);
   html = setContents(html, "strong", "deposit", money(listing.deposit?.amount));
   html = setContents(html, "div", "similar", similar, true);
   html = setLink(html, "tourSide", `${meta.canonical}#tour-times`);
