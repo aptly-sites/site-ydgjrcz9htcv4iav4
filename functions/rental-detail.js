@@ -17,3 +17,5 @@ export async function onRequestGet({ request }) {
     return unavailableResponse(503, "Rental details are temporarily unavailable.");
   }
 }
+
+export const onRequestHead = onRequestGet;

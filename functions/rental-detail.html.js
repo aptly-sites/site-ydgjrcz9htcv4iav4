@@ -1,1 +1,1 @@
-export { onRequestGet } from "./rental-detail.js";
+export { onRequestGet, onRequestHead } from "./rental-detail.js";
