@@ -2,7 +2,7 @@
   if (document.documentElement.dataset.jrGlobalNavReady === "true") return;
   document.documentElement.dataset.jrGlobalNavReady = "true";
 
-  const version = "20260908-8";
+  const version = "20260909-1";
   const scriptUrl = document.currentScript?.src || location.href;
   const assetUrl = name => `${new URL(name, scriptUrl).href}?v=${version}`;
   const ensureStylesheet = name => {
@@ -26,7 +26,7 @@
   ensureStylesheet("info-pages.css");
   ensureStylesheet("site-footer.css");
 
-  const footerMarkup = `<div class="jr-footer-shell"><div class="jr-footer-grid"><section class="jr-footer-brand" aria-label="J R Grace Realty"><a href="/index.html"><img class="jr-footer-logo" src="/assets/logo.png" alt="J R Grace Realty"></a><p>Professional property management with local experience, dependable communication, and practical support throughout Waco and Central Texas.</p></section><section><h2><a href="/contact.html">Contact</a></h2><address><a href="tel:2547775577">Phone: 254-777-5577</a><span>2012 Lake Air Dr.<br>Waco, Texas 76710</span></address><div class="jr-footer-legal-links"><a href="https://drive.google.com/file/d/1Egi37g3YcFlPerfmWEvhC5HxJJAF5Eqa/view" target="_blank" rel="noopener">IABS</a><a href="https://drive.google.com/file/d/1eAh302SyErFPp62zVbIiUM9ROOWzOkTS/view?usp=drive_link" target="_blank" rel="noopener">Consumer Protection</a></div></section><section><h2><a href="/sitemap.html">Sitemap</a></h2><nav aria-label="Footer sitemap"><a href="/index.html">Home</a><a href="/single-family-property-management.html">Property Management</a><a href="/rental-search.html">Homes for Rent</a><a href="/owner-faq.html">Owner FAQ</a><a href="/resident-faq.html">Resident FAQ</a><a class="jr-footer-all-pages" href="/sitemap.html">View full sitemap →</a></nav></section><section><h2>Quick Links</h2><nav aria-label="Portal links"><a href="https://jrgrace.owa.rentmanager.com/" target="_blank" rel="noopener">Owner Login</a><a href="https://jrgrace.twa.rentmanager.com/" target="_blank" rel="noopener">Tenant Login</a></nav></section></div><div class="jr-footer-bottom"><span>© <b data-footer-year></b> J R Grace Realty</span><span>Equal Housing Opportunity</span><a href="/privacy-policy.html">Privacy Policy</a></div></div>`;
+  const footerMarkup = `<div class="jr-footer-shell"><div class="jr-footer-grid"><section class="jr-footer-brand" aria-label="J R Grace Realty"><a href="/index.html"><img class="jr-footer-logo" src="/assets/logo.png" alt="J R Grace Realty"></a><p>Professional property management with local experience, dependable communication, and practical support throughout Waco and Central Texas.</p></section><section><h2><a href="/contact.html">Contact</a></h2><address><a href="tel:2547775577">Phone: 254-777-5577</a><span>2012 Lake Air Dr.<br>Waco, Texas 76710</span></address><div class="jr-footer-legal-links"><a href="https://drive.google.com/file/d/1Egi37g3YcFlPerfmWEvhC5HxJJAF5Eqa/view" target="_blank" rel="noopener">IABS</a><a href="https://drive.google.com/file/d/1eAh302SyErFPp62zVbIiUM9ROOWzOkTS/view?usp=drive_link" target="_blank" rel="noopener">Consumer Protection</a></div></section><section><h2><a href="/sitemap.html">Sitemap</a></h2><nav aria-label="Footer sitemap"><a href="/index.html">Home</a><a href="/single-family-property-management.html">Property Management</a><a href="/rental-search.html">Homes for Rent</a><a href="/owner-faq.html">Owner FAQ</a><a href="/resident-faq.html">Resident FAQ</a><a href="/rent-affordability-calculator.html">Rent Affordability Calculator</a><a class="jr-footer-all-pages" href="/sitemap.html">View full sitemap →</a></nav></section><section><h2>Quick Links</h2><nav aria-label="Portal links"><a href="https://jrgrace.owa.rentmanager.com/" target="_blank" rel="noopener">Owner Login</a><a href="https://jrgrace.twa.rentmanager.com/" target="_blank" rel="noopener">Tenant Login</a></nav></section></div><div class="jr-footer-bottom"><span>© <b data-footer-year></b> J R Grace Realty</span><span>Equal Housing Opportunity</span><a href="/privacy-policy.html">Privacy Policy</a></div></div>`;
   const renderSiteFooter = () => {
     let footer = document.querySelector("body > footer");
     if (!footer) {
@@ -44,7 +44,7 @@
   const menu = '<div><h3>Property Management Services</h3><div class="global-service-links"><a href="/single-family-property-management.html">Single-Family Management</a><a href="/multi-family-property-management.html">Multi-Family Management</a><a href="/tenant-placement.html">Tenant Placement Only</a><a href="/service-areas.html">Service Areas</a><a href="/owner-faq.html">Rent vs. Sell Calculator</a><a href="/index.html#analysis">Free Rental Analysis</a></div></div><div><h3>Central Texas Markets</h3><div class="global-city-links"><a href="/property-management-waco-tx.html">Waco</a><a href="/property-management-woodway-tx.html">Woodway</a><a href="/property-management-hewitt-tx.html">Hewitt</a><a href="/property-management-robinson-tx.html">Robinson</a><a href="/property-management-china-spring-tx.html">China Spring</a><a href="/property-management-bellmead-tx.html">Bellmead</a><a href="/property-management-lacy-lakeview-tx.html">Lacy Lakeview</a></div></div><div class="global-pm-actions"><a href="/index.html#analysis">Schedule a Call</a><a href="/service-areas.html">Explore Service Areas</a></div>';
   const propertyItem = `<div class="global-pm-nav"><button class="global-pm-trigger" type="button" aria-expanded="false">Property Management</button><div class="global-pm-menu">${menu}</div></div>`;
   const standardLinks = `${propertyItem}<a href="/rental-search.html">Rental Search</a><a href="/owner-faq.html">Owners FAQ</a><a href="/resident-faq.html">Resident FAQ</a><a href="/vendors.html">Vendors</a><a href="/agents.html">Agents</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>`;
-  const infoPages = new Set(["resident-faq.html", "vendors.html", "agents.html", "about.html", "contact.html", "privacy-policy.html", "sitemap.html"]);
+  const infoPages = new Set(["resident-faq.html", "rent-affordability-calculator.html", "vendors.html", "agents.html", "about.html", "contact.html", "privacy-policy.html", "sitemap.html"]);
   const propertyPages = new Set(["index.html", "single-family-property-management.html", "multi-family-property-management.html", "tenant-placement.html", "service-areas.html"]);
   const pageCache = new Map();
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -109,7 +109,9 @@
   const setActiveLink = value => {
     const current = basename(value);
     const rentalDetail = new URL(value, location.href).pathname.startsWith("/rentals/");
-    const linkedPage = current === "rental-detail.html" || rentalDetail ? "rental-search.html" : current;
+    const linkedPage = current === "rental-detail.html" || rentalDetail
+      ? "rental-search.html"
+      : current === "rent-affordability-calculator.html" ? "resident-faq.html" : current;
     nav.querySelectorAll(":scope > a").forEach(link => {
       const active = basename(link.href) === linkedPage;
       link.classList.toggle("active", active);
@@ -198,11 +200,16 @@
           ensureStylesheet("agent-referral.css");
           ensureScript("agent-referral.js");
         }
+        if (basename(url) === "rent-affordability-calculator.html") {
+          ensureStylesheet("rent-affordability.css");
+          import(assetUrl("rent-affordability.js")).then(module => module.initRentAffordability()).catch(() => {});
+        }
         renderedUrl = url.href;
         closeNavigation();
         setActiveLink(url);
         scrollTo({ top: 0, behavior: "auto" });
         if (historyMode === "push") history.pushState({ infoPage: true }, "", url);
+        document.dispatchEvent(new CustomEvent("jr:page-swapped", { detail: { url: url.href } }));
       };
 
       if (!reducedMotion && document.startViewTransition) {

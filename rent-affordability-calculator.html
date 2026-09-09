@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Rent Affordability Calculator for Central Texas | J R Grace Realty</title>
+  <meta name="description" content="Estimate how much rent you can afford, then see current J R Grace Realty rentals in your selected Central Texas city that fit your monthly budget.">
+  <link rel="canonical" href="https://site-ydgjrcz9htcv4iav4.pages.dev/rent-affordability-calculator.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="How Much Rent Can I Afford? | J R Grace Realty">
+  <meta property="og:description" content="Calculate a monthly rent budget and find current Central Texas rentals that match it.">
+  <meta property="og:url" content="https://site-ydgjrcz9htcv4iav4.pages.dev/rent-affordability-calculator.html">
+  <meta property="og:image" content="https://site-ydgjrcz9htcv4iav4.pages.dev/assets/waco-sunset-river.jpg">
+  <link rel="stylesheet" href="/service-pages.css">
+  <link rel="stylesheet" href="/global-property-nav.css?v=20260909-1">
+  <link rel="stylesheet" href="/info-pages.css?v=20260824-7">
+  <link rel="stylesheet" href="/navigation-scroll-fix.css?v=20260909-1">
+  <link rel="stylesheet" href="/rent-affordability.css?v=20260909-1">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebPage",
+        "name":"Rent Affordability Calculator for Central Texas",
+        "description":"Estimate a monthly rent budget and compare it with current J R Grace Realty rental listings.",
+        "url":"https://site-ydgjrcz9htcv4iav4.pages.dev/rent-affordability-calculator.html",
+        "isPartOf":{"@type":"WebSite","name":"J R Grace Realty","url":"https://site-ydgjrcz9htcv4iav4.pages.dev/"},
+        "about":{"@type":"Thing","name":"Rental affordability"}
+      },
+      {
+        "@type":"SoftwareApplication",
+        "name":"J R Grace Realty Rent Affordability Calculator",
+        "applicationCategory":"FinanceApplication",
+        "operatingSystem":"Web",
+        "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}
+      },
+      {
+        "@type":"FAQPage",
+        "mainEntity":[
+          {"@type":"Question","name":"How much rent can I afford?","acceptedAnswer":{"@type":"Answer","text":"A common starting point is to keep monthly rent near 30% of gross monthly income. Your debts, recurring expenses, savings goals, and other housing costs may support a lower target."}},
+          {"@type":"Question","name":"What is gross annual income?","acceptedAnswer":{"@type":"Answer","text":"Gross annual income is the income you expect to earn during a year before taxes, insurance, retirement contributions, and other deductions are removed."}},
+          {"@type":"Question","name":"What is the 30% rent rule?","acceptedAnswer":{"@type":"Answer","text":"The 30% rule is a budgeting guideline that estimates rent at no more than 30% of gross monthly income. It is a starting point rather than a guarantee that a particular home is affordable or that an application will be approved."}},
+          {"@type":"Question","name":"Should utilities be included in my rent budget?","acceptedAnswer":{"@type":"Answer","text":"Yes. Utilities, renters insurance, transportation, deposits, pet costs, and other recurring expenses should be considered in addition to the advertised rent."}},
+          {"@type":"Question","name":"Does this calculator guarantee rental approval?","acceptedAnswer":{"@type":"Answer","text":"No. The result is an educational planning estimate. Rental approval depends on the published qualification criteria and a completed application."}}
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="info-page affordability-page">
+  <header class="site-header"><div class="shell header-row"><a class="brand" href="/index.html"><img src="/assets/logo.png" alt="J R Grace Realty"></a><button class="nav-toggle" aria-label="Open navigation">☰</button><nav class="primary-nav"></nav></div></header>
+  <main class="info-main" id="main-content">
+    <section class="affordability-hero" aria-labelledby="affordability-title">
+      <div class="affordability-shell affordability-hero-grid">
+        <div class="affordability-intro">
+          <p class="info-eyebrow">Central Texas rent planning</p>
+          <h1 id="affordability-title">How much rent can I afford?</h1>
+          <p>Turn your annual income into a practical monthly rent target, then see current J R Grace Realty homes in the city where you want to live.</p>
+          <ul aria-label="Calculator benefits">
+            <li>A clear monthly estimate</li>
+            <li>Optional expense adjustments</li>
+            <li>Live matches from our available rentals</li>
+          </ul>
+        </div>
+
+        <form class="affordability-form" id="affordabilityForm" novalidate>
+          <div class="affordability-form-heading">
+            <span>Rent affordability calculator</span>
+            <strong>Two details to get started</strong>
+          </div>
+          <label class="affordability-field" for="affordCity">
+            <span>Where are you looking to live?</span>
+            <select id="affordCity" name="city" required disabled>
+              <option value="">Loading cities with available homes…</option>
+            </select>
+            <small>Only cities with current listings in the J R Grace Realty feed appear here.</small>
+          </label>
+          <label class="affordability-field" for="annualIncome">
+            <span>Annual gross income</span>
+            <span class="affordability-money-input"><b aria-hidden="true">$</b><input id="annualIncome" name="annualIncome" type="text" inputmode="decimal" autocomplete="off" placeholder="60,000" required aria-describedby="gross-income-help"></span>
+            <small id="gross-income-help">Your total yearly income before taxes, insurance, retirement contributions, and other deductions.</small>
+          </label>
+
+          <details class="affordability-more" id="affordabilityMore">
+            <summary>More options <span aria-hidden="true">+</span></summary>
+            <div class="affordability-more-fields">
+              <label class="affordability-field" for="monthlyExpenses"><span>Monthly living expenses</span><span class="affordability-money-input"><b aria-hidden="true">$</b><input id="monthlyExpenses" name="monthlyExpenses" type="text" inputmode="decimal" placeholder="Food, utilities, insurance"></span></label>
+              <label class="affordability-field" for="monthlyDebts"><span>Monthly debt payments</span><span class="affordability-money-input"><b aria-hidden="true">$</b><input id="monthlyDebts" name="monthlyDebts" type="text" inputmode="decimal" placeholder="Loans and credit cards"></span></label>
+              <label class="affordability-field" for="monthlySavings"><span>Monthly savings goal</span><span class="affordability-money-input"><b aria-hidden="true">$</b><input id="monthlySavings" name="monthlySavings" type="text" inputmode="decimal" placeholder="Savings and retirement"></span></label>
+              <label class="affordability-ratio" for="rentRatio"><span>Target share of gross income <output id="rentRatioOutput" for="rentRatio">30%</output></span><input id="rentRatio" name="rentRatio" type="range" min="20" max="40" step="1" value="30"><span class="affordability-scale"><i>20%</i><i>40%</i></span></label>
+            </div>
+          </details>
+
+          <p class="affordability-error" id="affordabilityError" role="alert" hidden></p>
+          <button class="affordability-submit" type="submit">Calculate my rent budget <span aria-hidden="true">→</span></button>
+          <p class="affordability-disclaimer">This calculator provides an educational estimate, not financial advice or a guarantee of rental approval.</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="affordability-results" id="affordabilityResults" aria-live="polite" hidden>
+      <div class="affordability-shell">
+        <div class="affordability-results-heading">
+          <div><p class="info-eyebrow">Your estimated rent budget</p><h2 id="affordabilityResultTitle">A monthly target built around your income</h2></div>
+          <button type="button" id="editAffordability">Edit my numbers</button>
+        </div>
+        <div class="affordability-summary" id="affordabilitySummary"></div>
+        <div class="affordability-explanation" id="affordabilityExplanation"></div>
+        <div class="affordability-match-heading">
+          <div><p class="info-eyebrow">Current availability</p><h2 id="affordabilityMatchesTitle">Homes that fit your estimate</h2></div>
+          <a id="browseCityRentals" href="/rental-search.html">Browse all rentals</a>
+        </div>
+        <div class="affordability-listing-status" id="affordabilityListingStatus"></div>
+        <div class="affordability-listings" id="affordabilityListings"></div>
+      </div>
+    </section>
+
+    <section class="info-section affordability-guide">
+      <div class="info-shell">
+        <p class="info-eyebrow">Understand your estimate</p>
+        <h2>A starting point for a confident rental search.</h2>
+        <div class="affordability-guide-grid">
+          <article><span>01</span><h3>Start with gross income</h3><p>Gross income is what you earn before deductions. Dividing annual gross income by 12 gives the monthly figure used for the initial estimate.</p></article>
+          <article><span>02</span><h3>Test the 30% guideline</h3><p>Thirty percent of gross monthly income is a widely used planning benchmark. Use the slider when your circumstances call for a more conservative or flexible target.</p></article>
+          <article><span>03</span><h3>Account for real life</h3><p>Debt payments, utilities, transportation, savings goals, pet expenses, and other recurring costs can make a lower rent target more comfortable.</p></article>
+        </div>
+        <aside class="affordability-note"><strong>Before you apply</strong><p>Advertised rent is only one part of the monthly housing picture. Review each listing, qualification criteria, deposits, fees, utility responsibilities, and pet policies before making a decision.</p></aside>
+      </div>
+    </section>
+
+    <section class="info-section soft affordability-faq-section">
+      <div class="info-shell">
+        <p class="info-eyebrow">Frequently asked questions</p>
+        <h2>Rent affordability, explained.</h2>
+        <div class="info-faq">
+          <details><summary>How much rent can I afford?</summary><p>A common starting point is to keep rent near 30% of gross monthly income. That is a guideline, not a rule. Your debt, recurring expenses, savings goals, transportation costs, and other housing expenses may support a lower target.</p></details>
+          <details><summary>What does annual gross income mean?</summary><p>Annual gross income is the total income you expect to earn during a year before taxes, insurance, retirement contributions, and other payroll deductions are removed. If more than one adult will apply, use only income that the household can document under the property's qualification criteria.</p></details>
+          <details><summary>What is the 30% rent rule?</summary><p>The 30% rule estimates a monthly rent target by multiplying gross monthly income by 0.30. For example, $60,000 in annual gross income equals $5,000 per month, producing a starting rent estimate of $1,500.</p></details>
+          <details><summary>What is the 50/30/20 budgeting approach?</summary><p>The 50/30/20 approach divides take-home pay into broad categories: about 50% for needs, 30% for wants, and 20% for savings or debt goals. Rent is part of the needs category along with utilities, food, transportation, and insurance.</p></details>
+          <details><summary>Should utilities and other housing costs be included?</summary><p>Yes. Consider utilities, renters insurance, deposits, application costs, pet expenses, parking, transportation, and maintenance responsibilities in addition to advertised rent. The optional fields help you test a more conservative monthly target.</p></details>
+          <details><summary>How does the calculator match available homes?</summary><p>The calculator reads J R Grace Realty's current Aptly listing feed, filters homes to your selected city, and displays listings whose advertised monthly rent is at or below the estimate. Availability and pricing can change, so confirm the current details on the listing page.</p></details>
+          <details><summary>Does the result guarantee that I will qualify?</summary><p>No. This tool is for educational planning only. Approval depends on the property's published qualification standards, verification of application information, screening results, and completion of the application process.</p></details>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer></footer>
+  <script src="/global-property-nav.js?v=20260909-1"></script>
+  <script type="module" src="/rent-affordability.js?v=20260909-1"></script>
+</body>
+</html>

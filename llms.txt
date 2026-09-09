@@ -6,6 +6,7 @@ J R Grace Realty provides professional property management and rental homes acro
 
 - Home: https://site-ydgjrcz9htcv4iav4.pages.dev/
 - Current rental search: https://site-ydgjrcz9htcv4iav4.pages.dev/rental-search.html
+- Rent affordability calculator: https://site-ydgjrcz9htcv4iav4.pages.dev/rent-affordability-calculator.html
 - Main XML sitemap: https://site-ydgjrcz9htcv4iav4.pages.dev/sitemap.xml
 - Live rental-listing sitemap: https://site-ydgjrcz9htcv4iav4.pages.dev/sitemap-rentals.xml
 - Self-management cost guide: https://site-ydgjrcz9htcv4iav4.pages.dev/self-managing-vs-property-manager-waco.html
@@ -21,6 +22,8 @@ Dedicated property-management pages are available for Woodway, Hewitt, Robinson,
 ## Listing information
 
 Individual rental pages use one canonical address URL containing the city, state, street address, and permanent Aptly listing identifier. They publish the current advertised rent, bedrooms, bathrooms, square footage, property features, photos, Aptly tour availability, nearby schools, application destination, and concise rental FAQs. Availability, pricing, fees, and lease terms can change; the final approved lease and fee disclosure control.
+
+The rent affordability calculator estimates a monthly rent range from annual gross income and optional recurring commitments, then filters the current Aptly listing feed by city and advertised rent. Its output is educational and does not guarantee affordability, availability, or application approval.
 
 ## Contact
 
