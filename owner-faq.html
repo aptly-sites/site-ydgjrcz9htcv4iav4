@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Owner Resources & Rent vs. Sell Calculator | J R Grace Realty</title><meta name="description" content="Compare renting versus selling your Central Texas property and access J R Grace Realty owner resources and FAQs."><link rel="stylesheet" href="owner-faq.css?v=2"><link rel="stylesheet" href="calculator-polish.css?v=1"><link rel="stylesheet" href="rent-lead-calculator.css?v=1"><link rel="stylesheet" href="global-property-nav.css?v=20260909-1"><link rel="stylesheet" href="navigation-scroll-fix.css?v=20260909-1"></head><body class="info-page owner-faq-page">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Owner Resources & Rent vs. Sell Calculator | J R Grace Realty</title><meta name="description" content="Search answers to 86 rental property management questions, compare renting versus selling, and access J R Grace Realty owner resources."><link rel="stylesheet" href="owner-faq.css?v=2"><link rel="stylesheet" href="calculator-polish.css?v=1"><link rel="stylesheet" href="rent-lead-calculator.css?v=1"><link rel="stylesheet" href="owner-faq-search.css?v=20260909-1"><link rel="stylesheet" href="global-property-nav.css?v=20260909-1"><link rel="stylesheet" href="navigation-scroll-fix.css?v=20260909-1"></head><body class="info-page owner-faq-page">
 <header class="site-header"><div class="header-row"><a class="brand" href="/index.html"><img src="assets/logo.png" alt="J R Grace Realty"></a><button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button><nav class="primary-nav"></nav></div></header>
 <main><section class="hero"><div class="wrap"><p class="eyebrow">A clearer path for your property</p><h1>Should you rent it—or sell it?</h1><p class="lead">Compare the estimated long-term wealth from keeping your home as a rental with selling today. Adjust every assumption to reflect your property and plans.</p>
 <div class="calculator"><div class="calculator-head"><div><p class="eyebrow">Rent vs. sell calculator</p><h2>See both paths side by side</h2></div><p>Results update instantly as you change your assumptions.</p></div><div class="calculator-grid">
@@ -7,5 +7,368 @@
 <fieldset><legend>Growth assumptions</legend><label>Annual appreciation <span><input name="appreciationRate" type="number" min="-20" max="30" step=".5" value="3">%</span></label><label>Annual rent growth <span><input name="rentGrowthRate" type="number" min="-20" max="30" step=".5" value="3">%</span></label><label>Selling costs <span><input name="sellingCosts" type="number" min="0" max="30" step=".5" value="6">%</span></label><label>Sale-proceeds return <span><input name="investmentReturn" type="number" min="-20" max="30" step=".5" value="6">%</span></label></fieldset></form>
 <section class="results" aria-live="polite"><label class="years">Comparison period: <strong><b id="years-label">5</b> years</strong><input id="yearsToHold" type="range" min="1" max="15" value="5"><small><i>1 year</i><i>15 years</i></small></label><div class="recommendation"><small>Estimated stronger path</small><strong id="recommendation-title"></strong><p id="recommendation-copy"></p></div><div class="cards"><article><span>Rent-out wealth</span><strong id="rent-wealth"></strong><small>Equity plus cumulative cash flow</small></article><article><span>Sell-now wealth</span><strong id="sell-wealth"></strong><small>Net proceeds invested over time</small></article><article id="difference-card"><span>Estimated difference</span><strong id="wealth-difference"></strong><small id="difference-context"></small></article></div><div id="wealth-chart" class="chart" role="img" aria-label="Projected wealth comparison by year"></div><details><summary>View year-by-year breakdown</summary><div class="scroll"><table><thead><tr><th>Year</th><th>Rental income</th><th>Net cash flow</th><th>Home value</th><th>Rent wealth</th><th>Sell wealth</th></tr></thead><tbody id="breakdown-body"></tbody></table></div></details><p class="note">Educational estimate only. It excludes income and capital-gains taxes, depreciation recapture, management fees, major capital expenses, and transaction-specific advice. Consult qualified real estate, tax, and financial professionals before deciding.</p></section></div></div>
 <div class="resources"><a href="https://jrgrace.owa.rentmanager.com/#/login?returnUrl=%2Fdashboard" target="_blank" rel="noopener"><strong>Owner Portal</strong><span>Statements, documents and account access →</span></a><a href="/documents/jr-grace-form-w9.pdf" target="_blank" rel="noopener"><strong>Form W-9 Download</strong><span>Open the current tax form →</span></a></div></div></section>
-<section class="faq"><p class="eyebrow">Owner resources</p><h2>Frequently asked owner questions</h2><p>Practical answers from a team that manages homes across Central Texas.</p><div class="faq-list"><details><summary>How soon can you begin managing my property?</summary><p>As soon as you are ready, we can prepare a management agreement for electronic signature. Our onboarding specialist will then guide you through the information and documents needed.</p></details><details><summary>How much do you charge?</summary><p>Our standard management fee is 8% of gross collected rent, with a 50% leasing fee for finding, screening, and placing a resident. Volume discounts may be available.</p></details><details><summary>Should I rent out my property or sell it?</summary><p>The answer depends on cash flow, equity growth, taxes, financing, and your plans. The calculator above is a useful starting point; our team can help review property-specific considerations.</p></details><details><summary>How do you determine rental price?</summary><p>We analyze the property, condition, location, and current competing homes to recommend an appropriate rental range.</p></details><details><summary>How are maintenance requests handled?</summary><p>Residents submit requests through their portal. We determine urgency, troubleshoot, coordinate qualified vendors, and communicate significant issues and costs.</p></details><details><summary>Can J R Grace Realty help if I decide to sell?</summary><p>Yes. Our licensed real estate professionals can help you evaluate a sale and coordinate the next steps.</p></details></div></section></main>
-<footer><img src="assets/logo.png" alt="J R Grace Realty"><p>Property management built around clear communication and dependable care.</p><a href="tel:+12544002863">(254) 400-2863</a></footer><script src="owner-faq.js?v=1"></script><script src="rent-lead-calculator.js?v=20260908-7"></script><script src="global-property-nav.js?v=20260909-1"></script></body></html>
+<section class="faq" id="owner-faq-library" aria-labelledby="owner-faq-heading">
+  <div class="faq-intro"><p class="eyebrow">Owner knowledge center</p><h2 id="owner-faq-heading">Find an answer about your rental</h2><p>Search 86 practical answers from the J R Grace Realty team, or browse the complete owner FAQ library below.</p></div>
+  <div class="faq-search-shell">
+    <p class="eyebrow">Ask the owner FAQ</p>
+    <h3>What would you like to know?</h3>
+    <p class="faq-search-copy">Type a question or a few keywords. The closest answer will appear immediately while the full library filters beneath it.</p>
+    <form class="faq-search" role="search" aria-label="Search owner frequently asked questions">
+      <div class="faq-search-control"><span class="faq-search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"></circle><path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></span><input id="ownerFaqSearch" type="search" inputmode="search" autocomplete="off" placeholder="Try &ldquo;How much are management fees?&rdquo;" aria-describedby="ownerFaqSearchStatus"><button class="faq-search-clear" type="button" hidden>Clear</button></div>
+      <div class="faq-suggestions" aria-label="Suggested owner questions"><button type="button" data-faq-suggestion="How much do you charge for property management services?">Management fees</button><button type="button" data-faq-suggestion="How do you handle maintenance requests?">Maintenance requests</button><button type="button" data-faq-suggestion="How do you screen residents?">Resident screening</button><button type="button" data-faq-suggestion="Should I rent or sell my property?">Rent or sell</button></div>
+      <p id="ownerFaqSearchStatus" class="faq-search-status" aria-live="polite"></p>
+    </form>
+    <article class="faq-best-answer" tabindex="-1" hidden><span class="faq-best-label">Best matching answer</span><h4></h4><p></p><button type="button">Show in full library</button></article>
+  </div>
+  <div class="faq-library-head"><div><p class="eyebrow">Complete owner FAQ</p><h3>Browse all questions</h3></div><button class="faq-expand-all" type="button">Expand all</button></div>
+  <div class="faq-category-tabs" aria-label="Filter owner questions by topic"><button type="button" data-faq-category="all" aria-pressed="true">All questions</button><button type="button" data-faq-category="management" aria-pressed="false">Getting started</button><button type="button" data-faq-category="fees" aria-pressed="false">Fees &amp; finances</button><button type="button" data-faq-category="leasing" aria-pressed="false">Leasing &amp; residents</button><button type="button" data-faq-category="maintenance" aria-pressed="false">Maintenance &amp; property</button></div>
+  <div class="faq-list" id="ownerFaqList">
+<details id="owner-answer-1" data-category="management">
+  <summary><span>How do I get started and how soon can you begin to manage my property?</span></summary>
+  <div class="faq-answer"><p>As soon as you are ready, let us know and we will prepare a management agreement for your property for you to sign electronically. The total time is maybe two minutes. We streamline this process so we can get started right away. Once we have started managing your property, we will need additional information and documents. Our On-boarding Specialist will walk you through all the additional requirements and introduce you to your dedicated property manager.</p></div>
+</details>
+<details id="owner-answer-2" data-category="fees">
+  <summary><span>How much do you charge for Property Management Services?</span></summary>
+  <div class="faq-answer"><p>A management fee of 8% of gross collected rent. For finding, screening and placing a Resident in a vacant property there is a 50% leasing fee. We do offer discounts for a larger volume on a sliding scale for SFR packages and multi family properties. You will also be required to pay for your Owner Benefit Package $45 per month per unit.</p></div>
+</details>
+<details id="owner-answer-3" data-category="fees">
+  <summary><span>Do you charge any other fees or service charges?</span></summary>
+  <div class="faq-answer"><p>The management fee is the charge that most owners are familiar with. This covers the basic management of your property. We also charge a leasing fee to fill vacant properties, and for your Owner benefit Package that covers a lot of our other services.. All of the details can be found in our management agreement.</p></div>
+</details>
+<details id="owner-answer-4" data-category="management">
+  <summary><span>Do you require a license to provide property management services?</span></summary>
+  <div class="faq-answer"><p>Yes, in Texas providing property management services requires us to be licensed. We are a real estate brokerage and all of our staff that do property management are licensed realtors. The license number for J R Grace Realty is 559124.</p></div>
+</details>
+<details id="owner-answer-5" data-category="management">
+  <summary><span>What does a property manager do?</span></summary>
+  <div class="faq-answer"><p>Property Managers, determine rental rates, market and lease property, screen Residents, collect rent, ensure lease compliance, ensure compliance with housing laws and regulations, coordinate repairs and maintenance. The easiest way to think about it is that the Property Manager takes the landlords place in managing the property and the Resident.</p></div>
+</details>
+<details id="owner-answer-6" data-category="management">
+  <summary><span>How long have you managed property?</span></summary>
+  <div class="faq-answer"><p>JR Grace began managing our own Property in 2006 and began managing others in 2017.</p></div>
+</details>
+<details id="owner-answer-7" data-category="management">
+  <summary><span>How many properties do you manage?</span></summary>
+  <div class="faq-answer"><p>As of September 2024 we manage 663 doors mostly in Central Texas, but we also manage properties in Dallas Ft. Worth Metroplex and the Greater Austin area.</p></div>
+</details>
+<details id="owner-answer-8" data-category="fees">
+  <summary><span>What is the Leasing Fee?</span></summary>
+  <div class="faq-answer"><p>The Leasing fee is what we charge for finding, screening, and preparing the lease for the Resident for your property. This fee is only charged when a Resident is placed and does not recur every month.</p></div>
+</details>
+<details id="owner-answer-9" data-category="fees">
+  <summary><span>What do I get charged if my property is vacant?</span></summary>
+  <div class="faq-answer"><p>We do not charge you a management fee while your property is vacant. You are still responsible for your Owner Benefit Package. You are still responsible for the maintenance on your property, like yard maintenance and utilities while it is vacant.</p></div>
+</details>
+<details id="owner-answer-10" data-category="fees">
+  <summary><span>What else do I pay for as the Owner?</span></summary>
+  <div class="faq-answer"><p>Remember, this is your Property so all the maintenance costs for the property are charged to the Owner. We also have an Owner Benefit Package that is in addition to the Management and Leasing fees.</p></div>
+</details>
+<details id="owner-answer-11" data-category="fees">
+  <summary><span>Owner Benefit Package , what is included?</span></summary>
+  <div class="faq-answer"><p>We are continually looking for ways to bring value to our Owners. Your Owner Benefit Package includes services like lease renewals and mid lease inspections of your property. As a part of this program annually you will receive an inspection report with pictures. We are looking for any maintenance concerns, pet evidence, and the Residents care of the property. Also while we are there we will change the filter on your HVAC unit and perform a basic preventative maintenance on the unit. Your Property Manager will make recommendations on these report findings. For all the details on what is included in the Owner Benefit Packages ask for more information.</p></div>
+</details>
+<details id="owner-answer-12" data-category="fees">
+  <summary><span>Should I rent out my Property or sell it?</span></summary>
+  <div class="faq-answer"><p>This is a question you will have to answer for yourself, but we can guide you on things you need to consider. First, when you rent your property out, you will lose your Homestead and possibly other exemptions on your property tax. Second, after some time your property will no longer qualify for the Capital gains tax exemption which can lead to a significant tax liability when you do sell your property. This can be a decision that has some complex implications. Book a time with us to talk about your property to go over these and other things you should consider.</p></div>
+</details>
+<details id="owner-answer-13" data-category="management">
+  <summary><span>Will You tell me what needs to be done to make my house ready to rent, and can you do the work?</span></summary>
+  <div class="faq-answer"><p>We will do an inspection of your property and give you a make-ready estimate on items that we feel like need to be done in order to get the best rent for your house. Whatever work you approve, we have Technicians to take care of the make-ready and get your property on the market.</p></div>
+</details>
+<details id="owner-answer-14" data-category="maintenance">
+  <summary><span>Who changes the air filter at my Property?</span></summary>
+  <div class="faq-answer"><p>In short, the Resident, but that idea probably scares you as much as it scares us. However this is how we handle air filters. As a part of your Owner Benefit package we provide the Resident with Air filters for their entire tenancy. We schedule periodic inspections though an app for them to submit proof of the air filter change. Residents who complete the inspection though the app by the deadline are entered into a drawing to receive a $100 gift card on a monthly basis. This encourages compliance and gets Residents excited about changing their air filter. Additionally twice a year we change the filter for the Residents during our periodic inspections.</p></div>
+</details>
+<details id="owner-answer-15" data-category="leasing">
+  <summary><span>Rent increases and lease renewals?</span></summary>
+  <div class="faq-answer"><p>90 days before the end of the Residents lease your Property Manager will reach out to you to discuss future plans for your Property and any potential rent increases. After discussing the plans for your Property we will contact the Resident about their plans and rent increases. We will renew leases on a month to month basis or shorter than a year’s term if this is more beneficial to the Owner. Typically there is a rent premium for a month to month lease for a Resident.</p></div>
+</details>
+<details id="owner-answer-16" data-category="management">
+  <summary><span>Why should I choose JR Grace Realty as my property manager?</span></summary>
+  <div class="faq-answer"><p>There are 3 things that we believe set us apart from other property management companies. While some companies might fit one or two of these, none of them are all three. We do Property Management first! We get what you do! We are an elite team that focuses on Property Management.</p></div>
+</details>
+<details id="owner-answer-17" data-category="management">
+  <summary><span>Do we need to meet at the Property?</span></summary>
+  <div class="faq-answer"><p>No, believe it or not most of our owners we have never met in person. We utilize technology to make the entire process as convenient as possible.</p></div>
+</details>
+<details id="owner-answer-18" data-category="management">
+  <summary><span>How soon can you start managing my property?</span></summary>
+  <div class="faq-answer"><p>We can start right away. Just reach out and we can walk you through the process to get started and all the needed paperwork can be signed electronically.</p></div>
+</details>
+<details id="owner-answer-19" data-category="management">
+  <summary><span>How long does it take to get my property on the market?</span></summary>
+  <div class="faq-answer"><p>We will start to onboarding process once you sign your management agreement. the whole process from signing to the property on the market usually takes about 7 days.</p></div>
+</details>
+<details id="owner-answer-20" data-category="leasing">
+  <summary><span>What happens when the Resident doesn&#39;t pay?</span></summary>
+  <div class="faq-answer"><p>If the rent is not received by the 5th-7th day of the month, we send an eviction notice or post the notice at the property. Whether or not we eventually proceed with a formal eviction depends on the specific circumstances. It is usually financially better, for all involved, if a solution can be worked out to avoid eviction. If the resident has experienced a one-time event which caused them a financial hardship, and we have had no previous problems with them, we will normally give them a chance to catch up, if there is reason to believe they can do so. If the resident has demonstrated an ongoing pattern of late payments, broken promises and/ or evasiveness, eviction is usually the best course of action.</p></div>
+</details>
+<details id="owner-answer-21" data-category="management">
+  <summary><span>Can I stop by and take a look at my property?</span></summary>
+  <div class="faq-answer"><p>According to your lease agreement, you’ve given the resident What’s called “peaceful enjoyment” Of the property. This doesn’t mean you can’t get a look at your house if you’d like to, but we do have to arrange with the tenant. If you do want to look at your property, contact your property manager, and we’ll see what we can arrange. We understand taking a look at the property might put your mind at ease. Our goal is to manage the property so you don’t have to. Please just let us know if you have any concerns.</p></div>
+</details>
+<details id="owner-answer-22" data-category="maintenance">
+  <summary><span>What repairs are Residents responsible for?</span></summary>
+  <div class="faq-answer"><p>Residents are responsible for basic cleanliness, changing batteries and smoke detectors and light bulbs, things like that. They’re also responsible for attempting to unclog plumbing with a plunger. But any other serious maintenance is the responsibility of the landlord.</p></div>
+</details>
+<details id="owner-answer-23" data-category="management">
+  <summary><span>May I be present at the move-out inspection?</span></summary>
+  <div class="faq-answer"><p>The move-out inspection report and the disposition of the security deposit and all decisions. About what is normal wear and tear made by the property manager and our final. We do not allow the owner to be involved in the move-out inspection.</p></div>
+</details>
+<details id="owner-answer-24" data-category="maintenance">
+  <summary><span>What happens if my resident finds mold?</span></summary>
+  <div class="faq-answer"><p>The property management industry were called regards mold issues as a top priority. Owners should be aware that mold is an issue that can lead to costly lawsuits if we fail to timely respond to tenant concerns. We take a cautious approach to situations where residents believe that they have mold in their unit. We will investigate the problem and take whatever steps are necessary to test or treat The mold situation. While communicating with you about the situation. We understand The claims like this can be expensive And we stay very conscious of the amount of money that things are costing. However, we are also keenly aware of how expensive the situation. can be if not treated appropriately.</p></div>
+</details>
+<details id="owner-answer-25" data-category="management">
+  <summary><span>Do you own your own investment property?</span></summary>
+  <div class="faq-answer"><p>Yes, we got our start managing our own properties, so we get what you do. We understand the pain of large maintenance expenses and those property tax increases.</p></div>
+</details>
+<details id="owner-answer-26" data-category="management">
+  <summary><span>Do you also sell real estate?</span></summary>
+  <div class="faq-answer"><p>Yes, we do! Let us know if we can help with that.</p></div>
+</details>
+<details id="owner-answer-27" data-category="management">
+  <summary><span>How do you determine the rental price for my property?</span></summary>
+  <div class="faq-answer"><p>Prior to setting a rent amount we do a rental analysis on your property to determine the appropriate rental range for your property. If a property does not rent within 14 days of being on the market we will communicate with you about a potential rent reduction.</p></div>
+</details>
+<details id="owner-answer-28" data-category="management">
+  <summary><span>What do you do to market and rent my property out?</span></summary>
+  <div class="faq-answer"><p>We take pictures, put a sign in the yard and write a compelling ad and list your property on our website that then syndicates out to hundreds of other online locations including Zillow, Hotpads, Zumper. We also market your property on Facebook and share the post with various local Facebook groups in order to boost exposure for your property.</p></div>
+</details>
+<details id="owner-answer-29" data-category="leasing">
+  <summary><span>How do you show my property?</span></summary>
+  <div class="faq-answer"><p>In order to show your property to as many qualified applicants as possible we utilize a secure self-show lock box system called ShowMojo that prescreens Prospects and allows them to look at your Property without us present. You are not required to participate in this program, but we have found that it comes with very little risk and will help your Property be leased faster.</p></div>
+</details>
+<details id="owner-answer-30" data-category="management">
+  <summary><span>So can just anyone set up a time to look at my property?</span></summary>
+  <div class="faq-answer"><p>In order for a prospect to set up a self-showing they must answer 3 qualifying questions that they must answer correctly to proceed. Additionally each prospect is required to submit a picture of their driver’s license or government ID.</p></div>
+</details>
+<details id="owner-answer-31" data-category="maintenance">
+  <summary><span>Will you put a for rent sign in my yard?</span></summary>
+  <div class="faq-answer"><p>Yes, a sign in the front of your house is one way we market your property to potential residents.</p></div>
+</details>
+<details id="owner-answer-32" data-category="leasing">
+  <summary><span>What is your application and screening process?</span></summary>
+  <div class="faq-answer"><p>After the prospective resident has viewed the property, they fill out the online application through our website. With the application we run a bundled screening that pulls a credit score along with any evictions, judgements, and delinquencies. Our bundled screening also pulls a criminal history report so we can determine the best possible Resident for your property. Prospects need to provide their last 2 paycheck stubs or a tax return as proof of income in order to meet the requirement of 3 times the rent amount requirement.</p></div>
+</details>
+<details id="owner-answer-33" data-category="management">
+  <summary><span>Do you allow felons to rent my property?</span></summary>
+  <div class="faq-answer"><p>Because of disparate impact guidance from HUD, this is a tricky question to answer. Criminal history is taken into account when we screen residents. However we cannot make a blanket statement that we do not allow any applications with a felony. Please contact us if you would like any more clarification on this.</p></div>
+</details>
+<details id="owner-answer-34" data-category="leasing">
+  <summary><span>Do I get to pick the renter for my property out of a list of qualified applicants?</span></summary>
+  <div class="faq-answer"><p>No. Selecting the best Resident for your property is our job. We are also committed to follow all the national and local Equal housing opportunity laws and we do not discriminate against anyone on the basis of Race, Color, Religion, Sex, Handicap, Familial Status, National Origin or Age.</p></div>
+</details>
+<details id="owner-answer-35" data-category="management">
+  <summary><span>Can I refuse to rent to a family that has children?</span></summary>
+  <div class="faq-answer"><p>No, that is a violation of Equal Housing Opportunity Laws, and is discriminatory on the basis of familial status.</p></div>
+</details>
+<details id="owner-answer-36" data-category="leasing">
+  <summary><span>Do you require Residents to pay a Security Deposit?</span></summary>
+  <div class="faq-answer"><p>Yes the security deposit is typically equal to 1 times one month’s rent. We hold all Residents’ security deposits in our trust account, and handle any deduction from the deposit at the end of the tenancy. We also have an option for Residents to participate in our Preferred Resident Program which qualifies them for a reduced deposit while still keeping you protected.</p></div>
+</details>
+<details id="owner-answer-37" data-category="leasing">
+  <summary><span>Do I get a copy of the Lease with the resident?</span></summary>
+  <div class="faq-answer"><p>We handle all of the interactions with the resident on your behalf including signing the lease so we won’t send you a copy unless you ask. If you ever need a copy of the lease for financing or insurance purposes we can get it to you.</p></div>
+</details>
+<details id="owner-answer-38" data-category="leasing">
+  <summary><span>How long is the lease typically?</span></summary>
+  <div class="faq-answer"><p>Most leases are for one year. This allows us to take advantage of annual rent increases.</p></div>
+</details>
+<details id="owner-answer-39" data-category="leasing">
+  <summary><span>Will you rent to a Resident for less than a year?</span></summary>
+  <div class="faq-answer"><p>Yes, in some circumstances renting for less than a year may be advantageous to the Landlord. In most cases we also charge a premium on rent for a lease less than one year.</p></div>
+</details>
+<details id="owner-answer-40" data-category="leasing">
+  <summary><span>Does everyone who lives in the house need to sign the Lease?</span></summary>
+  <div class="faq-answer"><p>Every person over the age of 18 that will live at the property is required to be screened and be on the lease as a Leaseholder.</p></div>
+</details>
+<details id="owner-answer-41" data-category="management">
+  <summary><span>Do you manage Short Term Rentals (STRs)?</span></summary>
+  <div class="faq-answer"><p>At this time we do not manage Short Term Rentals. We do have a referral partner in most of our markets that specialize in short term rentals that we can put you in touch with.</p></div>
+</details>
+<details id="owner-answer-42" data-category="leasing">
+  <summary><span>Will you do a short term lease, like 3 to 6 months?</span></summary>
+  <div class="faq-answer"><p>Yes, if you are willing to rent your property on a short term basis we are happy to help. Generally leases shorter than 12 months will have a 20% rent premium.</p></div>
+</details>
+<details id="owner-answer-43" data-category="fees">
+  <summary><span>Do you require all residents to have Rental Insurance?</span></summary>
+  <div class="faq-answer"><p>Yes, all residents are required to have Rental Insurance. We have a Master Resident Policy that the Residents can elect for coverage. Or if they choose to use a different coverage, we insist that we are named as an additional interested party so we are notified if there is any lapse in coverage.</p></div>
+</details>
+<details id="owner-answer-44" data-category="management">
+  <summary><span>Can I leave behind some stuff at my house in a locked closet or storage building?</span></summary>
+  <div class="faq-answer"><p>No, we do not allow owners to leave any personal property behind at your rental property, even if it is secured. Please contact our office if you have any additional questions about this.</p></div>
+</details>
+<details id="owner-answer-45" data-category="leasing">
+  <summary><span>Should I allow pets?</span></summary>
+  <div class="faq-answer"><p>We love pets! and Yes we think you should allow Residents with pets to rent your property. We utilize Petscreening.com to screen any pet that will be in a property. We also have an animal guarantee program for our Owners that makes it a no brainer to allow pets in your property. Reach out to us for all of the details on this program.</p></div>
+</details>
+<details id="owner-answer-46" data-category="leasing">
+  <summary><span>Do I have to allow pets on my Property?</span></summary>
+  <div class="faq-answer"><p>No, it is your property after all and we will follow any guidelines you give us about pets on your property. Please keep in mind an “Assistance Animal” is not a pet and the pet policy does not apply to them. We utilize Petscreening.com to determine what animals qualify as a “Assistance Animal”.</p></div>
+</details>
+<details id="owner-answer-47" data-category="leasing">
+  <summary><span>What if the Resident has an unauthorized pet?</span></summary>
+  <div class="faq-answer"><p>We will enforce the provisions in the lease and make sure the unauthorized pet is removed or we screen the pet and go through the approval process for them.</p></div>
+</details>
+<details id="owner-answer-48" data-category="leasing">
+  <summary><span>Do I have to accept housing voucher programs like Section 8?</span></summary>
+  <div class="faq-answer"><p>No, Section 8 is a voluntary program that a Landlord does not have to participate in.</p></div>
+</details>
+<details id="owner-answer-49" data-category="leasing">
+  <summary><span>Should I accept a housing voucher program like Section 8?</span></summary>
+  <div class="faq-answer"><p>Yes, all residents, even those on Section 8, are screened in the same way in regards to criminal history and credit worthiness. The income verification is different since they are receiving assistance from housing.</p></div>
+</details>
+<details id="owner-answer-50" data-category="leasing">
+  <summary><span>Will you manage my property if my Resident is receiving rental assistance like Section 8?</span></summary>
+  <div class="faq-answer"><p>Yes, many of the properties we manage have residents that receive some kind of rental assistance.</p></div>
+</details>
+<details id="owner-answer-51" data-category="maintenance">
+  <summary><span>Do I have to provide appliances?</span></summary>
+  <div class="faq-answer"><p>No, you are not required to per the Texas Property Code to provide appliances. although it is typical that the landlord provides a range and refrigerator.</p></div>
+</details>
+<details id="owner-answer-52" data-category="maintenance">
+  <summary><span>Should I provide appliances?</span></summary>
+  <div class="faq-answer"><p>Yes, In our opinion it is a good idea to provide appliances for your Residents. It helps get a higher rent price for your units and reduces the wear and tear on moving appliances in and out.</p></div>
+</details>
+<details id="owner-answer-53" data-category="maintenance">
+  <summary><span>Who maintains the yard at my Property?</span></summary>
+  <div class="faq-answer"><p>When your property is vacant we will put you on the list of yards that our team takes care of. The cost is charged to the owner. When the property is occupied the Resident is typically responsible. If you have a Duplex or Multifamily property typically we maintain the yard on a permanent basis and the cost is charged to the Owner. Some of our Owners want the yard maintained by us even if the Property is occupied and we can do that too.</p></div>
+</details>
+<details id="owner-answer-54" data-category="maintenance">
+  <summary><span>Pest Control?</span></summary>
+  <div class="faq-answer"><p>Owners have an obligation to provide a residence that is relatively free of pests upon occupancy. If a problem arises in the first 30 days, the owner will be responsible for treatment. The Owner is responsible for maintaining the residence in a reasonable rodent proof condition and rectifying any condition that would allow squirrels, birds, rats, etc. to enter and nest. Any infestations need to be taken seriously as they can cause property damage and health risks to people. Infestations are treated at the Owner’s expense. The Resident is of course obligated to keep the property in a clean and sanitary condition so as not to promote the attraction of rodents or pests.</p></div>
+</details>
+<details id="owner-answer-55" data-category="maintenance">
+  <summary><span>Can I rent a property that has a pool?</span></summary>
+  <div class="faq-answer"><p>Yes, we require that you keep the pool on a regular scheduled cleaning and maintenance service. We do not suggest leaving the pool maintenance up to the resident.</p></div>
+</details>
+<details id="owner-answer-56" data-category="leasing">
+  <summary><span>Are Residents allowed to smoke inside my house?</span></summary>
+  <div class="faq-answer"><p>No, smoking is not allowed inside any of the properties that we manage. It is made very clear to the residents in the lease agreement that smoking is strictly prohibited.</p></div>
+</details>
+<details id="owner-answer-57" data-category="leasing">
+  <summary><span>What happens if the Resident does not pay rent?</span></summary>
+  <div class="faq-answer"><p>If the rent is not received by the 5th-7th day of the month, we send an eviction notice or post the notice at the property. Whether or not we eventually proceed with a formal eviction depends on the specific circumstances. It is usually financially better, for all involved, if a solution can be worked out to avoid eviction. If the resident has experienced a one-time event which caused them a financial hardship, and we have had no previous problems with them, we will normally give them a chance to catch up, if there is reason to believe they can do so. If the resident has demonstrated an ongoing pattern of late payments, broken promises and/ or evasiveness, eviction is usually the best course of action.</p></div>
+</details>
+<details id="owner-answer-58" data-category="maintenance">
+  <summary><span>Do I need to Re-key my property?</span></summary>
+  <div class="faq-answer"><p>Texas Property Code requires a property to be rekeyed between each residential tenancy and between every Resident, even the Owner. There are also additional requirements for doors and security devices for Texas Rental properties including the installation of “Texas Landlord Locks” (One-sided deadbolts.</p></div>
+</details>
+<details id="owner-answer-59" data-category="maintenance">
+  <summary><span>Do I get the keys to my property?</span></summary>
+  <div class="faq-answer"><p>As a standard practice, we don’t give a copy of the key to the Owner. Residents are entitled to possession of the property during their tenancy. If you do want to take a look at the property, let your property manager know and we will arrange it for you.</p></div>
+</details>
+<details id="owner-answer-60" data-category="management">
+  <summary><span>What kind of contract will I sign for you to manage my property?</span></summary>
+  <div class="faq-answer"><p>We have worked with our attorney to draft a management agreement that is clear and easy to understand that describes our relationship. If you have any questions we will be happy to talk over our agreement with you in detail. You are also welcome to show a draft of your agreement to your attorney.</p></div>
+</details>
+<details id="owner-answer-61" data-category="management">
+  <summary><span>If my Property is owned by a company or Trust can you manage it for me?</span></summary>
+  <div class="faq-answer"><p>Yes, there are some additional documents and information that we need. Your onboarding specialist will walk you through everything we will need you to complete.</p></div>
+</details>
+<details id="owner-answer-62" data-category="leasing">
+  <summary><span>What if my Resident wants to buy my property?</span></summary>
+  <div class="faq-answer"><p>If a Resident expresses an interest in purchasing the Property they are currently renting we will contact you. If you want to sell the property we can assist you.</p></div>
+</details>
+<details id="owner-answer-63" data-category="management">
+  <summary><span>What if I want to sell my property?</span></summary>
+  <div class="faq-answer"><p>If you were referred to us by another Realtor that is a part of our referral program, we can reach out to them and coordinate the listing of the property for sale while the Resident is in the property. If the listing agent is not a part of our referral network then we will not continue to manage the property during the listing. If you do not have an agent that you work with we would be happy to help. All of our property managers are licensed Real Estate agents and able to help you.</p></div>
+</details>
+<details id="owner-answer-64" data-category="management">
+  <summary><span>Can you help me find investment properties to purchase?</span></summary>
+  <div class="faq-answer"><p>Yes, J R Grace Realty began managing our own properties first and we remain active investors. We understand what you are looking for and we can help.</p></div>
+</details>
+<details id="owner-answer-65" data-category="fees">
+  <summary><span>What happens while my property is vacant?</span></summary>
+  <div class="faq-answer"><p>While a property is vacant, we will do periodic inspections to make sure the property remains presentable and that no vandalism has occurred. We cannot accomplish the task of watering the yard and shrubs. If this is needed we can arrange it at the Owner’s expense.</p></div>
+</details>
+<details id="owner-answer-66" data-category="fees">
+  <summary><span>What kind of insurance do I need?</span></summary>
+  <div class="faq-answer"><p>You should have dwelling coverage. This is the type of insurance that covers your property if it burns down or is destroyed by a tornado. Many times, this type of coverage includes Liability coverage that protects you as the Landlord from a Resident lawsuit. There are 2 issues that need to be addressed when you begin to rent out a property. 1) The first is to verify that the type of insurance policy you have in place will cover you from liability in the event that a Resident is in the property. (Many homeowner policies will not cover an owner if a Resident is in the property). 2) The second is that the property manager is named as an additional Insured on the policy. There is no cost to adding the J R Grace Realty as an additional insured, and in the case of any Resident liability, it will be beneficial to the owner to have the property management company covered.</p></div>
+</details>
+<details id="owner-answer-67" data-category="fees">
+  <summary><span>Why does the Management company need to be an additional insured on my insurance policy?</span></summary>
+  <div class="faq-answer"><p>The best line of protection to an owner in the event a lawsuit is brought on by a Resident being injured on the property by any condition is to carry adequate insurance. An “Additional Insured” party is a person or organization not automatically included as an insured entity under an insurance policy, but for whom insured status is arranged, usually by endorsement. The Property Management Agreement requires the Owner to name the Property Management Company as “additional insured” because the Management Company does not hold title to the rental property that they are managing and cannot acquire general liability insurance on the property that they don’t own. Ordinarily there is no extra premium charge to the Owner to add the Management Company as an “additional insured”.</p></div>
+</details>
+<details id="owner-answer-68" data-category="fees">
+  <summary><span>What do I need to file my taxes?</span></summary>
+  <div class="faq-answer"><p>After the accounting for the year closes out, you will receive a 1099 and an annual owners statement. That is all your accountant or you should need to file your tax return.</p></div>
+</details>
+<details id="owner-answer-69" data-category="leasing">
+  <summary><span>What should I do if the Resident calls me?</span></summary>
+  <div class="faq-answer"><p>As the Owner of the property it is best that you avoid direct communication with the Residents and refer all inquiries and requests to our office. That is after all what you are paying for. If you engage with a Resident and they get some direction or response from our office that they don’t like, they will attempt to get a different answer from you. This defeats our ability to effectively enforce the lease agreement with the Residents.</p></div>
+</details>
+<details id="owner-answer-70" data-category="maintenance">
+  <summary><span>Can I do my own repairs?</span></summary>
+  <div class="faq-answer"><p>If your property is vacant you can do repairs or renovations or hire your own contractor. If the Property is occupied the Management Company will act as the general contractor for all repairs.</p></div>
+</details>
+<details id="owner-answer-71" data-category="fees">
+  <summary><span>How do I pay for repairs?</span></summary>
+  <div class="faq-answer"><p>Actual maintenance expenses for the property are the responsibility of the owner. We hold an owner reserve amount, typically starting at $500, for each unit that we manage for you. This amount covers minor repairs as needed and your account is rebalanced when the rent is paid by the Resident.</p></div>
+</details>
+<details id="owner-answer-72" data-category="fees">
+  <summary><span>What is the Reserve amount?</span></summary>
+  <div class="faq-answer"><p>The reserve amount is your money that we keep in trust in order to have the ability to quickly complete and pay for repairs. We will adjust your reserve amount periodically as we anticipate upcoming expenses.Our goal is to build up your reserve account to 4 months of rent. This amount is a typical requirement for investment property financing.</p></div>
+</details>
+<details id="owner-answer-73" data-category="fees">
+  <summary><span>What about ongoing expenses like dumpsters and landscaping?</span></summary>
+  <div class="faq-answer"><p>We can set up and maintain utilities, dumpsters, trash service, landscaping and more.</p></div>
+</details>
+<details id="owner-answer-74" data-category="fees">
+  <summary><span>How do I know you won’t spend my money on large repairs without my approval?</span></summary>
+  <div class="faq-answer"><p>This is one of the biggest fears owners have when using a property manager. We address this concern directly in our management agreement. Ordinarily maintenance and repairs that are under your maintenance limit, usually $500, are not completed with your express authorization. However we will authorize repairs for emergencies without your express authorization. In the end this comes down to developing trust. Property Managers are licensed professionals and we will take the actions on your behalf that we believe are in your best interest and many times that means spending money.</p></div>
+</details>
+<details id="owner-answer-75" data-category="maintenance">
+  <summary><span>What is an “Emergency Repair”</span></summary>
+  <div class="faq-answer"><p>If the repair constitutes a health and safety issue to a Resident 2) the property will incur additional damage if immediate action isn’t taken 3) In any instance where there is only one option to consider. For example we will not leave a Resident in 90+ degree heat without A/C or a Resident without hot water. Both of these would typically exceed the preset maintenance spending limit. Instead of having the owner incur another trip charge for us to get an estimate and then having to set another appointment with a Resident to come out and do the repair. Many times to save an owner the additional expense we might approve a repair if it is over the maintenance limit to save the additional cost of having to go to the property twice. Many times in our best estimate a repair will not exceed the maintenance limit, but once the repairs are underway it is discovered that the scope of work is larger than anticipated in the beginning, but leaving the job unfinished would cause a safety issue or not male financial sense for the owner. Situations like this also affect a Resident’s willingness to renew a lease which could cost the owner much more in the future. In the end our relationship is based on trust and we will work hard to earn your trust as we manage your property.</p></div>
+</details>
+<details id="owner-answer-76" data-category="maintenance">
+  <summary><span>How do you handle Maintenance Requests?</span></summary>
+  <div class="faq-answer"><p>Residents may submit maintenance requests through their TWA (Tenant Web Access) account. After we receive the maintenance request, we will contact the Resident to determine the nature of the problem. If possible we instruct the Resident on how to take care of the problem themselves or mitigate any damage if necessary. We then prioritize repairs and take care of the problems as best we can. Most maintenance issues are resolved in 48 hours or less.</p></div>
+</details>
+<details id="owner-answer-77" data-category="maintenance">
+  <summary><span>What if there is a maintenance request in the middle of the night?</span></summary>
+  <div class="faq-answer"><p>We have a 24/7 maintenance hotline that is answered by a live person and the Residents don’t even have to know another phone number. Residents just call our main office number after ours and are routed to the after hours hotline.</p></div>
+</details>
+<details id="owner-answer-78" data-category="leasing">
+  <summary><span>Can I just have the resident do the work that&#39;s needed at the property and take it off the rent?</span></summary>
+  <div class="faq-answer"><p>For liability and other reasons, we do not allow Residents to do work on the property. Any maintenance that is reported is handled by our maintenance team. It may seem like a good idea to try to save some money and hassle by having the Resident complete the work. But over our years of experience, we’ve determined that this never works well.</p></div>
+</details>
+<details id="owner-answer-79" data-category="maintenance">
+  <summary><span>I have a Home Warranty for my property?</span></summary>
+  <div class="faq-answer"><p>If you already have a Home Warranty in place, we can accommodate utilizing it. However we do not recommend getting a home warranty. Home Warranty companies try very hard to deny claims. They also insist on repairing items over and over and never considering replacement. Which leads to frustrated Residents which can cost you money in the long run. We will also reserve the right to not utilize a home warranty even if you have one. If a warranty company does not perform the cost to you will be well beyond the amount of money you thought you would save with the warranty company.</p></div>
+</details>
+<details id="owner-answer-80" data-category="management">
+  <summary><span>How informed will I be about what is happening at my property?</span></summary>
+  <div class="faq-answer"><p>We believe that you hire a property manager to manage the property for you, not assist you in managing it yourself. We keep you informed on a weekly basis when your property is vacant and on the market, when there is a major repair issue happening, or your resident is late on their agreed payments. We prefer to communicate by email because it allows us to keep track of stuff in writing and communicate when we have the opportunity. It is often difficult to be available by phone at the same time it is convenient for the owner. We will strive to meet your communication preferences whenever possible. The best way to reach our team is to email hello@jrgrace.com</p></div>
+</details>
+<details id="owner-answer-81" data-category="maintenance">
+  <summary><span>What color should I paint my rental property?</span></summary>
+  <div class="faq-answer"><p>You put a lot of thought into the design and decorating of your personal home tailoring it to your personal taste. In your rental property you want to use a basic color pallet. to appeal to a wide range of prospective Residents.</p></div>
+</details>
+<details id="owner-answer-82" data-category="leasing">
+  <summary><span>What happens if my Resident dies?</span></summary>
+  <div class="faq-answer"><p>The Residents lease will contain an emergency contact that has authority to deal with belongings after they are deceased. If there is no emergency contact, the probate court will determine who can take care of the Residents belongings. Typically the estate is responsible for the rent. When something like this happens, please understand it is a difficult time for those who cared for the Resident and will try to resolve any inconvenience to the owner as quickly as we can, while respecting those that are taking care of the Residents belongings and grieving for their loss.</p></div>
+</details>
+<details id="owner-answer-83" data-category="fees">
+  <summary><span>Can you protest my Property Tax Valuation?</span></summary>
+  <div class="faq-answer"><p>Yes, we have partners with a company that protests tax valuations in most markets that we manage property in. They provide our clients with a discounted Success fee of 30% of the amount that is saved off of the property tax bill. You simply need to sign an AoA, authorization to act, form so that they can represent you and your property in that capacity.</p></div>
+</details>
+<details id="owner-answer-84" data-category="maintenance">
+  <summary><span>What happens if the Resident leaves behind a car?</span></summary>
+  <div class="faq-answer"><p>A car or any other personal property that is titled, can not be abandoned. We will contact a licensed towing service that will remove the vehicle and attempt to contact the owner of the vehicle. If the owner cannot be reached the town company will sell the vehicle at auction to reimburse them for the cost of towing and storage. The owner of the property will not be charged for the vehicle removal in this case.</p></div>
+</details>
+<details id="owner-answer-85" data-category="fees">
+  <summary><span>Can I collect rent through Venmo, Zell, Cash app, etc.?</span></summary>
+  <div class="faq-answer"><p>No, J R Grace Realty is not set up to receive rent payments though apps like these. Since rent is classified as a business transaction on these platforms carry a transaction fee that is untenable for many residents. We do offer a large number of payment options, many of which are free for residents to utilize.</p></div>
+</details>
+<details id="owner-answer-86" data-category="management">
+  <summary><span>Do you have any questions that we haven’t covered.</span></summary>
+  <div class="faq-answer"><p>Email us at hello@jrgrace.com . We pride ourselves on being well versed in Property Management issues. If we don’t know the answer we will try and and find out.</p></div>
+</details>
+  </div>
+  <div class="faq-empty" hidden><strong>No exact answer found.</strong><span>Try a broader phrase, or contact the J R Grace Realty team at <a href="mailto:hello@jrgrace.com">hello@jrgrace.com</a>.</span></div>
+</section>
+</main>
+<footer><img src="assets/logo.png" alt="J R Grace Realty"><p>Property management built around clear communication and dependable care.</p><a href="tel:+12544002863">(254) 400-2863</a></footer><script src="owner-faq.js?v=1"></script><script src="rent-lead-calculator.js?v=20260908-7"></script><script src="owner-faq-search.js?v=20260909-1"></script><script src="global-property-nav.js?v=20260909-6"></script></body></html>
