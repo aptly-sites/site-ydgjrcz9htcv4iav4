@@ -6,7 +6,7 @@ J R Grace Realty provides professional property management and rental homes acro
 
 - Home: https://site-ydgjrcz9htcv4iav4.pages.dev/
 - Current rental search: https://site-ydgjrcz9htcv4iav4.pages.dev/rental-search.html
-- Rent affordability calculator: https://site-ydgjrcz9htcv4iav4.pages.dev/rent-affordability-calculator.html
+- Rent affordability calculator: https://site-ydgjrcz9htcv4iav4.pages.dev/rent-affordability-calculator
 - Main XML sitemap: https://site-ydgjrcz9htcv4iav4.pages.dev/sitemap.xml
 - Live rental-listing sitemap: https://site-ydgjrcz9htcv4iav4.pages.dev/sitemap-rentals.xml
 - Self-management cost guide: https://site-ydgjrcz9htcv4iav4.pages.dev/self-managing-vs-property-manager-waco.html
