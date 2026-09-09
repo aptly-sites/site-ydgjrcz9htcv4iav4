@@ -27,7 +27,7 @@
   panel.innerHTML = [
     '<div class="launch-checklist-toolbar">',
       '<div><span>Website review</span><strong>Launch checklist</strong></div>',
-      '<button type="button" class="launch-checklist-close" aria-label="Close launch checklist">&times;</button>',
+      '<button type="button" class="launch-checklist-close" aria-label="Close launch checklist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>',
     '</div>',
     '<iframe class="launch-checklist-frame" src="/launch-guide.html" title="J R Grace website launch checklist"></iframe>'
   ].join('');
