@@ -1,3 +1,0 @@
-# Legacy listing URLs permanently move to the server-side redirect function,
-# which preserves the Aptly listing ID and resolves the canonical address URL.
-/rental-detail.html /rental-detail 301
