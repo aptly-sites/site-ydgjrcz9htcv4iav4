@@ -100,6 +100,9 @@ analysisForm?.addEventListener('submit', async event => {
   buttonText.textContent = 'Preparing your request…'; note.className = 'form-note'; note.textContent = '';
   try {
     const payload = Object.fromEntries(new FormData(form));
+    payload.formSource = 'Homepage Free Property Management Rental Analysis';
+    payload.pageTitle = document.title;
+    payload.pageUrl = window.location.href;
     const response = await fetch(form.action,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});
     const result = await response.json().catch(()=>({}));
     if(!response.ok) throw new Error(result.message || 'We could not submit your request. Please try again.');

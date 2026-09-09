@@ -35,12 +35,65 @@ function fieldKey(field) {
 
 function findField(fields, names, types) {
   const wanted = names.map(normalized);
-  return fields.find((field) => {
+  const eligible = fields.filter((field) => {
     if (field.archived || !fieldKey(field)) return false;
-    const name = fieldName(field);
-    return (!types || types.includes(normalized(field.type)))
-      && wanted.some((candidate) => name === candidate || name.includes(candidate));
+    return !types || types.includes(normalized(field.type));
   });
+  for (const candidate of wanted) {
+    const exact = eligible.find((field) => fieldName(field) === candidate);
+    if (exact) return exact;
+  }
+  return eligible.find((field) => {
+    const name = fieldName(field);
+    return wanted.some((candidate) => name.includes(candidate));
+  });
+}
+
+function pageUrl(value) {
+  const candidate = clean(value, 500);
+  if (!candidate) return "";
+  try {
+    const url = new URL(candidate);
+    return ["http:", "https:"].includes(url.protocol) ? url.href.slice(0, 500) : "";
+  } catch {
+    return "";
+  }
+}
+
+function boardFieldValue(field, value) {
+  const type = normalized(field.type);
+  if (type.includes("number") || type.includes("numeric") || type.includes("decimal") || type.includes("integer")) {
+    if (normalized(value) === "studio") return 0;
+    const number = Number.parseFloat(value);
+    return Number.isFinite(number) ? number : value;
+  }
+  return value;
+}
+
+function buildDescription(values) {
+  return [
+    "Website Owner Lead",
+    "",
+    "LEAD ORIGIN",
+    `Form or calculator: ${values.formSource}`,
+    `Page: ${values.pageTitle}`,
+    `URL: ${values.pageUrl}`,
+    "",
+    "OWNER CONTACT",
+    `Name: ${values.name}`,
+    `Email: ${values.email}`,
+    `Phone: ${values.phone}`,
+    "",
+    "PROPERTY",
+    `Address: ${values.address}`,
+    `Property type: ${values.propertyType || "Not provided"}`,
+    `Bed count: ${values.bedrooms || "Not provided"}`,
+    `Bath count: ${values.bathrooms || "Not provided"}`,
+    "",
+    "OWNER REQUEST",
+    `Goal: ${values.goal || "Not provided"}`,
+    `Message: ${values.message || "Not provided"}`,
+  ].join("\n");
 }
 
 function addressComponent(components, type, field = "longText") {
@@ -143,6 +196,14 @@ export async function onRequestPost({ request, env }) {
   const email = clean(body.email, 180).toLowerCase();
   const phone = clean(body.phone, 40);
   const addressInput = clean(body.address, 280);
+  const propertyType = clean(body.propertyType, 80);
+  const bedrooms = clean(body.bedrooms || body.bedCount, 20);
+  const bathrooms = clean(body.bathrooms || body.bathCount, 20);
+  const goal = clean(body.goal, 120);
+  const message = clean(body.message, 1200);
+  const formSource = clean(body.formSource, 180) || goal || "Website Owner Lead Form";
+  const sourcePageTitle = clean(body.pageTitle, 200) || "J R Grace Realty website";
+  const sourcePageUrl = pageUrl(body.pageUrl) || pageUrl(request.headers.get("Referer")) || "Not provided";
   if (!name || !email || !phone || !addressInput || !/^\S+@\S+\.\S+$/.test(email)) {
     return Response.json(
       { message: "Please complete your name, contact details, and full property address." },
@@ -206,25 +267,42 @@ export async function onRequestPost({ request, env }) {
       ["Stage", "Lead Stage", "Status", "Workflow"],
       ["select", "singleselect", "text", "string"],
     );
+    const descriptionField = findField(fields, ["Description", "Lead Description", "Card Description", "Inquiry Details"]);
     if (!addressField) throw new Error("The Owner Leads board does not contain a Rental Property Address field.");
     if (!contactField) throw new Error("The Owner Leads board does not contain an owner/contact person field.");
+    if (!descriptionField) throw new Error("The Owner Leads board does not contain a Description field.");
 
     const card = {
       name: `${name} – ${formattedAddress}`,
       Stage: "New Lead",
       Source: "Website",
     };
+    const description = buildDescription({
+      formSource,
+      pageTitle: sourcePageTitle,
+      pageUrl: sourcePageUrl,
+      name,
+      email,
+      phone,
+      address: formattedAddress,
+      propertyType,
+      bedrooms,
+      bathrooms,
+      goal,
+      message,
+    });
     card[fieldKey(addressField)] = normalized(addressField.type) === "address" ? propertyAddress : formattedAddress;
     card[fieldKey(contactField)] = normalized(contactField.type) === "persons" ? [contactId] : contactId;
     if (stageField) card[fieldKey(stageField)] = "New Lead";
+    card[fieldKey(descriptionField)] = description;
 
     const optionalMappings = [
-      [["Property Type"], clean(body.propertyType, 80)],
-      [["Bedrooms"], clean(body.bedrooms, 20)],
-      [["Bathrooms"], clean(body.bathrooms, 20)],
-      [["Owner Goal", "Goal"], clean(body.goal, 120)],
-      [["Desired Management Service", "Desired Service", "Service Requested"], clean(body.goal, 120)],
-      [["Message", "Notes", "Property Notes"], clean(body.message, 1200)],
+      [["Property Type"], propertyType],
+      [["Bed Count", "Bedroom Count", "Bedrooms", "Beds"], bedrooms],
+      [["Bath Count", "Bathroom Count", "Bathrooms", "Baths"], bathrooms],
+      [["Owner Goal", "Goal"], goal],
+      [["Desired Management Service", "Desired Service", "Service Requested"], goal],
+      [["Message", "Notes", "Property Notes"], message],
       [["Email"], email],
       [["Phone", "Mobile Phone"], phone],
       [["Source", "Lead Source"], "Website"],
@@ -232,7 +310,7 @@ export async function onRequestPost({ request, env }) {
     for (const [labels, value] of optionalMappings) {
       if (!value) continue;
       const field = findField(fields, labels);
-      if (field && !card[fieldKey(field)]) card[fieldKey(field)] = value;
+      if (field && card[fieldKey(field)] === undefined) card[fieldKey(field)] = boardFieldValue(field, value);
     }
 
     const workflows = Array.isArray(config.workflows) ? config.workflows : [];

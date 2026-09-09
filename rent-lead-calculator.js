@@ -277,6 +277,9 @@
     const note = form.querySelector(".rent-lead-note");
     const submitButton = form.querySelector(".rent-lead-submit");
     const payload = Object.fromEntries(new FormData(form));
+    payload.formSource = "Rent vs. Sell Calculator – Personalized Rental Analysis";
+    payload.pageTitle = document.title;
+    payload.pageUrl = window.location.href;
     payload.message = `Rent vs. Sell calculator inquiry. Calculator assumptions: expected rent $${calculator.elements.monthlyRent.value}/month; current home value $${calculator.elements.homeValue.value}; comparison period ${document.querySelector("#yearsToHold").value} years.`;
     mask.classList.add("show");
     submitButton.disabled = true;
