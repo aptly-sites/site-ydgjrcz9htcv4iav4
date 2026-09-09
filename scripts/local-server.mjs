@@ -85,9 +85,12 @@ async function readRequestBody(request) {
 
 async function runPagesFunction(request, response, url) {
   const match = url.pathname.match(/^\/api\/([a-z0-9-]+)\/?$/i);
-  if (!match) return false;
+  const sitemap = url.pathname === "/sitemap-rentals.xml";
+  if (!match && !sitemap) return false;
 
-  const functionPath = path.join(projectRoot, "functions", "api", `${match[1]}.js`);
+  const functionPath = sitemap
+    ? path.join(projectRoot, "functions", "sitemap-rentals.xml.js")
+    : path.join(projectRoot, "functions", "api", `${match[1]}.js`);
   try {
     const module = await import(`${pathToFileURL(functionPath).href}?local=${Date.now()}`);
     const methodHandler = module[`onRequest${request.method[0]}${request.method.slice(1).toLowerCase()}`];
@@ -156,7 +159,8 @@ async function findPublicFile(pathname) {
 }
 
 async function servePublicFile(request, response, url) {
-  const result = await findPublicFile(url.pathname);
+  const isCanonicalRental = /^\/rentals\/[^/]+\/[^/]+\/[^/]+\/?$/i.test(url.pathname);
+  const result = await findPublicFile(isCanonicalRental ? "/rental-detail.html" : url.pathname);
   if (!result) return sendJson(response, 404, { message: "Not found." });
 
   const { filePath, fileStat } = result;
@@ -182,11 +186,13 @@ async function servePublicFile(request, response, url) {
     return request.method === "HEAD" ? response.end() : createReadStream(filePath, { start, end }).pipe(response);
   }
 
-  response.writeHead(200, {
+  const headers = {
     "Cache-Control": "no-cache",
     "Content-Length": fileStat.size,
     "Content-Type": contentType,
-  });
+  };
+  if (isCanonicalRental) headers.Link = `<${url.href}>; rel="canonical"`;
+  response.writeHead(200, headers);
   return request.method === "HEAD" ? response.end() : createReadStream(filePath).pipe(response);
 }
 

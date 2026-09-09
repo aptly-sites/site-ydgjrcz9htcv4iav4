@@ -2,7 +2,7 @@
   if (document.documentElement.dataset.jrGlobalNavReady === "true") return;
   document.documentElement.dataset.jrGlobalNavReady = "true";
 
-  const version = "20260908-6";
+  const version = "20260908-8";
   const scriptUrl = document.currentScript?.src || location.href;
   const assetUrl = name => `${new URL(name, scriptUrl).href}?v=${version}`;
   const ensureStylesheet = name => {
@@ -108,7 +108,8 @@
   };
   const setActiveLink = value => {
     const current = basename(value);
-    const linkedPage = current === "rental-detail.html" ? "rental-search.html" : current;
+    const rentalDetail = new URL(value, location.href).pathname.startsWith("/rentals/");
+    const linkedPage = current === "rental-detail.html" || rentalDetail ? "rental-search.html" : current;
     nav.querySelectorAll(":scope > a").forEach(link => {
       const active = basename(link.href) === linkedPage;
       link.classList.toggle("active", active);

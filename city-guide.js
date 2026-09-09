@@ -138,6 +138,8 @@ function guideMarkup(city) {
 
 const cityNameKey = value => String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 const listingStreet = listing => listing.address?.address || listing.address?.streetName || listing.marketingName || listing.name || 'Rental home';
+const listingSlug = value => String(value||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/&/g,' and ').replace(/[’']/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,120);
+const listingDetailUrl = listing => `/rentals/${listingSlug(listing.address?.city||'central-texas')}-${listingSlug(listing.address?.stateCode||listing.address?.state||'tx')}/${listingSlug(listingStreet(listing))||'rental-home'}/${encodeURIComponent(listing._id)}`;
 const listingPhotos = listing => listing.marketingFiles?.length ? listing.marketingFiles : (listing.photo || []);
 const listingMoney = cents => new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format((Number(cents)||0)/100);
 const firstSecureUrl = (...values) => values.find(value => typeof value === 'string' && /^https:\/\//.test(value));
@@ -146,7 +148,7 @@ const listingTourUrl = listing => firstSecureUrl(listing.aptlyShowings?.link,lis
 
 function rentalCard(listing) {
   const photos = listingPhotos(listing), image = photos[0] || 'assets/areas.jpg', street = listingStreet(listing);
-  return `<article class="city-rental-card"><a class="city-rental-image" href="rental-detail.html?id=${encodeURIComponent(listing._id)}"><img src="${escapeHtml(image)}" alt="${escapeHtml(street)} rental home" loading="lazy"><span>AVAILABLE NOW</span>${photos.length>1?`<b>${photos.length} photos</b>`:''}</a><div class="city-rental-copy"><p class="city-rental-price">${listingMoney(listing.marketRent?.amount)}<small>/mo</small></p><p class="city-rental-facts">${escapeHtml(listing.beds ?? '—')} bd · ${escapeHtml(listing.baths ?? '—')} ba · ${listing.totalArea ? Number(listing.totalArea).toLocaleString() : '—'} sq ft</p><h3>${escapeHtml(street)}</h3><p class="city-rental-address">${escapeHtml(listing.address?.city)}, ${escapeHtml(listing.address?.stateCode)} ${escapeHtml(listing.address?.postalCode)}</p><div class="city-rental-actions"><a href="${escapeHtml(listingTourUrl(listing))}" target="_blank" rel="noopener">Self tour</a><a href="${escapeHtml(listingApplyUrl(listing))}" target="_blank" rel="noopener">Apply</a><a href="rental-detail.html?id=${encodeURIComponent(listing._id)}">View details →</a></div></div></article>`;
+  return `<article class="city-rental-card"><a class="city-rental-image" href="${escapeHtml(listingDetailUrl(listing))}"><img src="${escapeHtml(image)}" alt="${escapeHtml(street)} rental home" loading="lazy"><span>AVAILABLE NOW</span>${photos.length>1?`<b>${photos.length} photos</b>`:''}</a><div class="city-rental-copy"><p class="city-rental-price">${listingMoney(listing.marketRent?.amount)}<small>/mo</small></p><p class="city-rental-facts">${escapeHtml(listing.beds ?? '—')} bd · ${escapeHtml(listing.baths ?? '—')} ba · ${listing.totalArea ? Number(listing.totalArea).toLocaleString() : '—'} sq ft</p><h3>${escapeHtml(street)}</h3><p class="city-rental-address">${escapeHtml(listing.address?.city)}, ${escapeHtml(listing.address?.stateCode)} ${escapeHtml(listing.address?.postalCode)}</p><div class="city-rental-actions"><a href="${escapeHtml(listingTourUrl(listing))}" target="_blank" rel="noopener">Self tour</a><a href="${escapeHtml(listingApplyUrl(listing))}" target="_blank" rel="noopener">Apply</a><a href="${escapeHtml(listingDetailUrl(listing))}">View details →</a></div></div></article>`;
 }
 
 async function loadCityRentals(city) {
@@ -189,4 +191,4 @@ if (city) {
   loadCitySchools(city);
 }
 
-(()=>{if(!document.querySelector('link[href*="global-property-nav"]')){const link=document.createElement('link');link.rel='stylesheet';link.href='global-property-nav.css?v=20260908-6';document.head.append(link)}if(!document.querySelector('script[src*="global-property-nav"]')){const script=document.createElement('script');script.src='global-property-nav.js?v=20260908-6';document.body.append(script)}})();
+(()=>{if(!document.querySelector('link[href*="global-property-nav"]')){const link=document.createElement('link');link.rel='stylesheet';link.href='global-property-nav.css?v=20260908-8';document.head.append(link)}if(!document.querySelector('script[src*="global-property-nav"]')){const script=document.createElement('script');script.src='global-property-nav.js?v=20260908-8';document.body.append(script)}})();

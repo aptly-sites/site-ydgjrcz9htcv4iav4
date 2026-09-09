@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://site-ydgjrcz9htcv4iav4.pages.dev/sitemap.xml
+Sitemap: https://site-ydgjrcz9htcv4iav4.pages.dev/sitemap-rentals.xml

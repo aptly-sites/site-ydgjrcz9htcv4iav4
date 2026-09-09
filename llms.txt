@@ -4,14 +4,15 @@ J R Grace Realty provides professional property management and rental homes acro
 
 ## Primary pages
 
-- Home: https://jr-grace-realty-review.sshekou.chatgpt.site/
-- Current rental search: https://jr-grace-realty-review.sshekou.chatgpt.site/rental-search.html
-- XML sitemap with current listing pages: https://jr-grace-realty-review.sshekou.chatgpt.site/sitemap.xml
-- Self-management cost guide: https://jr-grace-realty-review.sshekou.chatgpt.site/self-managing-vs-property-manager-waco.html
-- Single-family property management: https://jr-grace-realty-review.sshekou.chatgpt.site/single-family-property-management.html
-- Multi-family property management: https://jr-grace-realty-review.sshekou.chatgpt.site/multi-family-property-management.html
-- Tenant placement only: https://jr-grace-realty-review.sshekou.chatgpt.site/tenant-placement.html
-- Property management service areas: https://jr-grace-realty-review.sshekou.chatgpt.site/service-areas.html
+- Home: https://site-ydgjrcz9htcv4iav4.pages.dev/
+- Current rental search: https://site-ydgjrcz9htcv4iav4.pages.dev/rental-search.html
+- Main XML sitemap: https://site-ydgjrcz9htcv4iav4.pages.dev/sitemap.xml
+- Live rental-listing sitemap: https://site-ydgjrcz9htcv4iav4.pages.dev/sitemap-rentals.xml
+- Self-management cost guide: https://site-ydgjrcz9htcv4iav4.pages.dev/self-managing-vs-property-manager-waco.html
+- Single-family property management: https://site-ydgjrcz9htcv4iav4.pages.dev/single-family-property-management.html
+- Multi-family property management: https://site-ydgjrcz9htcv4iav4.pages.dev/multi-family-property-management.html
+- Tenant placement only: https://site-ydgjrcz9htcv4iav4.pages.dev/tenant-placement.html
+- Property management service areas: https://site-ydgjrcz9htcv4iav4.pages.dev/service-areas.html
 
 ## Local service areas
 
@@ -19,7 +20,7 @@ Dedicated property-management pages are available for Woodway, Hewitt, Robinson,
 
 ## Listing information
 
-Individual rental pages publish the current advertised rent, bedrooms, bathrooms, square footage, property features, photos, Aptly tour availability, nearby schools, application destination, and concise rental FAQs. Availability, pricing, fees, and lease terms can change; the final approved lease and fee disclosure control.
+Individual rental pages use one canonical address URL containing the city, state, street address, and permanent Aptly listing identifier. They publish the current advertised rent, bedrooms, bathrooms, square footage, property features, photos, Aptly tour availability, nearby schools, application destination, and concise rental FAQs. Availability, pricing, fees, and lease terms can change; the final approved lease and fee disclosure control.
 
 ## Contact
 
