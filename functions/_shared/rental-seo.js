@@ -8,6 +8,14 @@ export function listingStreet(listing) {
     || "Rental home";
 }
 
+export function listingMarketingHeading(listing, type) {
+  const marketingName = String(listing?.marketingName || "").trim();
+  if (marketingName) return marketingName;
+  const city = listing?.address?.city || "Central Texas";
+  const state = listing?.address?.stateCode || "TX";
+  return `${listing?.beds}-Bedroom ${type || "Home"} for Rent in ${city}, ${state}`;
+}
+
 export function slugify(value) {
   return String(value || "")
     .normalize("NFKD")
@@ -278,7 +286,7 @@ export function renderRentalHtml(sourceHtml, listing, allListings, origin) {
   html = setContents(html, "span", "crumbStreet", meta.street);
   html = setContents(html, "section", "gallery", gallery, true);
   html = setContents(html, "p", "kicker", `AVAILABLE RENTAL IN ${String(address.city || "WACO").toUpperCase()}, ${address.stateCode || "TX"}`);
-  html = setContents(html, "h1", "title", `${listing.beds}-Bedroom ${meta.type} for Rent in ${address.city}, ${address.stateCode}`);
+  html = setContents(html, "h1", "title", listingMarketingHeading(listing, meta.type));
   html = setContents(html, "p", "address", meta.formattedAddress);
   html = setContents(html, "p", "summary", summary);
   html = setContents(html, "strong", "rent", meta.rent);

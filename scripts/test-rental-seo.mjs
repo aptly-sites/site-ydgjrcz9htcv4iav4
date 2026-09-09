@@ -23,6 +23,7 @@ const listing = {
   marketRent: { amount: 185000 },
   deposit: { amount: 185000 },
   marketingDescription: "A well-kept Central Texas rental home.",
+  marketingName: "Charming Updated Home Near Baylor",
   marketingFiles: ["https://images.example.test/home-1.jpg"],
   address: {
     address: "1017 South 16th Street",
@@ -44,7 +45,7 @@ assert.equal(metadata.schema["@graph"].find((item) => item["@type"] === "RealEst
 
 const rendered = renderRentalHtml(sourceHtml, listing, [], "https://example.test");
 assert.match(rendered, new RegExp(`<link rel="canonical" id="canonicalUrl" href="https://example\\.test${expectedPath}">`));
-assert.match(rendered, /<h1 id="title">3-Bedroom Single Family Home for Rent in Waco, TX<\/h1>/);
+assert.match(rendered, /<h1 id="title">Charming Updated Home Near Baylor<\/h1>/);
 assert.match(rendered, /<div id="page" data-server-rendered="true">/);
 assert.match(rendered, /"@type":"RealEstateListing"/);
 assert.equal((rendered.match(/rel="canonical"/g) || []).length, 1);
