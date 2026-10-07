@@ -2,7 +2,7 @@
   if (document.documentElement.dataset.jrGlobalNavReady === "true") return;
   document.documentElement.dataset.jrGlobalNavReady = "true";
 
-  const version = "20261007-2";
+  const version = "20261007-3";
   const scriptUrl = document.currentScript?.src || location.href;
   const assetUrl = name => `${new URL(name, scriptUrl).href}?v=${version}`;
   const ensureStylesheet = name => {
