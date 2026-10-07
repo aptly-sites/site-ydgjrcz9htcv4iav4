@@ -39,7 +39,6 @@ function filtered(){
 
 function render(){
   const data=filtered();
-  $('#resultCount').textContent=`${data.length} of ${listings.length} homes`;
   $('#listingGrid').innerHTML=data.length?data.map(card).join(''):'<div class="empty"><h3>No homes match those filters.</h3><p>Try broadening your search.</p></div>';
   $('#status').hidden=true;
   document.querySelector('.results-split')?.classList.remove('loading');
@@ -65,7 +64,7 @@ function showDetails(id){const p=listings.find(x=>x._id===id);if(!p)return;const
 async function load(){try{const response=await fetch(API);if(!response.ok)throw new Error(`Feed returned ${response.status}`);const json=await response.json();listings=(json.data||[]).filter(p=>p.publishedForRent!==false);$('#heroCount').textContent=listings.length;const types=[...new Set(listings.map(p=>p.rentalCategory).filter(Boolean))].sort();$('#type').insertAdjacentHTML('beforeend',types.map(t=>`<option value="${esc(t)}">${esc(t)}</option>`).join(''));render()}catch(error){document.querySelector('.results-split')?.classList.remove('loading');$('#status').classList.add('error-state');$('#status').innerHTML=`<div class="error"><h3>Current listings are temporarily unavailable.</h3><p><a href="${APTLY_SEARCH}">Open the JR Grace Aptly search</a></p></div>`;console.error(error)}}
 document.querySelectorAll('#query,#rent,#beds,#type').forEach(el=>el.addEventListener(el.tagName==='INPUT'?'input':'change',render));
 $('#clear').addEventListener('click',()=>{$('#query').value='';$('#rent').value='';$('#beds').value='';$('#type').value='';render()});
-$('#filtersToggle').addEventListener('click',()=>{$('#advancedFilters').classList.toggle('open');$('#filtersToggle span').textContent=$('#advancedFilters').classList.contains('open')?'−':'＋'});
+$('#filtersToggle').addEventListener('click',()=>{const isOpen=$('#advancedFilters').classList.toggle('open');$('#filtersToggle').setAttribute('aria-expanded',String(isOpen));$('#filtersToggle span').textContent=isOpen?'−':'＋'});
 function photos(p){return p.marketingFiles?.length?p.marketingFiles:(p.photo||[])}
 function updateCompare(){const items=[...compared].map(id=>listings.find(p=>p._id===id)).filter(Boolean);$('#compareTray').hidden=!items.length;$('#compareCount').textContent=items.length;$('#compareNames').textContent=items.map(street).join(' · ')}
 function toggleCompare(id){if(compared.has(id))compared.delete(id);else if(compared.size<3)compared.add(id);updateCompare();render()}

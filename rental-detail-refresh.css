@@ -1,0 +1,450 @@
+.rental-detail-page{
+  --detail-navy:#18365f;
+  --detail-deep:#10263f;
+  --detail-gold:#e8b743;
+  --detail-ink:#17243a;
+  --detail-muted:#617085;
+  --detail-line:#d7e0e8;
+  --detail-frame:min(var(--jr-page-frame,1410px),calc(100% - var(--jr-page-gutter,48px)));
+  background:#e8f0f6;
+  color:var(--detail-ink);
+}
+
+.rental-detail-page #main{
+  position:relative;
+  padding:18px 0 28px;
+  overflow:clip;
+  background:
+    radial-gradient(circle at 3% 22%,rgba(232,183,67,.17),transparent 25%),
+    radial-gradient(circle at 98% 68%,rgba(24,54,95,.13),transparent 29%),
+    linear-gradient(180deg,#edf3f8 0%,#f8f5ed 47%,#e8f0f6 100%);
+}
+
+.rental-detail-page #main::before,
+.rental-detail-page #main::after{
+  content:"";
+  position:absolute;
+  z-index:0;
+  width:520px;
+  height:520px;
+  border:1px solid rgba(24,54,95,.08);
+  border-radius:50%;
+  pointer-events:none;
+}
+
+.rental-detail-page #main::before{
+  top:780px;
+  left:-395px;
+  box-shadow:0 0 0 70px rgba(24,54,95,.035),0 0 0 140px rgba(24,54,95,.025);
+}
+
+.rental-detail-page #main::after{
+  right:-410px;
+  bottom:520px;
+  box-shadow:0 0 0 80px rgba(232,183,67,.05),0 0 0 160px rgba(232,183,67,.035);
+}
+
+.rental-detail-page #page,
+.rental-detail-page #unavailable,
+.rental-detail-page #loading{
+  position:relative;
+  z-index:1;
+}
+
+.rental-detail-page .detail-shell{
+  width:var(--detail-frame);
+  max-width:none;
+}
+
+.rental-detail-page .breadcrumbs{
+  min-height:42px;
+  align-items:center;
+  padding:7px 4px 14px;
+  color:#64748a;
+  font-family:"Plus Jakarta Sans",Arial,sans-serif;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+
+.rental-detail-page .breadcrumbs a{color:#52657d}
+.rental-detail-page .breadcrumbs span:last-child{color:var(--detail-navy)}
+
+.rental-detail-page .listing-pager{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  align-items:center;
+  gap:18px;
+  margin-bottom:14px;
+  padding:10px;
+  border:1px solid rgba(24,54,95,.1);
+  border-radius:20px;
+  background:rgba(255,255,255,.96);
+  box-shadow:0 14px 36px rgba(24,54,95,.09);
+  font-family:"Plus Jakarta Sans",Arial,sans-serif;
+}
+
+.rental-detail-page .listing-pager-direction{
+  display:flex;
+  min-width:0;
+  align-items:center;
+  gap:12px;
+  padding:9px 12px;
+  border-radius:14px;
+  color:var(--detail-navy);
+  text-decoration:none;
+  transition:background-color .18s ease,transform .18s ease;
+}
+
+.rental-detail-page .listing-pager-direction:hover{
+  transform:translateY(-1px);
+  background:#eef3f7;
+}
+
+.rental-detail-page .listing-pager-direction:focus-visible,
+.rental-detail-page .listing-pager-position a:focus-visible{
+  outline:3px solid var(--detail-gold);
+  outline-offset:2px;
+}
+
+.rental-detail-page .listing-pager-direction>span:not(.listing-pager-arrow){min-width:0}
+.rental-detail-page .listing-pager-direction small,
+.rental-detail-page .listing-pager-direction strong{display:block}
+.rental-detail-page .listing-pager-direction small{margin-bottom:3px;color:#718095;font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.rental-detail-page .listing-pager-direction strong{overflow:hidden;font-size:13px;line-height:1.25;text-overflow:ellipsis;white-space:nowrap}
+.rental-detail-page .listing-pager-next{justify-content:flex-end;text-align:right}
+
+.rental-detail-page .listing-pager-arrow{
+  display:grid;
+  width:38px;
+  height:38px;
+  place-items:center;
+  flex:0 0 auto;
+  border-radius:50%;
+  background:var(--detail-navy);
+  color:#fff;
+  font-size:18px;
+}
+
+.rental-detail-page .listing-pager-position{
+  display:grid;
+  min-width:170px;
+  justify-items:center;
+  gap:3px;
+  padding:0 18px;
+  border-right:1px solid var(--detail-line);
+  border-left:1px solid var(--detail-line);
+}
+
+.rental-detail-page .listing-pager-position a{color:var(--detail-navy);font-size:11px;font-weight:800;letter-spacing:.07em;text-decoration:none;text-transform:uppercase}
+.rental-detail-page .listing-pager-position span{display:flex;align-items:center;gap:3px;color:#718095;font-size:10px;font-weight:700}
+.rental-detail-page .listing-pager.is-single .listing-pager-direction{visibility:hidden}
+
+.rental-detail-page .gallery{
+  height:600px;
+  gap:8px;
+  padding:9px;
+  border:1px solid rgba(24,54,95,.1);
+  border-radius:30px;
+  background:#fff;
+  box-shadow:0 24px 70px rgba(24,54,95,.12);
+}
+
+.rental-detail-page .gallery-photo{
+  border-radius:18px;
+  background:#e9eff4;
+}
+
+.rental-detail-page .gallery-photo:focus-visible{
+  outline:3px solid var(--detail-gold);
+  outline-offset:-3px;
+}
+
+.rental-detail-page .more-photos{
+  border-radius:999px;
+  color:var(--detail-deep);
+  box-shadow:0 8px 24px rgba(16,38,63,.2);
+}
+
+.rental-detail-page .content-grid{
+  display:grid;
+  grid-template-columns:minmax(0,2.45fr) minmax(310px,.9fr);
+  gap:18px;
+  align-items:start;
+  padding-top:18px;
+}
+
+.rental-detail-page .listing-content{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  min-width:0;
+  gap:18px;
+}
+
+.rental-detail-page .content-grid>article,
+.rental-detail-page .content-grid>aside,
+.rental-detail-page .listing-content>section{
+  min-width:0;
+  max-width:100%;
+}
+
+.rental-detail-page .listing-content>section,
+.rental-detail-page .schools-section>.detail-shell,
+.rental-detail-page .nearby>.detail-shell,
+.rental-detail-page .final-cta>.detail-shell{
+  margin:0;
+  padding:clamp(30px,3.25vw,48px)!important;
+  border:1px solid rgba(24,54,95,.1);
+  border-radius:26px;
+  background:rgba(255,255,255,.96);
+  box-shadow:0 20px 58px rgba(24,54,95,.1);
+}
+
+.rental-detail-page .listing-content>section{
+  border-top:1px solid rgba(24,54,95,.1);
+}
+
+.rental-detail-page .listing-overview .kicker{margin-top:0}
+
+.rental-detail-page .content-grid h1{
+  max-width:1040px;
+  margin:16px 0 12px;
+  color:var(--detail-deep);
+  font:700 clamp(42px,4.7vw,68px)/.98 "Inter Tight",Arial,sans-serif;
+  letter-spacing:-.045em;
+  text-wrap:balance;
+}
+
+.rental-detail-page .content-grid h2,
+.rental-detail-page .schools-section h2,
+.rental-detail-page .nearby h2,
+.rental-detail-page .final-cta h2,
+.rental-detail-page .sticky-card h2{
+  color:var(--detail-deep);
+  font:700 clamp(30px,3vw,46px)/1.02 "Inter Tight",Arial,sans-serif;
+  letter-spacing:-.035em;
+}
+
+.rental-detail-page .full-address{
+  margin:0;
+  color:var(--detail-muted);
+  font-size:1.05rem;
+}
+
+.rental-detail-page .kicker{
+  color:#9b7824;
+  font-family:"Plus Jakarta Sans",Arial,sans-serif;
+  letter-spacing:.14em;
+}
+
+.rental-detail-page .summary{
+  margin:28px 0 22px;
+  padding:21px 24px;
+  border:0;
+  border-left:4px solid var(--detail-gold);
+  border-radius:0 16px 16px 0;
+  background:#f4f0e4;
+}
+
+.rental-detail-page .stat-grid{
+  margin:0;
+  overflow:hidden;
+  border:1px solid var(--detail-line);
+  border-radius:18px;
+  background:#f8fafc;
+}
+
+.rental-detail-page .stat-grid div{padding:20px 22px;border-color:var(--detail-line)}
+.rental-detail-page .stat-grid strong{color:var(--detail-navy);font:800 1.65rem/1.1 "Plus Jakarta Sans",Arial,sans-serif}
+
+.rental-detail-page .tour-block,
+.rental-detail-page .costs{
+  background:#f4f0e4!important;
+}
+
+.rental-detail-page .tour-days button,
+.rental-detail-page .tour-times button{
+  border-radius:12px;
+}
+
+.rental-detail-page .tour-days button.is-selected{
+  background:var(--detail-navy);
+  border-color:var(--detail-navy);
+}
+
+.rental-detail-page .tour-times button:hover,
+.rental-detail-page .tour-times button.is-selected{
+  background:var(--detail-gold);
+  border-color:var(--detail-gold);
+}
+
+.rental-detail-page .feature-grid{
+  overflow:hidden;
+  border-color:var(--detail-line);
+  border-radius:18px;
+  background:#f8fafc;
+}
+
+.rental-detail-page .feature-grid div{border-color:var(--detail-line)}
+.rental-detail-page .description{color:#425269;line-height:1.75}
+
+.rental-detail-page .listing-faq details{border-color:var(--detail-line)}
+.rental-detail-page .listing-faq summary{color:var(--detail-navy)}
+
+.rental-detail-page .sticky-card{
+  position:sticky;
+  top:104px;
+  padding:34px;
+  border:1px solid rgba(24,54,95,.1);
+  border-top:5px solid var(--detail-gold);
+  border-radius:24px;
+  background:rgba(255,255,255,.96);
+  box-shadow:0 20px 58px rgba(24,54,95,.12);
+}
+
+.rental-detail-page .gold-button,
+.rental-detail-page .outline-button,
+.rental-detail-page .tour-continue{
+  min-height:48px;
+  border-radius:999px;
+}
+
+.rental-detail-page .gold-button{
+  background:var(--detail-gold);
+  color:var(--detail-deep);
+}
+
+.rental-detail-page .outline-button{border-color:var(--detail-navy);color:var(--detail-navy)}
+.rental-detail-page .sticky-card hr{border-color:var(--detail-line)}
+
+.rental-detail-page .schools-section,
+.rental-detail-page .nearby,
+.rental-detail-page .final-cta{
+  position:relative;
+  z-index:1;
+  padding:18px 0 0;
+  border:0;
+  background:transparent;
+}
+
+.rental-detail-page .schools-section>.detail-shell,
+.rental-detail-page .nearby>.detail-shell,
+.rental-detail-page .final-cta>.detail-shell{
+  width:var(--detail-frame);
+}
+
+.rental-detail-page .schools-intro{color:var(--detail-muted)}
+
+.rental-detail-page .schools-layout{
+  overflow:hidden;
+  border-color:var(--detail-line);
+  border-radius:20px;
+  background:#eef3f7;
+  box-shadow:none;
+}
+
+.rental-detail-page .school-list{background:#fff}
+.rental-detail-page .school-card{border-color:var(--detail-line)}
+
+.rental-detail-page .similar-grid{gap:16px}
+
+.rental-detail-page .similar-card{
+  overflow:hidden;
+  border-color:var(--detail-line);
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 12px 30px rgba(24,54,95,.08);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+
+.rental-detail-page .similar-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 18px 40px rgba(24,54,95,.14);
+}
+
+.rental-detail-page .similar-card h3{color:var(--detail-deep)}
+
+.rental-detail-page .final-cta>.detail-shell{
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 88% 15%,rgba(232,183,67,.24),transparent 25%),
+    var(--detail-navy);
+  color:#fff;
+}
+
+.rental-detail-page .final-cta h2,
+.rental-detail-page .final-cta .kicker{color:#fff}
+.rental-detail-page .final-cta p{color:#dce7f1}
+.rental-detail-page .final-cta .outline-button{border-color:#fff;color:#fff}
+
+.rental-detail-page .unavailable{
+  width:var(--detail-frame);
+  min-height:580px;
+  margin:0 auto;
+  padding:90px clamp(28px,6vw,88px);
+  border:1px solid rgba(24,54,95,.1);
+  border-radius:28px;
+  background:#fff;
+  box-shadow:0 24px 70px rgba(24,54,95,.12);
+}
+
+@media(max-width:900px){
+  .rental-detail-page .content-grid{grid-template-columns:1fr;gap:14px}
+  .rental-detail-page .sticky-card{position:static;margin:0}
+  .rental-detail-page .gallery{height:480px}
+}
+
+@media(max-width:620px){
+  .rental-detail-page{
+    --detail-frame:calc(100% - 28px);
+  }
+
+  .rental-detail-page #main{padding-top:8px;padding-bottom:18px}
+  .rental-detail-page .breadcrumbs{min-height:36px;padding:4px 2px 10px}
+  .rental-detail-page .listing-pager{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px;padding:8px;border-radius:18px}
+  .rental-detail-page .listing-pager-position{grid-column:1/-1;grid-row:1;min-width:0;padding:5px 8px 10px;border:0;border-bottom:1px solid var(--detail-line)}
+  .rental-detail-page .listing-pager-direction{grid-row:2;gap:8px;padding:8px 6px}
+  .rental-detail-page .listing-pager-direction strong{font-size:11px}
+  .rental-detail-page .listing-pager-direction small{font-size:8px}
+  .rental-detail-page .listing-pager-arrow{width:34px;height:34px;font-size:16px}
+  .rental-detail-page .gallery{height:390px!important;padding:7px;border-radius:22px}
+  .rental-detail-page .gallery-photo{border-radius:14px}
+  .rental-detail-page .content-grid{padding-top:14px}
+
+  .rental-detail-page .listing-content>section,
+  .rental-detail-page .schools-section>.detail-shell,
+  .rental-detail-page .nearby>.detail-shell,
+  .rental-detail-page .final-cta>.detail-shell{
+    padding:24px 20px!important;
+    border-radius:20px;
+  }
+
+  .rental-detail-page .content-grid h1{font-size:clamp(38px,11.5vw,50px)}
+  .rental-detail-page .content-grid h2,
+  .rental-detail-page .schools-section h2,
+  .rental-detail-page .nearby h2,
+  .rental-detail-page .final-cta h2,
+  .rental-detail-page .sticky-card h2{font-size:clamp(29px,9vw,39px)}
+
+  .rental-detail-page .summary{padding:18px;margin:22px 0 18px}
+  .rental-detail-page .stat-grid{grid-template-columns:1fr 1fr}
+  .rental-detail-page .stat-grid div{padding:16px}
+  .rental-detail-page .stat-grid div:nth-child(-n+2){border-bottom:1px solid var(--detail-line)}
+  .rental-detail-page .stat-grid div:nth-child(2){border-right:0}
+
+  .rental-detail-page .feature-grid{grid-template-columns:1fr}
+  .rental-detail-page .feature-grid div:nth-child(odd){border-right:0}
+  .rental-detail-page .sticky-card{padding:26px 22px}
+  .rental-detail-page .schools-section,
+  .rental-detail-page .nearby,
+  .rental-detail-page .final-cta{padding-top:14px}
+  .rental-detail-page .schools-layout{margin:0}
+  .rental-detail-page .similar-grid{grid-template-columns:1fr}
+  .rental-detail-page .final-cta .gold-button,
+  .rental-detail-page .final-cta .outline-button{display:flex;width:100%;align-items:center;justify-content:center;margin:10px 0 0}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .rental-detail-page .similar-card{transition:none}
+}

@@ -1,0 +1,545 @@
+.audience-switcher{
+  --audience-navy:#18365f;
+  --audience-ink:#17243a;
+  --audience-gold:#e8b743;
+  --audience-pale:#edf3f8;
+  padding:26px 0 96px;
+  scroll-margin-top:130px;
+  background:linear-gradient(180deg,#fff 0,#f1f5f9 16%,#e9f0f6 100%);
+}
+
+.audience-shell{
+  width:min(var(--jr-page-frame,1410px),calc(100% - var(--jr-page-gutter,48px)));
+  margin:0 auto;
+}
+
+.audience-tablist{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:2px;
+  overflow:hidden;
+  border:1px solid rgba(24,54,95,.14);
+  border-radius:22px;
+  background:#d5dee8;
+  box-shadow:0 16px 38px rgba(24,54,95,.09);
+}
+
+.audience-tablist button{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:20px;
+  min-height:112px;
+  padding:24px 30px;
+  border:0;
+  border-radius:0;
+  background:#fff;
+  color:var(--audience-ink);
+  text-align:left;
+  cursor:pointer;
+  transition:background .25s ease,color .25s ease;
+}
+
+.audience-tablist button:hover{background:#f7f9fc}
+
+.audience-tablist button[aria-selected="true"]{
+  background:var(--audience-navy);
+  color:#fff;
+}
+
+.audience-tab-number{
+  display:grid;
+  place-items:center;
+  width:48px;
+  height:48px;
+  border:1px solid rgba(24,54,95,.18);
+  border-radius:50%;
+  color:var(--audience-navy);
+  font:800 12px/1 "Plus Jakarta Sans",Arial,sans-serif;
+}
+
+[aria-selected="true"] .audience-tab-number{
+  border-color:rgba(255,255,255,.32);
+  color:var(--audience-gold);
+}
+
+.audience-tab-copy{display:grid;gap:5px}
+.audience-tab-copy small{
+  color:#76869b;
+  font:800 10px/1.2 "Plus Jakarta Sans",Arial,sans-serif;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+
+[aria-selected="true"] .audience-tab-copy small{color:#cbd7e5}
+.audience-tab-copy strong{font:700 clamp(17px,1.7vw,24px)/1.15 "Plus Jakarta Sans",Arial,sans-serif}
+.audience-tab-arrow{font-size:25px;transition:transform .2s ease}
+.audience-tablist button:hover .audience-tab-arrow{transform:translateX(4px)}
+.audience-tablist button:focus-visible{position:relative;z-index:1;outline:3px solid var(--audience-gold);outline-offset:-4px}
+
+.audience-panel{
+  margin-top:18px;
+  overflow:hidden;
+  border:1px solid rgba(24,54,95,.1);
+  border-radius:30px;
+  background:#fff;
+  box-shadow:0 24px 70px rgba(24,54,95,.1);
+  scroll-margin-top:130px;
+}
+
+.audience-panel[hidden]{display:none}
+.owner-homepage-content[hidden]{display:none!important}
+
+.owner-homepage-content{
+  position:relative;
+  padding-bottom:76px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 3% 20%,rgba(232,183,67,.2),transparent 26%),
+    radial-gradient(circle at 97% 65%,rgba(24,54,95,.14),transparent 30%),
+    linear-gradient(180deg,rgba(237,243,248,.88) 0%,rgba(248,245,237,.94) 48%,rgba(232,240,246,.93) 100%),
+    url("assets/waco-sunset-river.jpg") center/cover fixed;
+}
+
+.owner-homepage-content::before,
+.owner-homepage-content::after{
+  content:"";
+  position:absolute;
+  z-index:0;
+  width:520px;
+  height:520px;
+  border:1px solid rgba(24,54,95,.08);
+  border-radius:50%;
+  pointer-events:none;
+}
+
+.owner-homepage-content::before{top:760px;left:-390px;box-shadow:0 0 0 70px rgba(24,54,95,.035),0 0 0 140px rgba(24,54,95,.025)}
+.owner-homepage-content::after{right:-410px;top:1720px;box-shadow:0 0 0 80px rgba(232,183,67,.05),0 0 0 160px rgba(232,183,67,.035)}
+.owner-homepage-content>section{
+  position:relative;
+  z-index:1;
+  width:min(var(--jr-page-frame,1410px),calc(100% - var(--jr-page-gutter,48px)));
+  margin:24px auto 0;
+  overflow:hidden;
+  border:1px solid rgba(24,54,95,.1);
+  border-radius:30px;
+  box-shadow:0 24px 70px rgba(24,54,95,.12);
+}
+
+.owner-homepage-content>section>.wrap{width:calc(100% - 64px)!important}
+.owner-homepage-content .leadership{margin:24px auto 0}
+
+.owner-homepage-content .manage{
+  padding:72px 0;
+  background:rgba(255,255,255,.96);
+}
+
+.owner-homepage-content .difference{
+  padding:72px 0 78px;
+  background:linear-gradient(145deg,#10263f 0%,#18365f 68%,#10263f 100%);
+}
+
+.owner-homepage-content .service-answer-grid{gap:16px;margin-top:42px}
+.owner-homepage-content .service-answer-grid article{
+  min-height:236px;
+  padding:30px;
+  border:1px solid #dce4ec;
+  border-top:0;
+  border-radius:18px;
+  background:#f3f6fa;
+  box-shadow:inset 0 4px 0 #18365f;
+}
+
+.owner-homepage-content .feature-grid article{
+  border:1px solid rgba(255,255,255,.15);
+  box-shadow:0 18px 42px rgba(4,16,31,.24);
+}
+
+.owner-homepage-content .rent-estimate{background:rgba(245,248,251,.97)}
+.owner-homepage-content .estimate-shell{border-radius:22px}
+.owner-homepage-content .benefit-cards{background:rgba(255,255,255,.96)}
+.owner-homepage-content .comparison-link{background:linear-gradient(145deg,#10263f,#18365f)}
+.owner-homepage-content .faq-section{background:rgba(245,248,251,.97)}
+.owner-homepage-content .faq-grid{gap:14px;margin-top:36px}
+.owner-homepage-content .faq-grid article{
+  padding:24px;
+  border:1px solid #dce4ec;
+  border-radius:16px;
+  background:#fff;
+}
+
+.audience-panel-inner{padding:clamp(44px,5vw,76px)}
+.audience-eyebrow{
+  margin:0 0 18px!important;
+  color:#6c7d92;
+  font:800 11px/1.2 "Plus Jakarta Sans",Arial,sans-serif!important;
+  letter-spacing:.17em;
+  text-transform:uppercase;
+}
+
+.audience-intro{
+  display:grid;
+  grid-template-columns:minmax(0,1.2fr) minmax(280px,.7fr);
+  align-items:end;
+  gap:clamp(40px,7vw,100px);
+  margin-bottom:50px;
+}
+
+.audience-intro h2{
+  max-width:850px;
+  margin:0;
+  color:var(--audience-navy);
+  font:700 clamp(42px,5vw,76px)/.98 "Inter Tight",Arial,sans-serif;
+  letter-spacing:-.04em;
+  text-wrap:balance;
+}
+
+.audience-intro-copy>p{
+  margin:0 0 24px;
+  color:#435169;
+  font:500 18px/1.65 "Plus Jakarta Sans",Arial,sans-serif;
+}
+
+.audience-actions{display:flex;flex-wrap:wrap;gap:10px}
+.audience-actions a{
+  display:inline-flex;
+  align-items:center;
+  min-height:48px;
+  padding:0 20px;
+  border:1px solid var(--audience-navy);
+  border-radius:99px;
+  color:var(--audience-navy);
+  font:800 12px/1 "Plus Jakarta Sans",Arial,sans-serif;
+  text-decoration:none;
+  transition:transform .2s ease,background .2s ease,color .2s ease;
+}
+
+.audience-actions a:first-child{background:var(--audience-gold);border-color:var(--audience-gold);color:var(--audience-ink)}
+.audience-actions a:hover{transform:translateY(-2px);background:var(--audience-navy);color:#fff}
+.audience-actions a:focus-visible{outline:3px solid var(--audience-gold);outline-offset:3px}
+
+.owner-uniques{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+
+.owner-unique{
+  position:relative;
+  min-height:330px;
+  padding:34px;
+  overflow:hidden;
+  border-radius:24px;
+  background:#f0f4f8;
+}
+
+.owner-unique:nth-child(1){background:var(--audience-navy);color:#fff}
+.owner-unique:nth-child(2){background:var(--audience-gold);color:var(--audience-ink)}
+.owner-unique:nth-child(3){background:#dfe9f4;color:var(--audience-ink)}
+.owner-unique-number{display:block;margin-bottom:70px;font:800 12px/1 "Plus Jakarta Sans",Arial,sans-serif;letter-spacing:.12em;opacity:.72}
+.owner-unique h3{margin:0 0 16px;color:inherit;font:700 clamp(25px,2.2vw,36px)/1.05 "Inter Tight",Arial,sans-serif;letter-spacing:-.025em}
+.owner-unique p{margin:0;color:inherit;font:500 15px/1.65 "Plus Jakarta Sans",Arial,sans-serif;opacity:.9}
+
+.owner-services{
+  margin-top:58px;
+  padding-top:42px;
+  border-top:1px solid #d9e1e9;
+}
+
+.owner-services-heading{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:30px;
+  margin-bottom:30px;
+}
+
+.owner-services-heading h3{max-width:720px;margin:0;color:var(--audience-navy);font:700 clamp(30px,3vw,46px)/1.05 "Inter Tight",Arial,sans-serif;letter-spacing:-.03em}
+.owner-services-heading p{max-width:430px;margin:0;color:#5b687a;font:500 15px/1.6 "Plus Jakarta Sans",Arial,sans-serif}
+.owner-service-grid{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));overflow:hidden;isolation:isolate;border-top:1px solid #cfd8e2;border-bottom:1px solid #cfd8e2}
+.owner-service-grid article{position:relative;z-index:1;min-height:242px;padding:28px 26px;border-right:1px solid #cfd8e2}
+.owner-service-grid article:last-child{border-right:0}
+.owner-service-grid span{display:block;margin-bottom:44px;color:#8794a5;font:800 10px/1 "Plus Jakarta Sans",Arial,sans-serif;letter-spacing:.14em}
+.owner-service-grid h4{margin:0 0 12px;color:var(--audience-navy);font:700 20px/1.15 "Plus Jakarta Sans",Arial,sans-serif}
+.owner-service-grid p{margin:0;color:#556276;font:500 14px/1.62 "Plus Jakarta Sans",Arial,sans-serif}
+
+.owner-service-grid .owner-service-pulse{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  display:grid;
+  place-items:center;
+  margin:0;
+  pointer-events:none;
+}
+
+.owner-service-pulse img{
+  position:relative;
+  z-index:2;
+  display:block;
+  width:66px;
+  height:66px;
+  opacity:.2;
+  filter:drop-shadow(0 0 16px rgba(255,255,255,.94));
+}
+
+.owner-service-pulse::before,
+.owner-service-pulse::after{
+  content:"";
+  position:absolute;
+  inset:47% 48.5%;
+  border:1px solid rgba(24,54,95,.2);
+  border-radius:50%;
+  opacity:0;
+  animation:owner-service-ripple 5.2s cubic-bezier(.18,.65,.28,1) infinite;
+}
+
+.owner-service-pulse::after{animation-delay:2.6s}
+
+@keyframes owner-service-ripple{
+  0%{inset:47% 48.5%;opacity:0}
+  12%{opacity:.18}
+  72%{opacity:.07}
+  100%{inset:0;opacity:0}
+}
+
+.owner-principles{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.owner-principles span{padding:10px 14px;border:1px solid #d6dfe8;border-radius:99px;color:#526177;background:#f7f9fb;font:800 10px/1 "Plus Jakarta Sans",Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+
+.renter-intro{margin-bottom:42px}
+.renter-current-link{display:inline-flex;align-items:center;gap:8px;color:var(--audience-navy);font:800 11px/1.3 "Plus Jakarta Sans",Arial,sans-serif;text-decoration:none;text-transform:uppercase;letter-spacing:.06em}
+.renter-current-link:hover{text-decoration:underline;text-underline-offset:4px}
+.renter-current-link:focus-visible{outline:3px solid var(--audience-gold);outline-offset:4px}
+.renter-action-grid{display:grid;grid-template-columns:minmax(0,1.1fr) repeat(2,minmax(250px,.7fr));gap:14px;margin:0 0 56px}
+.renter-home-action{position:relative;display:flex;min-height:315px;padding:38px;overflow:hidden;flex-direction:column;border-radius:24px;color:var(--audience-ink);background:#e8b743;text-decoration:none;isolation:isolate;transition:transform .22s ease,box-shadow .22s ease}
+.renter-home-action::after{content:"";position:absolute;z-index:-1;width:320px;height:320px;right:-180px;top:-190px;border:1px solid currentColor;border-radius:50%;opacity:.16;box-shadow:0 0 0 52px currentColor,0 0 0 104px currentColor}
+.renter-home-action>span{display:block;margin-bottom:auto;font:800 9px/1.2 "Plus Jakarta Sans",Arial,sans-serif;letter-spacing:.16em}
+.renter-home-action strong{display:block;max-width:700px;margin:42px 0 13px;font:700 clamp(34px,4vw,58px)/.98 "Inter Tight",Arial,sans-serif;letter-spacing:-.035em}
+.renter-home-action p{max-width:670px;margin:0;font:500 14px/1.65 "Plus Jakarta Sans",Arial,sans-serif;opacity:.88}
+.renter-home-action b{display:inline-flex;align-items:center;gap:10px;margin-top:28px;font:800 10px/1 "Plus Jakarta Sans",Arial,sans-serif;letter-spacing:.07em;text-transform:uppercase}
+.renter-home-action i{font-style:normal;font-size:17px;transition:transform .2s ease}
+.renter-home-action-primary{color:#fff;background:#18365f}
+.renter-home-action-primary>span,.renter-home-action-primary b{color:#e8b743}
+.renter-home-action-budget strong{font-size:clamp(30px,3vw,46px)}
+.renter-home-action-qualify{color:#18365f;background:#dfe9f4}
+.renter-home-action-qualify strong{font-size:clamp(30px,3vw,46px)}
+.renter-home-action:hover{transform:translateY(-4px);box-shadow:0 20px 42px rgba(23,36,58,.18)}
+.renter-home-action:hover i{transform:translateX(5px)}
+.renter-home-action:focus-visible{outline:4px solid var(--audience-gold);outline-offset:3px}
+.market-explorer{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(440px,.9fr);gap:18px;align-items:stretch}
+.audience-map-wrap{display:flex;min-width:0;flex-direction:column;padding:10px;border:1px solid #d8e1ea;border-radius:22px;background:#f7f9fb}
+.audience-map{min-height:690px;flex:1;border-radius:15px;background:#dbe6ef}
+.audience-map-note{margin:10px 5px 1px;color:#66758a;font:600 11px/1.4 "Plus Jakarta Sans",Arial,sans-serif}
+.audience-map .leaflet-control-attribution{font-size:9px}
+.audience-map .leaflet-popup-content-wrapper{border-radius:14px;box-shadow:0 14px 35px rgba(23,36,58,.2)}
+.audience-map .leaflet-popup-content{margin:16px 18px;font:700 14px/1.4 "Plus Jakarta Sans",Arial,sans-serif}
+.audience-map .leaflet-popup-content a{display:inline-block;margin-top:6px;color:var(--audience-navy);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.jr-city-marker{border:0!important;background:transparent!important}
+.jr-city-marker span{
+  position:absolute;
+  left:0;
+  top:0;
+  display:block;
+  min-width:88px;
+  padding:8px 12px;
+  border:2px solid #fff;
+  border-radius:99px;
+  background:var(--audience-navy);
+  color:#fff;
+  box-shadow:0 7px 18px rgba(23,36,58,.24);
+  font:800 11px/1 "Plus Jakarta Sans",Arial,sans-serif;
+  text-align:center;
+  white-space:nowrap;
+  transform:translate(-50%,-50%);
+}
+.leaflet-marker-icon:focus span{outline:3px solid var(--audience-gold);outline-offset:2px}
+
+.city-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.city-card{
+  position:relative;
+  display:flex;
+  min-height:160px;
+  padding:22px;
+  overflow:hidden;
+  flex-direction:column;
+  justify-content:flex-end;
+  border-radius:18px;
+  color:#fff;
+  background:linear-gradient(180deg,rgba(9,26,49,.08),rgba(9,26,49,.9)),var(--city-image) center/cover;
+  text-decoration:none;
+  isolation:isolate;
+  transition:transform .22s ease,box-shadow .22s ease;
+}
+.city-card:first-child{grid-column:1/-1;min-height:190px}
+.city-card::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(120deg,rgba(24,54,95,.08),rgba(232,183,67,.2));opacity:0;transition:opacity .22s ease}
+.city-card:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(23,36,58,.22)}
+.city-card:hover::after{opacity:1}
+.city-card:focus-visible{outline:4px solid var(--audience-gold);outline-offset:2px}
+.city-card small{margin-bottom:8px;font:800 9px/1 "Plus Jakarta Sans",Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase}
+.city-card h3{margin:0;color:#fff;font:700 clamp(22px,2vw,30px)/1 "Inter Tight",Arial,sans-serif;letter-spacing:-.02em}
+.city-card span{display:inline-flex;align-items:center;gap:8px;margin-top:13px;font:800 10px/1 "Plus Jakarta Sans",Arial,sans-serif;text-transform:uppercase;letter-spacing:.07em}
+
+.resident-care{
+  position:relative;
+  margin-top:clamp(62px,7vw,100px);
+  padding:clamp(42px,5vw,74px);
+  padding-bottom:clamp(38px,4vw,56px);
+  overflow:clip;
+  border-radius:28px;
+  color:#fff;
+  background:#142f53;
+  isolation:isolate;
+}
+.resident-care::before,.resident-care::after{content:"";position:absolute;z-index:-1;border:1px solid rgba(255,255,255,.09);border-radius:50%;pointer-events:none}
+.resident-care::before{width:520px;height:520px;top:-350px;right:-100px}
+.resident-care::after{width:420px;height:420px;bottom:-330px;left:-140px}
+.resident-care-heading{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.72fr);gap:clamp(38px,7vw,96px);align-items:end}
+.resident-care-kicker{margin:0 0 18px!important;color:#e8b743;font:800 10px/1.2 "Plus Jakarta Sans",Arial,sans-serif!important;letter-spacing:.17em;text-transform:uppercase}
+.resident-care-heading h3{max-width:720px;margin:0;color:#fff;font:700 clamp(40px,4.7vw,72px)/.98 "Inter Tight",Arial,sans-serif;letter-spacing:-.04em;text-wrap:balance}
+.resident-care-heading>p{margin:0;color:#d6e0ec;font:500 16px/1.72 "Plus Jakarta Sans",Arial,sans-serif}
+
+.resident-care-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:58px 0 0;padding:0;border-top:1px solid rgba(255,255,255,.19);border-bottom:1px solid rgba(255,255,255,.19);list-style:none}
+.resident-care-flow li{min-height:238px;padding:28px 25px;border-right:1px solid rgba(255,255,255,.19)}
+.resident-care-flow li:last-child{border-right:0}
+.resident-care-flow span{display:block;margin-bottom:48px;color:#e8b743;font:800 10px/1 "Plus Jakarta Sans",Arial,sans-serif;letter-spacing:.14em}
+.resident-care-flow strong{display:block;margin-bottom:12px;color:#fff;font:700 24px/1.1 "Inter Tight",Arial,sans-serif}
+.resident-care-flow p{margin:0;color:#cbd7e4;font:500 13px/1.62 "Plus Jakarta Sans",Arial,sans-serif}
+
+.resident-care-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px;margin-top:14px}
+.resident-care-card{position:relative;isolation:isolate;overflow:hidden;grid-column:span 5;min-height:250px;padding:30px 34px;border-radius:20px;background:#20446f}
+.resident-care-card::before,.resident-care-card::after{content:"";position:absolute;inset:0;pointer-events:none}
+.resident-care-card::before{z-index:0;background-image:var(--resident-care-image);background-position:var(--resident-care-position,center);background-size:cover;filter:saturate(.78) contrast(.94);transform:scale(1.015)}
+.resident-care-card::after{z-index:1;background:linear-gradient(90deg,rgba(16,37,62,.97) 0%,rgba(20,47,78,.91) 52%,rgba(20,47,78,.68) 100%)}
+.resident-care-card>*{position:relative;z-index:2}
+.resident-care-card-tech{--resident-care-image:url("assets/resident-care/maintenance-technician.jpg");--resident-care-position:center}
+.resident-care-card-leak{--resident-care-image:url("assets/resident-care/leaky-sink.jpg");--resident-care-position:64% center}
+.resident-care-card-cooling{--resident-care-image:url("assets/resident-care/temporary-cooling.jpg");--resident-care-position:74% center}
+.resident-care-card-lock{--resident-care-image:url("assets/resident-care/touchless-entry.jpg");--resident-care-position:center}
+.resident-care-card-wide{grid-column:span 7}
+.resident-care-card>span{display:block;margin-bottom:34px;color:#aebed0;font:800 9px/1.2 "Plus Jakarta Sans",Arial,sans-serif;letter-spacing:.15em}
+.resident-care-card h4{max-width:580px;margin:0 0 16px;color:#fff;font:700 clamp(26px,2.6vw,40px)/1.04 "Inter Tight",Arial,sans-serif;letter-spacing:-.025em}
+.resident-care-card p{margin:0;color:#d8e1eb;font:500 14px/1.7 "Plus Jakarta Sans",Arial,sans-serif}
+.resident-care-card ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:28px 0 0;padding:0;list-style:none}
+.resident-care-card li{padding:13px 14px;border:1px solid rgba(255,255,255,.2);border-radius:12px;background:rgba(9,28,49,.38);color:#f4f7fa;font:700 10px/1.45 "Plus Jakarta Sans",Arial,sans-serif;backdrop-filter:blur(4px)}
+.resident-care-card-gold{color:#17243a;background:#e8b743}
+.resident-care-card-gold>span,.resident-care-card-gold h4,.resident-care-card-gold p{color:#17243a}
+.resident-care-card-light{color:#17243a;background:#dfe9f4}
+.resident-care-card-light>span{color:#61748c}
+.resident-care-card-light h4{color:#18365f}
+.resident-care-card-light p{color:#40536a}
+.resident-digital-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.resident-digital-list span{padding:10px 12px;border:1px solid rgba(24,54,95,.18);border-radius:999px;color:#18365f;font:800 9px/1 "Plus Jakarta Sans",Arial,sans-serif;letter-spacing:.05em;text-transform:uppercase}
+.resident-care-card-gold::after{background:linear-gradient(90deg,rgba(35,42,48,.96) 0%,rgba(48,48,42,.87) 55%,rgba(62,49,23,.58) 100%)}
+.resident-care-card-cooling::after{background:linear-gradient(90deg,rgba(35,42,48,.97) 0%,rgba(48,48,42,.84) 58%,rgba(62,49,23,.34) 100%)}
+.resident-care-card-light::after{background:linear-gradient(90deg,rgba(17,39,65,.97) 0%,rgba(24,54,95,.9) 52%,rgba(24,54,95,.61) 100%)}
+.resident-care-card-gold>span,.resident-care-card-light>span{color:#f2c85f}
+.resident-care-card-gold h4,.resident-care-card-gold p,.resident-care-card-light h4,.resident-care-card-light p{color:#fff}
+.resident-care-card-cooling h4,.resident-care-card-cooling p{max-width:68%}
+.resident-care-card-wide>p{max-width:76%}
+.resident-care-card .resident-digital-list span{border-color:rgba(255,255,255,.28);background:rgba(8,27,49,.36);color:#fff;backdrop-filter:blur(4px)}
+
+.resident-care-footer{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:38px;align-items:end;margin-top:34px;padding-top:26px;border-top:1px solid rgba(255,255,255,.19)}
+.resident-care-footer strong{display:block;margin-bottom:9px;color:#fff;font:700 17px/1.2 "Plus Jakarta Sans",Arial,sans-serif}
+.resident-care-footer p{max-width:770px;margin:0;color:#bdcad9;font:500 12px/1.65 "Plus Jakarta Sans",Arial,sans-serif}
+.resident-care-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:9px}
+.resident-care-actions a{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:0 18px;border:1px solid rgba(255,255,255,.46);border-radius:999px;color:#fff;font:800 10px/1 "Plus Jakarta Sans",Arial,sans-serif;text-decoration:none;text-transform:uppercase;letter-spacing:.06em;transition:transform .2s ease,background .2s ease,color .2s ease}
+.resident-care-actions a:first-child{border-color:#e8b743;background:#e8b743;color:#17243a}
+.resident-care-actions a:hover{transform:translateY(-2px);background:#fff;color:#18365f}
+.resident-care-actions a:focus-visible{outline:3px solid #e8b743;outline-offset:3px}
+
+@media(max-width:1080px){
+  .audience-intro{grid-template-columns:1fr;align-items:start;gap:24px}
+  .audience-intro-copy{max-width:780px}
+  .owner-uniques{grid-template-columns:1fr 1fr}
+  .owner-unique:nth-child(3){grid-column:1/-1;min-height:260px}
+  .owner-unique-number{margin-bottom:50px}
+  .owner-service-grid{grid-template-columns:1fr 1fr}
+  .owner-service-grid article:nth-child(2){border-right:0}
+  .owner-service-grid article:nth-child(-n+2){border-bottom:1px solid #cfd8e2}
+  .market-explorer{grid-template-columns:1fr}
+  .renter-action-grid{grid-template-columns:1fr 1fr}
+  .renter-home-action-primary{grid-column:1/-1}
+  .renter-home-action{min-height:300px}
+  .audience-map{min-height:520px}
+  .city-card-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .city-card:first-child{grid-column:auto;min-height:160px}
+  .city-card:last-child{grid-column:span 2}
+  .resident-care-heading{grid-template-columns:1fr;align-items:start;gap:22px}
+  .resident-care-heading>p{max-width:760px}
+  .resident-care-flow{grid-template-columns:1fr 1fr}
+  .resident-care-flow li:nth-child(2){border-right:0}
+  .resident-care-flow li:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.19)}
+  .resident-care-card,.resident-care-card-wide{grid-column:span 6}
+  .resident-care-card ul{grid-template-columns:1fr}
+  .resident-care-footer{grid-template-columns:1fr;align-items:start}
+  .resident-care-actions{justify-content:flex-start}
+}
+
+@media(max-width:700px){
+  .audience-switcher{padding:14px 0 68px;scroll-margin-top:116px}
+  .owner-homepage-content{padding-bottom:38px;background-attachment:scroll,scroll,scroll,scroll}
+  .owner-homepage-content>section{width:calc(100% - 20px);margin-top:12px;border-radius:22px}
+  .owner-homepage-content .manage{padding:48px 0}
+  .owner-homepage-content .difference{padding:50px 0 54px}
+  .owner-homepage-content>section>.wrap{width:calc(100% - 32px)!important}
+  .owner-homepage-content .estimate-shell{border-radius:16px}
+  .owner-homepage-content .service-answer-grid article{min-height:0;padding:24px;border-radius:15px}
+  .audience-shell{width:min(var(--jr-page-frame,1410px),calc(100% - var(--jr-page-gutter,20px)))}
+  .audience-tablist{border-radius:16px}
+  .audience-tablist button{grid-template-columns:1fr;min-height:96px;padding:18px 15px;text-align:center}
+  .audience-tab-number,.audience-tab-arrow{display:none}
+  .audience-tab-copy small{font-size:8px}
+  .audience-tab-copy strong{font-size:14px;line-height:1.25}
+  .audience-panel{margin-top:10px;border-radius:20px}
+  .audience-panel-inner{padding:34px 22px}
+  .audience-intro{margin-bottom:34px}
+  .audience-intro h2{font-size:clamp(36px,11vw,52px)}
+  .audience-intro-copy>p{font-size:15px;line-height:1.6}
+  .owner-uniques{grid-template-columns:1fr}
+  .owner-unique,.owner-unique:nth-child(3){grid-column:auto;min-height:280px;padding:28px}
+  .owner-unique-number{margin-bottom:48px}
+  .owner-services{margin-top:42px;padding-top:32px}
+  .owner-services-heading{display:block}
+  .owner-services-heading h3{margin-bottom:16px}
+  .owner-service-grid{grid-template-columns:1fr}
+  .owner-service-grid article{min-height:0;border-right:0;border-bottom:1px solid #cfd8e2!important}
+  .owner-service-grid article:last-child{border-bottom:0!important}
+  .owner-service-grid span{margin-bottom:26px}
+  .owner-service-pulse img{width:54px;height:54px;opacity:.17}
+  .audience-map{min-height:420px}
+  .jr-city-marker span{min-width:18px;width:18px;height:18px;padding:0;border:3px solid var(--audience-navy);background:var(--audience-gold);font-size:0}
+  .city-card-grid{grid-template-columns:1fr 1fr}
+  .city-card:first-child,.city-card:last-child{grid-column:1/-1}
+  .city-card{min-height:145px;padding:18px}
+  .renter-action-grid{grid-template-columns:1fr;margin-bottom:42px}
+  .renter-home-action-primary{grid-column:auto}
+  .renter-home-action{min-height:280px;padding:30px 26px;border-radius:20px}
+  .renter-home-action strong,.renter-home-action-budget strong{font-size:clamp(34px,11vw,48px)}
+  .resident-care{margin-top:52px;padding:36px 22px;border-radius:20px}
+  .resident-care-heading h3{font-size:clamp(36px,11vw,52px)}
+  .resident-care-heading>p{font-size:14px}
+  .resident-care-flow{grid-template-columns:1fr;margin-top:38px}
+  .resident-care-flow li{min-height:0;padding:24px 6px;border-right:0;border-bottom:1px solid rgba(255,255,255,.19)!important}
+  .resident-care-flow li:last-child{border-bottom:0!important}
+  .resident-care-flow span{margin-bottom:18px}
+  .resident-care-grid{grid-template-columns:1fr}
+  .resident-care-card,.resident-care-card-wide{grid-column:auto;min-height:0;padding:28px 24px}
+  .resident-care-card-wide>p,.resident-care-card-cooling h4,.resident-care-card-cooling p{max-width:none}
+  .resident-care-card>span{margin-bottom:34px}
+  .resident-care-footer{margin-top:38px}
+  .resident-care-actions{display:grid}
+}
+
+@media(max-width:430px){
+  .audience-actions{display:grid}
+  .audience-actions a{justify-content:center}
+  .audience-map{min-height:380px}
+  .city-card-grid{grid-template-columns:1fr}
+  .city-card:first-child,.city-card:last-child{grid-column:auto}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .audience-tablist button,.audience-tab-arrow,.audience-actions a,.renter-home-action,.renter-home-action i,.city-card,.city-card::after,.resident-care-actions a{transition:none}
+  .owner-service-pulse::before{inset:34% 37%;opacity:.08;animation:none}
+  .owner-service-pulse::after{display:none;animation:none}
+}

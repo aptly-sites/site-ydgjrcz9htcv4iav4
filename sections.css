@@ -1,23 +1,30 @@
-/* Attachment-matched leadership and connection sections */
-.leadership{position:relative;margin-top:85px;padding:0;background:#f5f6f7;overflow:hidden}
-.leadership:before{content:"";position:absolute;inset:0;background:url('assets/mark.png') 0 0/145px 141px repeat;opacity:.055;pointer-events:none}
-.leadership-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:74px;align-items:stretch}
-.leadership-copy{padding:68px 0 68px 20px;color:#2e4b75;text-align:left}
-.leadership-copy h2{font-size:clamp(2.2rem,3.5vw,3.25rem);margin-bottom:22px}
-.leadership-copy .role{font-size:1.34rem;margin-bottom:48px}
-.leadership-copy p:not(.role){max-width:640px;font-size:1.12rem;line-height:1.55;margin-bottom:22px}
-.leadership-cta{font-size:1.35rem;min-width:305px;text-align:center;border-radius:16px;margin-top:25px;padding:11px 24px}
-.portrait-panel{min-height:520px;display:flex;align-items:flex-end;justify-content:center;background:linear-gradient(#1d477f 0%,#aebbd0 72%,#f6f6f6 100%);border-radius:14px 14px 0 0;overflow:hidden}
-.portrait-panel img{display:block;width:100%;height:100%;max-height:520px;object-fit:contain;object-position:center bottom}
-.connected{padding:85px 0 105px;background:#fff}
-.connected h2{font-size:clamp(2.5rem,4.5vw,4.25rem);margin-bottom:42px}
-.connection-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-.connection-card{position:relative;min-height:500px;padding:38px 28px 42px;border-radius:11px;box-shadow:0 7px 22px #0002;background:#fff;overflow:hidden}
-.connection-card:after{content:"";position:absolute;left:0;right:0;bottom:0;height:18px}
-.connection-card.owners:after{background:#7ca140}.connection-card.residents:after{background:#ed3c2f}.connection-card.realtors:after{background:#cabe8d}.connection-card.vendors:after{background:#ff681e}
-.connection-card img{width:58px;height:57px;object-fit:contain;margin-bottom:10px}
-.connection-card h3{font-size:1.55rem;margin:0 auto 14px;line-height:1.02}
-.connection-card .rule{display:block;width:105px;border-top:1px dotted var(--blue);margin:0 auto 18px}
-.connection-card p{font-family:Arial,sans-serif;font-size:1rem;line-height:1.45;margin:0}
-@media(max-width:900px){.leadership-grid{grid-template-columns:1fr;gap:0}.leadership-copy{padding:55px 20px}.portrait-panel{min-height:430px;max-width:620px;width:100%;margin:auto}.connection-grid{grid-template-columns:1fr 1fr}.connection-card{min-height:455px}}
-@media(max-width:560px){.leadership-copy .role{margin-bottom:30px}.leadership-cta{min-width:0;width:100%;font-size:1.05rem}.portrait-panel{min-height:330px}.connection-grid{grid-template-columns:1fr}.connection-card{min-height:0;padding-bottom:60px}.connected{padding:65px 0}}
+/* Patrick Pendley leadership section */
+.leadership{position:relative;margin-top:85px;padding:96px 0 80px;background:#f1f5f9;overflow:hidden}
+.leadership:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 7% 16%,rgba(232,183,67,.19),transparent 23%),radial-gradient(circle at 92% 84%,rgba(24,54,95,.12),transparent 26%);pointer-events:none}
+.leadership-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(360px,.88fr) minmax(0,1.12fr);gap:42px 78px;align-items:center}
+.leadership-copy{padding:12px 0;color:#2e4b75;text-align:left}
+.leadership-kicker{margin:0 0 16px!important;color:#aa8124;font:800 12px/1.2 "Plus Jakarta Sans",sans-serif!important;letter-spacing:.18em;text-transform:uppercase}
+.leadership-copy h2{max-width:650px;margin:0 0 16px;color:#18365f;font-size:clamp(2.65rem,4.7vw,4.65rem);line-height:.98;letter-spacing:-.045em}
+.leadership-copy .role{margin:0 0 30px;color:#56708f;font-size:.82rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.leadership-copy>p:not(.role):not(.leadership-kicker){max-width:650px;margin:24px 0 0;font-size:1.05rem;line-height:1.72}
+.patrick-statement{position:relative;max-width:680px;padding:26px 30px 27px;border-left:5px solid #e8b743;background:#fff;box-shadow:0 18px 48px rgba(24,54,95,.1)}
+.patrick-statement:before{content:"“";position:absolute;top:4px;right:22px;color:rgba(232,183,67,.25);font:700 78px/1 Georgia,serif}
+.patrick-statement p{position:relative;z-index:1;margin:0;color:#18365f;font:600 clamp(1.22rem,1.7vw,1.55rem)/1.46 "Plus Jakarta Sans",sans-serif}
+.leadership-cta{min-width:250px;margin-top:32px;padding:13px 24px;border-radius:999px;text-align:center;font-size:1rem}
+.portrait-panel{position:relative;align-self:stretch;min-height:610px;margin:0;display:flex;align-items:flex-end;justify-content:center;isolation:isolate;border-radius:30px;overflow:hidden;background:linear-gradient(155deg,#18365f 0 66%,#e8b743 66% 73%,#dce6f1 73%)}
+.portrait-panel:before{content:"";position:absolute;inset:26px;border:1px solid rgba(255,255,255,.26);border-radius:23px;z-index:-1}
+.portrait-panel img{position:relative;z-index:2;display:block;width:116%;max-width:none;height:auto;max-height:590px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 20px 20px rgba(6,22,42,.23))}
+.portrait-panel figcaption{position:absolute;z-index:4;left:28px;right:28px;bottom:26px;display:flex;align-items:end;justify-content:space-between;gap:18px;padding:16px 18px;border:1px solid rgba(255,255,255,.28);border-radius:14px;background:rgba(255,255,255,.86);box-shadow:0 12px 26px rgba(12,35,62,.18);backdrop-filter:blur(12px)}
+.portrait-panel figcaption strong,.portrait-panel figcaption span{display:block;color:#18365f}
+.portrait-panel figcaption strong{font:800 1.02rem/1.2 "Plus Jakarta Sans",sans-serif}
+.portrait-panel figcaption span{font-size:.72rem;font-weight:700;letter-spacing:.04em;text-align:right;text-transform:uppercase}
+.portrait-orbit{position:absolute;z-index:0;border:1px solid rgba(255,255,255,.2);border-radius:50%}
+.portrait-orbit-one{width:390px;height:390px;top:64px;left:-145px}
+.portrait-orbit-two{width:520px;height:520px;top:-105px;right:-300px}
+.leadership-stats{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin-top:8px;border-radius:20px;overflow:hidden;background:rgba(24,54,95,.14);box-shadow:0 18px 50px rgba(24,54,95,.1)}
+.leadership-stats article{min-height:168px;padding:30px 24px;display:flex;flex-direction:column;justify-content:center;background:#fff}
+.leadership-stats strong{display:block;color:#18365f;font:800 clamp(2.7rem,4.5vw,4.3rem)/.9 "Plus Jakarta Sans",sans-serif;letter-spacing:-.06em}
+.leadership-stats strong:after{content:"+";margin-left:3px;color:#e8b743;font-size:.45em;vertical-align:top}
+.leadership-stats span{display:block;max-width:180px;margin-top:13px;color:#5a6b80;font-size:.76rem;font-weight:800;line-height:1.4;letter-spacing:.08em;text-transform:uppercase}
+@media(max-width:900px){.leadership{padding:70px 0}.leadership-grid{grid-template-columns:1fr;gap:42px}.leadership-copy{padding:0}.portrait-panel{min-height:560px;max-width:620px;width:100%;margin:auto}.leadership-stats{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.leadership{margin-top:55px;padding:52px 0}.leadership-grid{gap:32px}.leadership-copy h2{font-size:clamp(2.4rem,12vw,3.2rem)}.leadership-copy .role{margin-bottom:24px}.patrick-statement{padding:22px}.patrick-statement p{font-size:1.12rem}.leadership-cta{min-width:0;width:100%;font-size:1.05rem}.portrait-panel{min-height:430px;border-radius:22px}.portrait-panel img{width:122%;max-height:420px}.portrait-panel figcaption{left:16px;right:16px;bottom:16px;display:block}.portrait-panel figcaption span{margin-top:5px;text-align:left}.leadership-stats{grid-template-columns:1fr 1fr;border-radius:16px}.leadership-stats article{min-height:142px;padding:24px 18px}.leadership-stats strong{font-size:2.65rem}.leadership-stats span{font-size:.66rem}}

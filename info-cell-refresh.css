@@ -1,0 +1,251 @@
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page){
+  --info-cell-navy:#18365f;
+  --info-cell-deep:#10263f;
+  --info-cell-gold:#e8b743;
+  --info-cell-ink:#24354b;
+  --info-cell-muted:#607087;
+  --info-cell-line:#d7e0e9;
+  --info-cell-frame:min(1410px,calc(100% - 48px));
+  --info-cell-radius:30px;
+  --info-cell-shadow:0 24px 70px rgba(24,54,95,.12);
+  overflow-x:clip;
+  background:#eaf0f5;
+  color:var(--info-cell-ink);
+}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-main{
+  display:grid;
+  gap:24px;
+  min-height:70vh;
+  padding:18px 0 28px;
+  background:
+    radial-gradient(circle at 3% 18%,rgba(232,183,67,.20),transparent 25%),
+    radial-gradient(circle at 97% 66%,rgba(24,54,95,.14),transparent 30%),
+    linear-gradient(180deg,rgba(237,243,248,.90) 0%,rgba(248,245,237,.94) 49%,rgba(232,240,246,.94) 100%),
+    url("assets/waco-sunset-river.jpg") center/cover fixed;
+  font-family:"Plus Jakarta Sans",Arial,sans-serif;
+}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-main>.info-hero{
+  position:relative;
+  display:flex;
+  width:var(--info-cell-frame);
+  min-height:500px;
+  align-items:flex-end;
+  margin:0 auto;
+  padding:0;
+  overflow:hidden;
+  border-radius:var(--info-cell-radius);
+  background:
+    linear-gradient(90deg,rgba(10,30,52,.95) 0%,rgba(14,40,68,.78) 48%,rgba(14,40,68,.25) 100%),
+    url("assets/waco-poster.jpg") center/cover;
+  box-shadow:var(--info-cell-shadow);
+  color:#fff;
+}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-main>.info-hero::after{
+  position:absolute;
+  right:-80px;
+  bottom:-130px;
+  width:350px;
+  height:350px;
+  border:1px solid rgba(232,183,67,.34);
+  border-radius:50%;
+  box-shadow:0 0 0 74px rgba(232,183,67,.07),0 0 0 148px rgba(232,183,67,.035);
+  content:"";
+  pointer-events:none;
+}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-main>.info-hero>.info-shell{
+  position:relative;
+  z-index:1;
+  width:100%;
+  margin:0;
+  padding:clamp(50px,6vw,88px);
+}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-eyebrow{
+  margin:0 0 15px;
+  color:#a57918;
+  font:800 10px/1.2 "Plus Jakarta Sans",Arial,sans-serif;
+  letter-spacing:.17em;
+  text-transform:uppercase;
+}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-hero .info-eyebrow{color:var(--info-cell-gold)}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-hero h1{
+  max-width:920px;
+  margin:0 0 22px;
+  color:#fff;
+  font:700 clamp(50px,6vw,86px)/.94 "Inter Tight",Arial,sans-serif;
+  letter-spacing:-.05em;
+  text-wrap:balance;
+}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-hero p:last-child{
+  max-width:760px;
+  margin:0;
+  color:#e0e8f0;
+  font:500 clamp(16px,1.5vw,20px)/1.7 "Plus Jakarta Sans",Arial,sans-serif;
+}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-main>.info-section{
+  width:var(--info-cell-frame);
+  margin:0 auto;
+  padding:0;
+  background:transparent;
+}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-main>.info-section>.info-shell{
+  width:100%;
+  margin:0;
+  padding:clamp(44px,5.4vw,78px);
+  border-radius:var(--info-cell-radius);
+  background:rgba(255,255,255,.97);
+  box-shadow:var(--info-cell-shadow);
+}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-section h2{
+  max-width:960px;
+  margin:0 0 22px;
+  color:var(--info-cell-navy);
+  font:700 clamp(38px,4.3vw,62px)/.98 "Inter Tight",Arial,sans-serif;
+  letter-spacing:-.04em;
+  text-wrap:balance;
+}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-intro{
+  color:var(--info-cell-muted);
+  font:500 16px/1.75 "Plus Jakarta Sans",Arial,sans-serif;
+}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-grid{gap:16px}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-card{
+  display:flex;
+  min-height:235px;
+  flex-direction:column;
+  padding:30px;
+  border:1px solid var(--info-cell-line);
+  border-radius:20px;
+  background:#f8fafc;
+  box-shadow:none;
+}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-card h3,
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .sitemap-card h2{
+  margin:0 0 14px;
+  color:var(--info-cell-navy);
+  font:700 clamp(22px,2vw,30px)/1.08 "Inter Tight",Arial,sans-serif;
+  letter-spacing:-.025em;
+}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-card p{color:#58677a;font:500 14px/1.7 "Plus Jakarta Sans",Arial,sans-serif}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-card>.info-actions{margin-top:auto;padding-top:24px}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-actions{gap:10px;margin-top:30px}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-button{
+  min-height:50px;
+  padding:0 19px;
+  border:1px solid transparent;
+  border-radius:999px;
+  background:var(--info-cell-navy);
+  font:800 10px/1 "Plus Jakarta Sans",Arial,sans-serif;
+  letter-spacing:.055em;
+  text-transform:uppercase;
+  transition:transform .2s ease,background-color .2s ease,color .2s ease;
+}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-button:hover,
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-button:focus-visible{transform:translateY(-2px)}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-button.gold{background:var(--info-cell-gold);color:var(--info-cell-deep)!important}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-button.outline{border-color:rgba(24,54,95,.25);border-radius:999px;background:#fff;color:var(--info-cell-navy)!important}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-contact{
+  grid-template-columns:minmax(0,1.16fr) minmax(330px,.84fr);
+  gap:clamp(38px,6vw,88px);
+  align-items:stretch;
+}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-contact-card,
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-quote{
+  padding:36px;
+  border-radius:20px;
+  background:
+    radial-gradient(circle at 100% 0,rgba(232,183,67,.2),transparent 32%),
+    var(--info-cell-deep);
+  color:#fff;
+}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-contact-card .info-eyebrow,
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-quote .info-eyebrow{color:var(--info-cell-gold)}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-contact-card h2,
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-quote h2{color:#fff;font-size:clamp(30px,3.2vw,46px)}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-contact-card p,
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-quote p{color:#d6e0ea;font:500 14px/1.7 "Plus Jakarta Sans",Arial,sans-serif}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-contact-card a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.35);text-underline-offset:4px}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-main>.info-section.soft>.info-shell{
+  background:
+    radial-gradient(circle at 96% 4%,rgba(232,183,67,.18),transparent 27%),
+    linear-gradient(140deg,#10263f,#18365f);
+  color:#fff;
+}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-section.soft .info-eyebrow{color:var(--info-cell-gold)}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-section.soft h2{color:#fff}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-section.soft .info-card{border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.08)}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-section.soft .info-card h3{color:#fff}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-section.soft .info-card p{color:#d1dce7}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-section.soft .info-contact-card{background:#fff;color:var(--info-cell-ink)}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-section.soft .info-contact-card .info-eyebrow{color:#a57918}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-section.soft .info-contact-card h2{color:var(--info-cell-navy)}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-section.soft .info-contact-card p{color:var(--info-cell-muted)}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-section.soft .info-contact-card a{color:var(--info-cell-navy)}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-list{gap:12px;margin:28px 0 0}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-list li{
+  padding:15px 17px;
+  border:1px solid rgba(255,255,255,.17);
+  border-radius:13px;
+  background:rgba(255,255,255,.07);
+  color:#edf2f7;
+  font:700 12px/1.45 "Plus Jakarta Sans",Arial,sans-serif;
+}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-list li::before{color:var(--info-cell-gold)}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .legal-copy{max-width:none}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .legal-copy h2{max-width:900px;margin-top:52px;font-size:clamp(28px,3vw,40px)}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .legal-copy h2:first-child{margin-top:0}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .legal-copy p,
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .legal-copy li{max-width:980px;color:#56667a;font:500 15px/1.78 "Plus Jakarta Sans",Arial,sans-serif}
+
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .sitemap-card{min-height:0}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .sitemap-links{margin-top:18px;padding-top:0}
+body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .sitemap-links a{padding:12px 0;border-color:var(--info-cell-line);color:var(--info-cell-navy);font:700 13px/1.4 "Plus Jakarta Sans",Arial,sans-serif}
+
+@media(max-width:900px){
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-contact{grid-template-columns:1fr}
+}
+
+@media(max-width:760px){
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page){--info-cell-frame:calc(100% - 24px);--info-cell-radius:22px}
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-main{gap:12px;padding:10px 0 18px}
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-main>.info-hero{min-height:460px;background-position:58% center}
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-main>.info-hero>.info-shell{padding:42px 25px}
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-hero h1{font-size:clamp(44px,13vw,60px)}
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-hero p:last-child{font-size:15px}
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-main>.info-section>.info-shell{padding:38px 24px}
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-section h2{font-size:clamp(37px,10vw,50px)}
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-intro{font-size:14px}
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-grid,
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-grid.three,
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-list{grid-template-columns:1fr}
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-card{min-height:0;padding:26px}
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-actions{align-items:stretch;flex-direction:column}
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-button{width:100%}
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-contact-card,
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-quote{padding:26px}
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .legal-copy h2{margin-top:42px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  body.info-page:not(.about-page):not(.owner-faq-page):not(.affordability-page):not(.resident-resources-page) .info-button{transition:none}
+}

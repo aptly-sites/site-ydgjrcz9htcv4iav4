@@ -1,0 +1,402 @@
+:root{
+  --service-cell-navy:#18365f;
+  --service-cell-deep:#10263f;
+  --service-cell-gold:#e8b743;
+  --service-cell-ink:#24354b;
+  --service-cell-muted:#607087;
+  --service-cell-line:#d7e0e9;
+  --service-cell-frame:min(1410px,calc(100% - 48px));
+  --service-cell-radius:30px;
+  --service-cell-shadow:0 24px 70px rgba(24,54,95,.12);
+}
+
+body.legacy-service-page,
+body.city-page{
+  overflow-x:clip;
+  background:#eaf0f5;
+  color:var(--service-cell-ink);
+}
+
+body.legacy-service-page main,
+body.city-page main{
+  display:grid;
+  gap:24px;
+  padding:18px 0 28px;
+  background:
+    radial-gradient(circle at 3% 18%,rgba(232,183,67,.2),transparent 25%),
+    radial-gradient(circle at 97% 66%,rgba(24,54,95,.14),transparent 30%),
+    linear-gradient(180deg,rgba(237,243,248,.9) 0%,rgba(248,245,237,.94) 49%,rgba(232,240,246,.94) 100%),
+    url("assets/waco-sunset-river.jpg") center/cover fixed;
+  font-family:"Plus Jakarta Sans",Arial,sans-serif;
+}
+
+body.legacy-service-page main>.hero,
+body.city-page main>.city-hero{
+  position:relative;
+  display:flex;
+  width:var(--service-cell-frame);
+  min-height:590px;
+  align-items:flex-end;
+  margin:0 auto;
+  padding:0;
+  overflow:hidden;
+  border-radius:var(--service-cell-radius);
+  box-shadow:var(--service-cell-shadow);
+}
+
+body.legacy-service-page main>.hero::after,
+body.city-page main>.city-hero::after{
+  position:absolute;
+  right:-80px;
+  bottom:-130px;
+  z-index:0;
+  width:360px;
+  height:360px;
+  border:1px solid rgba(232,183,67,.34);
+  border-radius:50%;
+  box-shadow:0 0 0 76px rgba(232,183,67,.07),0 0 0 152px rgba(232,183,67,.035);
+  content:"";
+  pointer-events:none;
+}
+
+body.legacy-service-page main>.hero>.shell,
+body.city-page main>.city-hero>.wrap{
+  position:relative;
+  z-index:1;
+  width:100%;
+  margin:0;
+  padding:clamp(54px,6vw,90px);
+}
+
+body.legacy-service-page .eyebrow,
+body.city-page .city-hero>.wrap>p:first-child,
+body.city-page .city-eyebrow,
+body.city-page .guide-heading>p:first-child{
+  color:#a57918;
+  font:800 10px/1.2 "Plus Jakarta Sans",Arial,sans-serif;
+  letter-spacing:.17em;
+  text-transform:uppercase;
+}
+
+body.legacy-service-page .hero .eyebrow,
+body.city-page .city-hero>.wrap>p:first-child{color:var(--service-cell-gold)}
+
+body.legacy-service-page .hero h1,
+body.city-page .city-hero h1{
+  max-width:980px;
+  margin:10px 0 24px;
+  color:#fff;
+  font:700 clamp(50px,6.2vw,88px)/.94 "Inter Tight",Arial,sans-serif;
+  letter-spacing:-.05em;
+  text-wrap:balance;
+}
+
+body.legacy-service-page .hero .lead,
+body.city-page .city-hero>.wrap>p:last-child{
+  max-width:780px;
+  color:#e0e8f0;
+  font:500 clamp(16px,1.5vw,20px)/1.7 "Plus Jakarta Sans",Arial,sans-serif;
+}
+
+body.legacy-service-page .hero-actions{gap:12px;margin-top:32px}
+body.legacy-service-page .btn,
+body.city-page .button,
+body.city-page .city-rentals-all{
+  min-height:50px;
+  padding:0 20px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid transparent;
+  border-radius:999px;
+  background:var(--service-cell-navy);
+  color:#fff;
+  font:800 10px/1 "Plus Jakarta Sans",Arial,sans-serif;
+  letter-spacing:.055em;
+  text-decoration:none;
+  text-transform:uppercase;
+  transition:transform .2s ease,background-color .2s ease,color .2s ease;
+}
+body.legacy-service-page .btn:hover,
+body.legacy-service-page .btn:focus-visible,
+body.city-page .button:hover,
+body.city-page .button:focus-visible,
+body.city-page .city-rentals-all:hover,
+body.city-page .city-rentals-all:focus-visible{transform:translateY(-2px)}
+body.legacy-service-page .btn.gold{background:var(--service-cell-gold);color:var(--service-cell-deep)}
+body.legacy-service-page .hero .btn:not(.gold){border-color:rgba(255,255,255,.42);background:rgba(255,255,255,.12);backdrop-filter:blur(8px)}
+
+body.legacy-service-page main>.proof-strip{
+  width:var(--service-cell-frame);
+  margin:0 auto;
+  overflow:hidden;
+  border:0;
+  border-radius:var(--service-cell-radius);
+  background:rgba(255,255,255,.97);
+  box-shadow:var(--service-cell-shadow);
+}
+body.legacy-service-page .proof-strip div{padding:28px;border-color:var(--service-cell-line)}
+body.legacy-service-page .proof-strip strong{color:var(--service-cell-navy);font:700 20px/1.25 "Inter Tight",Arial,sans-serif}
+body.legacy-service-page .proof-strip span{display:block;margin-top:8px;color:var(--service-cell-muted);font:600 12px/1.5 "Plus Jakarta Sans",Arial,sans-serif}
+body.legacy-service-page .proof-strip .fee{font-size:clamp(38px,4vw,56px)}
+
+body.legacy-service-page main>.section,
+body.legacy-service-page main>.cta-band,
+body.city-page main>.city-content,
+body.city-page main>.city-guide{
+  width:var(--service-cell-frame);
+  margin:0 auto;
+  padding:0;
+  background:transparent;
+}
+
+body.legacy-service-page main>.section>.shell,
+body.legacy-service-page main>.cta-band>.shell,
+body.city-page main>.city-content>.wrap,
+body.city-page main>.city-guide>.wrap{
+  width:100%;
+  margin:0;
+  padding:clamp(44px,5.4vw,78px);
+  border-radius:var(--service-cell-radius);
+  background:rgba(255,255,255,.97);
+  box-shadow:var(--service-cell-shadow);
+}
+
+body.legacy-service-page .section h2,
+body.legacy-service-page .cta-band h2,
+body.city-page .city-content h2,
+body.city-page .city-guide h2{
+  max-width:1050px;
+  margin:0 0 22px;
+  color:var(--service-cell-navy);
+  font:700 clamp(38px,4.4vw,64px)/.98 "Inter Tight",Arial,sans-serif;
+  letter-spacing:-.04em;
+  text-wrap:balance;
+}
+
+body.legacy-service-page .section-intro,
+body.city-page .city-lede{
+  max-width:880px;
+  color:var(--service-cell-muted);
+  font:500 16px/1.75 "Plus Jakarta Sans",Arial,sans-serif;
+}
+
+body.legacy-service-page .service-grid{gap:16px;margin-top:34px}
+body.legacy-service-page .service-card{
+  min-height:250px;
+  padding:30px;
+  border:1px solid var(--service-cell-line);
+  border-radius:20px;
+  background:#f8fafc;
+  box-shadow:none;
+}
+body.legacy-service-page .service-card span{color:#a57918;font:800 10px/1.2 "Plus Jakarta Sans",Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase}
+body.legacy-service-page .service-card h3{margin:18px 0 13px;color:var(--service-cell-navy);font:700 clamp(22px,2vw,30px)/1.08 "Inter Tight",Arial,sans-serif;letter-spacing:-.025em}
+body.legacy-service-page .service-card p,
+body.legacy-service-page .section p{font-family:"Plus Jakarta Sans",Arial,sans-serif}
+body.legacy-service-page .service-card p{color:#58677a;font-size:14px;line-height:1.7}
+
+body.legacy-service-page main>.section.soft>.shell{
+  background:
+    radial-gradient(circle at 96% 4%,rgba(232,183,67,.18),transparent 27%),
+    linear-gradient(140deg,#10263f,#18365f);
+  color:#fff;
+}
+body.legacy-service-page .section.soft .eyebrow{color:var(--service-cell-gold)}
+body.legacy-service-page .section.soft h2{color:#fff}
+body.legacy-service-page .section.soft p{color:#d1dce7}
+body.legacy-service-page .section.soft .check-grid div{
+  padding:15px 17px;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:13px;
+  background:rgba(255,255,255,.07);
+  color:#edf2f7;
+  font:700 12px/1.45 "Plus Jakarta Sans",Arial,sans-serif;
+}
+body.legacy-service-page .section.soft .check-grid div::before{color:var(--service-cell-gold)}
+body.legacy-service-page .review-panel{
+  padding:38px;
+  border-radius:20px;
+  background:#fff;
+  color:var(--service-cell-ink);
+}
+body.legacy-service-page .review-panel strong{color:#a57918;font:800 18px/1.25 "Plus Jakarta Sans",Arial,sans-serif}
+body.legacy-service-page .section.soft .review-panel h2{margin-top:18px;color:var(--service-cell-navy);font-size:clamp(32px,3.5vw,48px)}
+body.legacy-service-page .section.soft .review-panel p{color:var(--service-cell-muted)}
+
+body.legacy-service-page main>.section.cream>.shell{background:rgba(248,244,233,.98)}
+body.legacy-service-page .process{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:32px}
+body.legacy-service-page .process article{
+  min-height:210px;
+  padding:30px 28px 28px 82px;
+  border:1px solid rgba(24,54,95,.14);
+  border-radius:18px;
+  background:rgba(255,255,255,.72);
+}
+body.legacy-service-page .process article::before{top:29px;left:28px;border-radius:50%;background:var(--service-cell-navy)}
+body.legacy-service-page .process h3{color:var(--service-cell-navy);font:700 24px/1.1 "Inter Tight",Arial,sans-serif}
+body.legacy-service-page .process p{color:#58677a;font-size:14px;line-height:1.7}
+
+body.legacy-service-page main>.cta-band{border-radius:var(--service-cell-radius);overflow:hidden;box-shadow:var(--service-cell-shadow)}
+body.legacy-service-page main>.cta-band>.shell{
+  padding-block:clamp(52px,6vw,82px);
+  background:
+    radial-gradient(circle at 4% 100%,rgba(232,183,67,.2),transparent 32%),
+    var(--service-cell-deep);
+  color:#fff;
+}
+body.legacy-service-page .cta-band h2{margin-inline:auto;color:#fff}
+
+body.legacy-service-page .map-shell{gap:18px;margin-top:34px}
+body.legacy-service-page .service-map,
+body.legacy-service-page .map-list{overflow:hidden;border:1px solid var(--service-cell-line);border-radius:20px}
+body.legacy-service-page .map-list{padding:30px;background:var(--service-cell-deep)}
+body.legacy-service-page .map-list a{border-color:rgba(255,255,255,.16);font:700 14px/1.5 "Plus Jakarta Sans",Arial,sans-serif}
+body.legacy-service-page .area-grid{gap:16px}
+body.legacy-service-page .area-card{
+  min-height:210px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:20px;
+  background:linear-gradient(rgba(16,38,63,.2),rgba(16,38,63,.9)),var(--city-image,url("assets/waco-sunset-river.jpg")) center/cover;
+  transition:transform .2s ease;
+}
+body.legacy-service-page .area-card:hover,
+body.legacy-service-page .area-card:focus-visible{transform:translateY(-3px)}
+
+body.city-page main>.city-hero{min-height:530px}
+body.city-page .city-content>.city-grid{grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:clamp(36px,5vw,74px);align-items:start}
+body.city-page .city-content p,
+body.city-page .city-content article p{color:var(--service-cell-muted);font:500 15px/1.75 "Plus Jakarta Sans",Arial,sans-serif}
+body.city-page .city-content h2{font-size:clamp(36px,4vw,58px)}
+body.city-page .city-content article{
+  padding:22px 0;
+  border-top:1px solid var(--service-cell-line);
+}
+body.city-page .city-content article h3{margin:0 0 9px;color:var(--service-cell-navy);font:700 19px/1.25 "Inter Tight",Arial,sans-serif}
+body.city-page .city-card{
+  padding:34px;
+  border:1px solid var(--service-cell-line);
+  border-radius:20px;
+  background:#f8fafc;
+  box-shadow:none;
+}
+body.city-page .city-card h2{font-size:clamp(30px,3vw,43px)}
+body.city-page .city-actions .secondary{border-color:rgba(24,54,95,.22);background:#fff;color:var(--service-cell-navy)}
+
+body.city-page main>.city-guide>.wrap{display:grid;gap:18px}
+body.city-page .city-guide>.wrap>.city-eyebrow,
+body.city-page .city-guide>.wrap>h2,
+body.city-page .city-guide>.wrap>.city-lede{margin-left:4px}
+body.city-page .city-guide>.wrap>.city-lede{margin-bottom:8px}
+body.city-page .city-stats{
+  margin:20px 0 8px;
+  overflow:hidden;
+  border:1px solid var(--service-cell-line);
+  border-radius:20px;
+  background:#f8fafc;
+}
+body.city-page .city-stats div{padding:28px;border-color:var(--service-cell-line)}
+body.city-page .city-stats strong{color:var(--service-cell-navy);font-family:"Inter Tight",Arial,sans-serif}
+body.city-page .guide-block{
+  margin:0;
+  padding:clamp(32px,4vw,52px);
+  border:1px solid var(--service-cell-line);
+  border-radius:20px;
+  background:#f8fafc;
+}
+body.city-page .guide-heading{max-width:900px;margin-bottom:28px}
+body.city-page .guide-heading h2{font-size:clamp(34px,4vw,54px)}
+body.city-page .guide-heading>p:last-child{color:var(--service-cell-muted);font:500 14px/1.7 "Plus Jakarta Sans",Arial,sans-serif}
+body.city-page .neighborhood-grid,
+body.city-page .attraction-grid{gap:14px}
+body.city-page .neighborhood-grid article,
+body.city-page .city-rental-card,
+body.city-page .city-rental-loading,
+body.city-page .city-rental-empty{
+  overflow:hidden;
+  border:1px solid var(--service-cell-line);
+  border-radius:17px;
+  background:#fff;
+  box-shadow:none;
+}
+body.city-page .neighborhood-grid article{padding:26px}
+body.city-page .neighborhood-grid h3,
+body.city-page .attraction-grid h3,
+body.city-page .city-rental-copy h3{color:var(--service-cell-navy);font-family:"Inter Tight",Arial,sans-serif}
+body.city-page .attraction-grid a{
+  overflow:hidden;
+  border-radius:17px;
+  background:var(--service-cell-deep);
+}
+body.city-page .attraction-grid a:hover,
+body.city-page .attraction-grid a:focus{background:var(--service-cell-navy)}
+body.city-page .relocation{gap:50px}
+body.city-page .relocation li{border-color:var(--service-cell-line);color:#56667a;font:500 14px/1.7 "Plus Jakarta Sans",Arial,sans-serif}
+body.city-page .city-school-list{overflow:hidden;border-color:var(--service-cell-line);border-radius:17px;background:#fff}
+body.city-page .city-school-card{border-color:var(--service-cell-line)}
+body.city-page .city-school-card>span{background:var(--service-cell-navy)}
+body.city-page .city-rentals-heading{max-width:none}
+body.city-page .city-rentals-all{flex:0 0 auto;margin-bottom:12px;background:var(--service-cell-navy);color:#fff}
+body.city-page .city-rental-image{height:210px}
+body.city-page .city-rental-actions a{color:var(--service-cell-navy)}
+
+@media(max-width:980px){
+  body.legacy-service-page .split,
+  body.city-page .city-content>.city-grid{grid-template-columns:1fr}
+  body.legacy-service-page .area-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media(max-width:760px){
+  :root{--service-cell-frame:calc(100% - 24px);--service-cell-radius:22px}
+  body.legacy-service-page main,
+  body.city-page main{gap:12px;padding:10px 0 18px;background-attachment:scroll}
+  body.legacy-service-page main>.hero,
+  body.city-page main>.city-hero{min-height:460px;background-position:58% center}
+  body.legacy-service-page main>.hero>.shell,
+  body.city-page main>.city-hero>.wrap{padding:42px 25px}
+  body.legacy-service-page .hero h1,
+  body.city-page .city-hero h1{font-size:clamp(43px,12.5vw,58px)}
+  body.legacy-service-page .hero .lead,
+  body.city-page .city-hero>.wrap>p:last-child{font-size:14px;line-height:1.6}
+  body.legacy-service-page .hero-actions{align-items:stretch;flex-direction:column}
+  body.legacy-service-page .hero-actions .btn{width:100%}
+  body.legacy-service-page main>.section>.shell,
+  body.legacy-service-page main>.cta-band>.shell,
+  body.city-page main>.city-content>.wrap,
+  body.city-page main>.city-guide>.wrap{padding:38px 24px}
+  body.legacy-service-page .section h2,
+  body.legacy-service-page .cta-band h2,
+  body.city-page .city-content h2,
+  body.city-page .city-guide h2{font-size:clamp(36px,10vw,49px)}
+  body.legacy-service-page .service-grid,
+  body.legacy-service-page .check-grid,
+  body.legacy-service-page .area-grid,
+  body.legacy-service-page .process{grid-template-columns:1fr}
+  body.legacy-service-page .service-card{min-height:0;padding:26px}
+  body.legacy-service-page .process article{min-height:0;padding:27px 24px 25px 74px}
+  body.legacy-service-page .process article::before{top:26px;left:24px}
+  body.legacy-service-page .review-panel{padding:27px}
+  body.legacy-service-page .proof-strip div{padding:23px}
+  body.legacy-service-page .service-map{min-height:390px}
+  body.city-page .city-card{padding:27px}
+  body.city-page .guide-block{padding:28px 22px}
+  body.city-page .city-stats{grid-template-columns:1fr}
+  body.city-page .city-stats div{border-right:0;border-bottom:1px solid var(--service-cell-line)}
+  body.city-page .city-stats div:last-child{border-bottom:0}
+  body.city-page .city-rentals-heading{display:block}
+  body.city-page .city-rentals-all{width:100%;margin:0 0 22px}
+  body.city-page .city-rental-grid,
+  body.city-page .neighborhood-grid,
+  body.city-page .attraction-grid,
+  body.city-page .city-school-list{grid-template-columns:1fr}
+  body.city-page .relocation{grid-template-columns:1fr;gap:16px}
+  body.city-page .city-school-card:nth-child(odd){border-right:0}
+}
+
+@media(prefers-reduced-motion:reduce){
+  body.legacy-service-page .btn,
+  body.legacy-service-page .area-card,
+  body.city-page .button,
+  body.city-page .city-rentals-all{transition:none}
+}

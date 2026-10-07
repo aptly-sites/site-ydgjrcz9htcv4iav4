@@ -1,0 +1,62 @@
+:root {
+  --jr-modal-radius: 28px;
+  --jr-modal-radius-compact: 20px;
+}
+
+/* Modal backdrops and controls must sit above the shared sticky navigation. */
+.lead-modal,
+.rent-lead-modal,
+.agent-referral-modal {
+  z-index: 2000 !important;
+}
+
+/* Keep the shared backdrop full-screen while curving only the window above it. */
+dialog,
+[role="dialog"],
+.lead-dialog,
+.rent-lead-dialog,
+.agent-referral-dialog {
+  border-radius: var(--jr-modal-radius) !important;
+}
+
+dialog,
+.lead-dialog,
+.rent-lead-dialog,
+.agent-referral-dialog {
+  overflow: auto;
+}
+
+#compareDialog,
+.photo-viewer {
+  overflow: hidden;
+}
+
+/* These viewers previously touched every viewport edge, hiding their corners. */
+.photo-viewer[open] {
+  width: calc(100vw - 24px) !important;
+  height: calc(100dvh - 24px) !important;
+  max-height: calc(100dvh - 24px) !important;
+  margin: 12px !important;
+}
+
+@media (max-width: 700px) {
+  :root {
+    --jr-modal-radius: var(--jr-modal-radius-compact);
+  }
+
+  #compareDialog[open],
+  .photo-viewer[open] {
+    width: calc(100vw - 16px) !important;
+    height: calc(100dvh - 16px) !important;
+    max-height: calc(100dvh - 16px) !important;
+    margin: 8px !important;
+  }
+
+  .lead-dialog,
+  .rent-lead-dialog,
+  .agent-referral-dialog {
+    width: calc(100% - 16px) !important;
+    max-height: calc(100dvh - 16px) !important;
+    margin: 8px;
+  }
+}
