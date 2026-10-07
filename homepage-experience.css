@@ -1,6 +1,22 @@
+body.home-page{
+  --home-nav-height:126px;
+  background:
+    radial-gradient(circle at 3% 20%,rgba(232,183,67,.2),transparent 26%),
+    radial-gradient(circle at 97% 65%,rgba(24,54,95,.14),transparent 30%),
+    linear-gradient(180deg,rgba(237,243,248,.88) 0%,rgba(248,245,237,.94) 48%,rgba(232,240,246,.93) 100%),
+    url("assets/waco-sunset-river.jpg") center top/cover fixed;
+}
+
+body.home-page main#content{
+  position:relative;
+  margin-top:calc(-1 * var(--home-nav-height));
+}
+
 body.home-page .wrap{
   width:min(var(--jr-page-frame,1410px),calc(100% - var(--jr-page-gutter,48px)))!important;
 }
+
+body.home-page .hero{margin-top:0}
 
 body .hero{
   position:relative;
@@ -246,12 +262,19 @@ body .choice{margin-top:-62px}
   body .hero{height:clamp(900px,calc(100svh - 130px),1120px)}
 }
 
+@media(max-width:1100px){
+  body.home-page{
+    --home-nav-height:116px;
+    background-attachment:scroll,scroll,scroll,scroll;
+  }
+}
+
 @media(max-width:900px){
   body .hero{width:calc(100% - 20px);height:clamp(680px,82svh,800px);margin-top:10px;border-radius:26px;clip-path:inset(0 round 26px)}
   body .hero-copy{padding:64px 42px 150px}
   .hero-rotator{width:100%;min-height:350px}
   .hero-rotator-controls,.hero-primary-actions{left:42px}
-  body .hero h1,.hero-title{font-size:clamp(46px,8.8vw,76px)}
+  body .hero h1,.hero-title{font-size:clamp(46px,8.8vw,76px)!important}
 }
 
 @media(max-width:600px){
@@ -259,9 +282,9 @@ body .choice{margin-top:-62px}
   body .hero video{object-position:center center}
   body .hero>.shade{background:linear-gradient(90deg,rgba(9,25,47,.86),rgba(9,25,47,.52)),linear-gradient(0deg,rgba(9,25,47,.78),transparent 52%)}
   body .hero-copy{justify-content:flex-start;padding:58px 24px 142px}
-  .hero-kicker{margin-bottom:20px!important;font-size:10px!important}
+  .hero-kicker{margin-bottom:20px!important;font-size:10px!important;transform:translateY(18px)}
   .hero-rotator{min-height:360px}
-  body .hero h1,.hero-title{font-size:clamp(39px,12.1vw,54px);line-height:.98!important}
+  body .hero h1,.hero-title{font-size:clamp(39px,12.1vw,54px)!important;line-height:.98!important}
   .hero-message>p:last-child{margin-top:20px!important;font-size:15px!important;line-height:1.45!important}
   .hero-rotator-controls{left:24px;bottom:220px;gap:4px}
   .hero-rotator-controls button{width:18px;height:20px}
@@ -273,6 +296,14 @@ body .choice{margin-top:-62px}
   body .hero-proof .associations{gap:6px}
   body .hero-proof .associations img{max-width:58px;max-height:34px}
   body .choice{margin-top:-44px}
+}
+
+@media(max-width:760px){
+  body.home-page{--home-nav-height:88px}
+}
+
+@media(max-width:360px){
+  body .hero h1,.hero-title{font-size:36px!important}
 }
 
 @media(prefers-reduced-motion:reduce){
