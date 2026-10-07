@@ -1,0 +1,31 @@
+html{
+  min-height:100%;
+  background:#e7eff6;
+}
+
+body{
+  min-height:100%;
+  background-color:#e7eff6!important;
+  background-image:linear-gradient(180deg,#eaf1f7 0%,#eef3f6 22%,#f7f4ec 52%,#edf2f5 78%,#e7eff6 100%)!important;
+  background-position:top center!important;
+  background-repeat:no-repeat!important;
+  background-size:100% 100%!important;
+  background-attachment:scroll!important;
+}
+
+body>main{
+  background-color:transparent!important;
+  background-image:none!important;
+}
+
+.home-page .audience-switcher,
+.home-page .owner-homepage-content,
+.resident-resources-page .resident-resources-switcher,
+.self-management-guide .sm-page-background,
+.affordability-page .affordability-results,
+.affordability-page .affordability-guide,
+.affordability-page .affordability-faq-section,
+.affordability-page .resident-affordability-callout{
+  background-color:transparent!important;
+  background-image:none!important;
+}

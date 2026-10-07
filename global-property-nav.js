@@ -2,7 +2,7 @@
   if (document.documentElement.dataset.jrGlobalNavReady === "true") return;
   document.documentElement.dataset.jrGlobalNavReady = "true";
 
-  const version = "20261007-1";
+  const version = "20261007-2";
   const scriptUrl = document.currentScript?.src || location.href;
   const assetUrl = name => `${new URL(name, scriptUrl).href}?v=${version}`;
   const ensureStylesheet = name => {
@@ -31,6 +31,7 @@
   ensureStylesheet("orbit-navigation.css");
   ensureStylesheet("site-breadcrumbs.css");
   ensureStylesheet("site-modals.css");
+  ensureStylesheet("continuous-page-background.css");
 
   const currentFilename = location.pathname.split("/").filter(Boolean).pop()?.toLowerCase() || "index.html";
   if (["multi-family-property-management.html", "tenant-placement.html", "service-areas.html"].includes(currentFilename)) {
