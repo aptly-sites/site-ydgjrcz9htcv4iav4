@@ -95,6 +95,10 @@
 }
 
 .single-family-page .section-intro{max-width:900px}
+.single-family-page .sf-service-areas .service-map,
+.single-family-page .sf-service-areas .map-list{overflow:hidden;border-radius:18px}
+.single-family-page .sf-service-areas .service-map{min-height:540px}
+.single-family-page .sf-service-areas .map-list h3{margin-top:0;color:#fff;font-family:"Plus Jakarta Sans",Arial,sans-serif}
 
 .single-family-page .service-grid{
   gap:18px;
@@ -413,6 +417,7 @@
   .single-family-page .sf-rent-options{grid-template-columns:1fr}
   .single-family-page .sf-rent-options>div{min-height:0;text-align:left;border-right:0;border-bottom:1px solid #dbe3ea}
   .single-family-page .sf-rent-options>div:last-child{border-bottom:0}
+  .single-family-page .sf-service-areas .service-map{min-height:390px}
 }
 
 @media(prefers-reduced-motion:reduce){.single-family-page .service-card{transition:none}}

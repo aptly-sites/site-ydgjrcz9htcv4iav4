@@ -330,24 +330,18 @@
 .audience-map-wrap{display:flex;min-width:0;flex-direction:column;padding:10px;border:1px solid #d8e1ea;border-radius:22px;background:#f7f9fb}
 .audience-map{min-height:690px;flex:1;border-radius:15px;background:#dbe6ef}
 .audience-map-note{margin:10px 5px 1px;color:#66758a;font:600 11px/1.4 "Plus Jakarta Sans",Arial,sans-serif}
-.jr-city-marker span{
-  position:absolute;
-  left:0;
-  top:0;
-  display:block;
-  min-width:88px;
-  padding:8px 12px;
-  border:2px solid #fff;
-  border-radius:99px;
-  background:var(--audience-navy);
-  color:#fff;
-  box-shadow:0 7px 18px rgba(23,36,58,.24);
-  font:800 11px/1 "Plus Jakarta Sans",Arial,sans-serif;
-  text-align:center;
-  white-space:nowrap;
-  transform:translate(-50%,-50%);
-}
-
+.owner-service-area{margin-top:18px;padding:32px;border:1px solid #d8e1ea;border-radius:24px;background:#fff}
+.owner-service-area-heading{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:42px;align-items:end;margin-bottom:24px}
+.owner-service-area-heading h3{max-width:720px;margin:8px 0 0;color:var(--audience-navy);font:700 clamp(28px,3.2vw,44px)/1.06 "Plus Jakarta Sans",Arial,sans-serif;letter-spacing:-.04em}
+.owner-service-area-heading>p{max-width:500px;margin:0;color:#65758a;font:500 15px/1.6 "Plus Jakarta Sans",Arial,sans-serif}
+.owner-service-area-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,.45fr);gap:16px}
+.owner-service-area .audience-map{min-height:510px}
+.owner-city-links{overflow:hidden;border-radius:18px;background:var(--audience-navy)}
+.owner-city-links a{display:flex;align-items:center;justify-content:space-between;min-height:57px;padding:0 20px;border-bottom:1px solid rgba(255,255,255,.14);color:#fff;font:700 13px/1.2 "Plus Jakarta Sans",Arial,sans-serif;text-decoration:none;transition:background .16s ease,padding .16s ease}
+.owner-city-links a:hover,.owner-city-links a:focus-visible{padding-left:24px;background:rgba(255,255,255,.1)}
+.owner-city-links a span{color:var(--audience-gold);font-size:18px}
+.owner-city-links .owner-city-links-all{border-bottom:0;background:var(--audience-gold);color:var(--audience-navy)}
+.owner-city-links .owner-city-links-all span{color:var(--audience-navy)}
 .city-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .city-card{
   position:relative;
@@ -444,6 +438,10 @@
 @media(max-width:1080px){
   .audience-intro{grid-template-columns:1fr;align-items:start;gap:24px}
   .audience-intro-copy{max-width:780px}
+  .owner-service-area-heading,.owner-service-area-grid{grid-template-columns:1fr}
+  .owner-city-links{display:grid;grid-template-columns:1fr 1fr}
+  .owner-city-links a:nth-child(odd){border-right:1px solid rgba(255,255,255,.14)}
+  .owner-city-links .owner-city-links-all{grid-column:1/-1}
   .owner-uniques{grid-template-columns:1fr 1fr}
   .owner-unique:nth-child(3){grid-column:1/-1;min-height:260px}
   .owner-unique-number{margin-bottom:50px}
@@ -473,6 +471,12 @@
   .audience-switcher{padding:14px 0 68px;scroll-margin-top:116px}
   .owner-homepage-content{padding-bottom:38px;background-attachment:scroll,scroll,scroll,scroll}
   .owner-homepage-content>section{width:calc(100% - 20px);margin-top:12px;border-radius:22px}
+  .owner-service-area{padding:20px;border-radius:19px}
+  .owner-service-area-heading{gap:16px}
+  .owner-service-area .audience-map{min-height:390px}
+  .owner-city-links{grid-template-columns:1fr}
+  .owner-city-links a:nth-child(odd){border-right:0}
+  .owner-city-links .owner-city-links-all{grid-column:auto}
   .owner-homepage-content .manage{padding:48px 0}
   .owner-homepage-content .difference{padding:50px 0 54px}
   .owner-homepage-content>section>.wrap{width:calc(100% - 32px)!important}
