@@ -1,0 +1,23 @@
+.jr-google-map{position:relative;overflow:hidden}
+.jr-map-unavailable{display:grid;min-height:inherit;place-items:center;padding:28px;text-align:center;color:#586779;background:#eef2f5;font:700 14px/1.5 Arial,sans-serif}
+.jr-map-city-pin,.jr-map-price-pin,.jr-map-home-pin,.jr-map-school-pin{appearance:none;border:0;cursor:pointer;font-family:"Inter Tight","Plus Jakarta Sans",Arial,sans-serif;transition:transform .14s ease,box-shadow .14s ease}
+.jr-map-city-pin:focus-visible,.jr-map-price-pin:focus-visible,.jr-map-home-pin:focus-visible,.jr-map-school-pin:focus-visible{outline:3px solid #efbc3d;outline-offset:3px}
+.jr-map-city-pin:hover,.jr-map-price-pin:hover,.jr-map-home-pin:hover,.jr-map-school-pin:hover{transform:translateY(-2px) scale(1.04)}
+.jr-map-city-pin{min-width:72px;padding:8px 12px;border:3px solid #fff;border-radius:999px;background:#173d70;color:#fff;box-shadow:0 7px 20px rgba(13,31,59,.28);font-size:12px;font-weight:800;white-space:nowrap}
+.jr-map-price-pin{padding:7px 10px;border:2px solid #fff;border-radius:999px;background:#173d70;color:#fff;box-shadow:0 6px 18px rgba(13,31,59,.32);font-size:12px;font-weight:800;white-space:nowrap}
+.jr-map-home-pin,.jr-map-school-pin{display:grid;place-items:center;border-radius:50%;color:#fff;box-shadow:0 4px 14px rgba(0,0,0,.36);font-weight:900}
+.jr-map-home-pin{width:44px;height:44px;border:4px solid #fff;background:#efbc3d;color:#173d70;font-size:21px}
+.jr-map-school-pin{width:32px;height:32px;border:3px solid #fff;background:#173d70;font-size:12px}
+.jr-map-info{min-width:150px;max-width:320px;padding:5px 2px 2px;color:#17263a;font:600 13px/1.45 "Inter Tight",Arial,sans-serif}
+.jr-map-info strong{display:block;margin-bottom:3px;color:#173d70;font-size:15px}
+.jr-map-info a{display:inline-block;margin-top:6px;color:#173d70;font-weight:800;text-decoration:none}
+.jr-map-info a:hover{text-decoration:underline}
+.jr-map-reset{margin:10px!important;padding:10px 13px;border:0;border-radius:999px;background:#fff;color:#173d70;box-shadow:0 2px 9px rgba(0,0,0,.25);cursor:pointer;font:800 10px/1 "Inter Tight",Arial,sans-serif;letter-spacing:.06em;opacity:0;pointer-events:none;transition:opacity .16s ease,transform .16s ease}
+.jr-map-reset.visible{opacity:1;pointer-events:auto}
+.jr-map-reset:hover{transform:translateY(-1px)}
+.jr-school-legend{display:flex;gap:12px;align-items:center;margin:10px;padding:8px 10px;border:1px solid #d7dce2;border-radius:8px;background:rgba(255,255,255,.94);box-shadow:0 2px 9px rgba(0,0,0,.14);color:#173d70;font:700 12px/1.2 "Inter Tight",Arial,sans-serif}
+.jr-school-legend span{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.jr-school-legend i{display:grid;width:23px;height:23px;place-items:center;border:2px solid #fff;border-radius:50%;font-style:normal;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.jr-school-legend .home{background:#efbc3d;color:#173d70}.jr-school-legend .school{background:#173d70;color:#fff;font-size:10px}
+.compare-map .jr-map-home-pin{width:36px;height:36px;border-width:3px;font-size:17px}
+@media(max-width:620px){.jr-map-city-pin{min-width:18px;width:18px;height:18px;padding:0;border-width:3px;font-size:0}.jr-school-legend{max-width:230px;flex-wrap:wrap}}

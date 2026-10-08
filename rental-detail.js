@@ -102,23 +102,24 @@ function listingCoordinates(p){
 }
 async function renderSchools(p){
   const coords=listingCoordinates(p),list=$('#schoolList');
-  if(!coords||typeof L==='undefined'){list.innerHTML='<div class="school-empty"><p>School mapping is not available for this listing.</p></div>';return}
+  if(!coords){list.innerHTML='<div class="school-empty"><p>School mapping is not available for this listing.</p></div>';return}
   try{
     const response=await fetch(`/api/nearby-schools?lat=${encodeURIComponent(coords.lat)}&lon=${encodeURIComponent(coords.lon)}`),data=await response.json().catch(()=>({}));
     if(!response.ok)throw new Error(data.message||'Schools unavailable');
     const schools=Array.isArray(data.schools)?data.schools:[];
     if(!schools.length){list.innerHTML='<div class="school-empty"><p>No nearby schools were returned for this location.</p></div>';return}
-    const map=L.map('schoolMap',{scrollWheelZoom:false}).setView([coords.lat,coords.lon],12);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
-    const homeIcon=L.divIcon({className:'home-map-marker',html:'<span class="home-pin" aria-hidden="true">★</span>',iconSize:[42,42],iconAnchor:[21,21]});
-    L.marker([coords.lat,coords.lon],{icon:homeIcon,zIndexOffset:1000}).addTo(map).bindPopup(`<b>${esc(street(p))}</b><span>Rental home location</span>`);const bounds=L.latLngBounds([[coords.lat,coords.lon]]);
-    const legend=L.control({position:'bottomleft'});
-    legend.onAdd=()=>{const node=L.DomUtil.create('div','school-map-legend');node.innerHTML='<span><i class="legend-home" aria-hidden="true">★</i> Rental home</span><span><i class="legend-school" aria-hidden="true">1</i> Nearby school</span>';return node};
-    legend.addTo(map);
     list.innerHTML=schools.map((school,i)=>`<a class="school-card" href="${esc(school.url||'#')}" ${school.url?'target="_blank" rel="noopener"':''} data-school="${i}"><span class="school-number">${i+1}</span><span><h3>${esc(school.name)}</h3><p class="school-meta">${esc(school.type)} · ${esc(school.grades)} · ${Number(school.distance).toFixed(1)} mi</p><p class="school-address">${esc(school.address)}</p>${school.ratingBand?`<span class="school-band">${esc(school.ratingBand)}</span>`:''}</span></a>`).join('');
-    const markers=schools.map((school,i)=>{const marker=L.marker([school.lat,school.lon],{icon:L.divIcon({className:'school-map-marker',html:`<span class="school-pin">${i+1}</span>`,iconSize:[30,30],iconAnchor:[15,15]})}).addTo(map).bindPopup(`<b>${esc(school.name)}</b><span>${esc(school.grades)} · ${Number(school.distance).toFixed(1)} mi</span>${school.url?`<br><a href="${esc(school.url)}" target="_blank" rel="noopener">School details</a>`:''}`);bounds.extend([school.lat,school.lon]);return marker});
-    list.addEventListener('mouseover',event=>{const card=event.target.closest('[data-school]');if(card)markers[Number(card.dataset.school)]?.openPopup()});
-    map.fitBounds(bounds.pad(.12),{maxZoom:14,padding:[32,32]});setTimeout(()=>map.invalidateSize(),50);
+    try{
+      const{Map,InfoWindow,AdvancedMarkerElement}=await window.jrGoogleMapsLibraries(),element=$('#schoolMap');
+      const map=new Map(element,{center:{lat:coords.lat,lng:coords.lon},zoom:12,mapId:'DEMO_MAP_ID',scrollwheel:false,streetViewControl:false,mapTypeControl:false});
+      const info=new InfoWindow({maxWidth:280}),bounds=new google.maps.LatLngBounds();bounds.extend({lat:coords.lat,lng:coords.lon});
+      const homeMarker=new AdvancedMarkerElement({map,position:{lat:coords.lat,lng:coords.lon},title:`${street(p)} rental home`,zIndex:1000,content:window.jrMapMarkerContent('jr-map-home-pin','★',`${street(p)} rental home`)});
+      homeMarker.addListener('click',()=>{info.setContent(`<div class="jr-map-info"><strong>${esc(street(p))}</strong><span>Rental home location</span></div>`);info.open({map,anchor:homeMarker})});
+      const schoolMarkers=schools.map((school,i)=>{const position={lat:Number(school.lat),lng:Number(school.lon)};if(!Number.isFinite(position.lat)||!Number.isFinite(position.lng))return null;bounds.extend(position);const content=`<div class="jr-map-info"><strong>${esc(school.name)}</strong><span>${esc(school.grades)} · ${Number(school.distance).toFixed(1)} mi</span>${school.url?`<br><a href="${esc(school.url)}" target="_blank" rel="noopener">School details</a>`:''}</div>`;const marker=new AdvancedMarkerElement({map,position,title:school.name,content:window.jrMapMarkerContent('jr-map-school-pin',String(i+1),school.name)});marker.addListener('click',()=>{info.setContent(content);info.open({map,anchor:marker})});return{marker,content}});
+      list.addEventListener('mouseover',event=>{const card=event.target.closest('[data-school]'),entry=card&&schoolMarkers[Number(card.dataset.school)];if(entry){info.setContent(entry.content);info.open({map,anchor:entry.marker})}});
+      const legend=document.createElement('div');legend.className='jr-school-legend';legend.innerHTML='<span><i class="home" aria-hidden="true">★</i> Rental home</span><span><i class="school" aria-hidden="true">1</i> Nearby school</span>';map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(legend);
+      map.fitBounds(bounds,32);google.maps.event.addListenerOnce(map,'idle',()=>{if(map.getZoom()>14)map.setZoom(14)});
+    }catch(mapError){$('#schoolMap').innerHTML='<p class="jr-map-unavailable">The map is temporarily unavailable. Nearby school details remain available here.</p>';console.error(mapError)}
   }catch(error){$('#nearbySchools').classList.add('schools-unavailable');list.innerHTML=`<div class="school-empty"><b>Nearby school information is not available yet.</b><p>${esc(error.message||'We are finishing the secure school-data connection for this feature.')}</p></div>`}
 }
 

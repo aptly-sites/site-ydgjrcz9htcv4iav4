@@ -330,11 +330,6 @@
 .audience-map-wrap{display:flex;min-width:0;flex-direction:column;padding:10px;border:1px solid #d8e1ea;border-radius:22px;background:#f7f9fb}
 .audience-map{min-height:690px;flex:1;border-radius:15px;background:#dbe6ef}
 .audience-map-note{margin:10px 5px 1px;color:#66758a;font:600 11px/1.4 "Plus Jakarta Sans",Arial,sans-serif}
-.audience-map .leaflet-control-attribution{font-size:9px}
-.audience-map .leaflet-popup-content-wrapper{border-radius:14px;box-shadow:0 14px 35px rgba(23,36,58,.2)}
-.audience-map .leaflet-popup-content{margin:16px 18px;font:700 14px/1.4 "Plus Jakarta Sans",Arial,sans-serif}
-.audience-map .leaflet-popup-content a{display:inline-block;margin-top:6px;color:var(--audience-navy);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
-.jr-city-marker{border:0!important;background:transparent!important}
 .jr-city-marker span{
   position:absolute;
   left:0;
@@ -352,7 +347,6 @@
   white-space:nowrap;
   transform:translate(-50%,-50%);
 }
-.leaflet-marker-icon:focus span{outline:3px solid var(--audience-gold);outline-offset:2px}
 
 .city-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .city-card{
@@ -507,7 +501,6 @@
   .owner-service-grid span{margin-bottom:26px}
   .owner-service-pulse img{width:54px;height:54px;opacity:.17}
   .audience-map{min-height:420px}
-  .jr-city-marker span{min-width:18px;width:18px;height:18px;padding:0;border:3px solid var(--audience-navy);background:var(--audience-gold);font-size:0}
   .city-card-grid{grid-template-columns:1fr 1fr}
   .city-card:first-child,.city-card:last-child{grid-column:1/-1}
   .city-card{min-height:145px;padding:18px}

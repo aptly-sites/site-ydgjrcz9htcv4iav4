@@ -7,6 +7,7 @@
   const ownerOnlySections = [...document.querySelectorAll("[data-owner-only]")];
   const mapElement = switcher.querySelector("#homepageServiceMap");
   let serviceMap;
+  let serviceMapPromise;
 
   const cities = [
     { name: "Waco", coordinates: [31.5493, -97.1467], href: "property-management-waco-tx.html" },
@@ -20,38 +21,48 @@
 
   const initMap = () => {
     if (serviceMap || !mapElement) {
-      serviceMap?.invalidateSize();
+      if (serviceMap && window.google?.maps) google.maps.event.trigger(serviceMap, "resize");
       return;
     }
-    if (!window.L) {
-      mapElement.innerHTML = '<p class="audience-map-note">Use the community cards to explore our Central Texas city guides.</p>';
-      return;
-    }
-
-    serviceMap = L.map(mapElement, {
-      scrollWheelZoom: false,
-      zoomControl: true,
-      attributionControl: true
-    });
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 18,
-      attribution: "&copy; OpenStreetMap contributors"
-    }).addTo(serviceMap);
-
-    const bounds = L.latLngBounds();
-    cities.forEach(city => {
-      bounds.extend(city.coordinates);
-      L.marker(city.coordinates, {
-        title: `${city.name} city guide`,
-        icon: L.divIcon({
-          className: "jr-city-marker",
-          html: `<span>${city.name}</span>`,
-          iconSize: [1, 1],
-          iconAnchor: [0, 0]
-        })
-      }).addTo(serviceMap).bindPopup(`<strong>${city.name}, TX</strong><br><a href="${city.href}">Explore city guide →</a>`);
-    });
-    serviceMap.fitBounds(bounds.pad(.28), { maxZoom: 10, padding: [42, 42] });
+    if (serviceMapPromise) return serviceMapPromise;
+    serviceMapPromise = (async () => {
+      try {
+        const { Map, InfoWindow, AdvancedMarkerElement } = await window.jrGoogleMapsLibraries();
+        serviceMap = new Map(mapElement, {
+          center: { lat: 31.55, lng: -97.16 },
+          zoom: 10,
+          mapId: "DEMO_MAP_ID",
+          scrollwheel: false,
+          streetViewControl: false,
+          mapTypeControl: false,
+          fullscreenControl: true
+        });
+        const bounds = new google.maps.LatLngBounds();
+        const info = new InfoWindow();
+        cities.forEach(city => {
+          const position = { lat: city.coordinates[0], lng: city.coordinates[1] };
+          bounds.extend(position);
+          const marker = new AdvancedMarkerElement({
+            map: serviceMap,
+            position,
+            title: `${city.name} city guide`,
+            content: window.jrMapMarkerContent("jr-map-city-pin", city.name, `${city.name} city guide`)
+          });
+          marker.addListener("click", () => {
+            info.setContent(`<div class="jr-map-info"><strong>${city.name}, TX</strong><a href="${city.href}">Explore city guide →</a></div>`);
+            info.open({ map: serviceMap, anchor: marker });
+          });
+        });
+        serviceMap.fitBounds(bounds, 42);
+        google.maps.event.addListenerOnce(serviceMap, "idle", () => {
+          if (serviceMap.getZoom() > 10) serviceMap.setZoom(10);
+        });
+      } catch (error) {
+        mapElement.innerHTML = '<p class="jr-map-unavailable">Use the community cards to explore our Central Texas city guides.</p>';
+        console.error(error);
+      }
+    })();
+    return serviceMapPromise;
   };
 
   const activate = (name, options = {}) => {
@@ -72,7 +83,9 @@
     if (options.updateHash) history.replaceState(null, "", `#${selectedName}`);
     if (selectedName === "renters") requestAnimationFrame(() => {
       initMap();
-      setTimeout(() => serviceMap?.invalidateSize(), 80);
+      setTimeout(() => {
+        if (serviceMap && window.google?.maps) google.maps.event.trigger(serviceMap, "resize");
+      }, 80);
     });
   };
 

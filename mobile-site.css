@@ -64,7 +64,6 @@ button,a,input,select,textarea{touch-action:manipulation}
   .hover-tools button{width:52px;height:48px}
   .photo-arrow,.map-photo-arrow,.viewer-arrow,.viewer-close,.rent-lead-close,.agent-referral-close{min-width:44px;min-height:44px}
   .map-preview-actions a{min-height:44px}
-  .school-map .leaflet-bar a{width:44px;height:44px;line-height:44px}
   .actions a,.actions button{min-height:44px}
   .compare-tray{bottom:10px;width:calc(100% - 20px);padding:12px;gap:8px}
   #compareDialog{width:100vw!important;max-width:none!important;height:100dvh;max-height:none;margin:0}
@@ -75,7 +74,7 @@ button,a,input,select,textarea{touch-action:manipulation}
   .compare-media{height:220px;margin:0 10px}
   .compare-location{min-height:300px}
   .compare-map{height:220px}
-  .property-map-popup .leaflet-popup-content{width:min(290px,calc(100vw - 70px))!important}
+  #map .gm-style-iw-d .map-property-preview{width:min(290px,calc(100vw - 70px))}
 
   /* Listing details */
   .breadcrumbs{overflow-x:auto;white-space:nowrap;padding-top:22px}
