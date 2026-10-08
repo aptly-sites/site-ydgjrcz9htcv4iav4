@@ -2,7 +2,8 @@
   if (document.documentElement.dataset.jrGlobalNavReady === "true") return;
   document.documentElement.dataset.jrGlobalNavReady = "true";
 
-  const version = "20261007-4";
+  const version = "20261008-1";
+  const analyticsId = "G-S2M075EJ1V";
   const scriptUrl = document.currentScript?.src || location.href;
   const assetUrl = name => `${new URL(name, scriptUrl).href}?v=${version}`;
   const ensureStylesheet = name => {
@@ -19,6 +20,25 @@
     script.defer = true;
     document.head.append(script);
   };
+
+  const ensureAnalytics = () => {
+    if (window.jrGraceAnalyticsReady) return;
+    window.jrGraceAnalyticsReady = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function () {
+      window.dataLayer.push(arguments);
+    };
+    window.gtag("js", new Date());
+    window.gtag("config", analyticsId);
+
+    if (document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=${analyticsId}"]`)) return;
+    const analyticsScript = document.createElement("script");
+    analyticsScript.async = true;
+    analyticsScript.src = `https://www.googletagmanager.com/gtag/js?id=${analyticsId}`;
+    document.head.append(analyticsScript);
+  };
+
+  ensureAnalytics();
 
   ensureStylesheet("global-property-nav.css");
   ensureStylesheet("navigation-scroll-fix.css");
