@@ -178,7 +178,7 @@ export async function onRequestPost({ request, env }) {
   if (!token) {
     console.error("Owner lead integration is missing its hosted Aptly API token.");
     return Response.json(
-      { message: "We couldn't send your request right now. Please call (254) 400-2863." },
+      { message: "We couldn't send your request right now. Please call 254-777-5577." },
       { status: 503 },
     );
   }
@@ -334,7 +334,7 @@ export async function onRequestPost({ request, env }) {
   } catch (error) {
     console.error("Unable to create Aptly owner lead:", error instanceof Error ? error.message : error);
     return Response.json(
-      { message: "We couldn't send your request right now. Please call (254) 400-2863." },
+      { message: "We couldn't send your request right now. Please call 254-777-5577." },
       { status: 502 },
     );
   }

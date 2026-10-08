@@ -48,7 +48,7 @@
           <label>Bathrooms<select required name="bathrooms"><option value="" selected disabled>Select</option><option>1</option><option>1.5</option><option>2</option><option>2.5</option><option>3</option><option>3.5</option><option>4+</option></select></label>
           <label>Full name<input required name="name" autocomplete="name" placeholder="Your full name"></label>
           <label>Email address<input required type="email" name="email" autocomplete="email" placeholder="you@example.com"></label>
-          <label>Phone number<input required type="tel" name="phone" autocomplete="tel" placeholder="(254) 400-2863"></label>
+          <label>Phone number<input required type="tel" name="phone" autocomplete="tel" placeholder="254-777-5577"></label>
           <input type="hidden" name="placeId">
           <input type="hidden" name="latitude">
           <input type="hidden" name="longitude">

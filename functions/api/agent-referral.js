@@ -121,7 +121,7 @@ export async function onRequestPost({ request, env }) {
   if (!token) {
     console.error("Agent referral integration is missing its hosted Aptly API token.");
     return Response.json(
-      { message: "We couldn't send the referral right now. Please call (254) 400-2863." },
+      { message: "We couldn't send the referral right now. Please call 254-777-5577." },
       { status: 503 },
     );
   }
@@ -258,7 +258,7 @@ export async function onRequestPost({ request, env }) {
   } catch (error) {
     console.error("Unable to create Aptly agent referral:", error instanceof Error ? error.message : error);
     return Response.json(
-      { message: "We couldn't send the referral right now. Please call (254) 400-2863." },
+      { message: "We couldn't send the referral right now. Please call 254-777-5577." },
       { status: 502 },
     );
   }

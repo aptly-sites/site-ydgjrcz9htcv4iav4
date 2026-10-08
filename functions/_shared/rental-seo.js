@@ -181,7 +181,7 @@ export function rentalMetadata(listing, origin) {
         provider: {
           "@type": "RealEstateAgent",
           name: "J R Grace Realty",
-          telephone: "+1-254-400-2863",
+          telephone: "+1-254-777-5577",
           email: "hello@jrgrace.com",
           url: new URL("/", origin).href,
         },
