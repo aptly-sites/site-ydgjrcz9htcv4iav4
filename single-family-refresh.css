@@ -177,7 +177,7 @@
 
 .single-family-page .sf-pricing-grid{
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:16px;
   margin-top:42px;
 }
@@ -193,7 +193,6 @@
 }
 
 .single-family-page .sf-price-card:nth-child(2){background:#f4ecd4}
-.single-family-page .sf-price-card-benefit{background:linear-gradient(145deg,#1c416f,#10263f);color:#fff}
 
 .single-family-page .sf-price-number{
   display:flex;
@@ -215,10 +214,46 @@
 
 .single-family-page .sf-price-card h3{margin:24px 0 10px;color:var(--sf-navy);font:700 24px/1.1 "Plus Jakarta Sans",Arial,sans-serif}
 .single-family-page .sf-price-card p{margin:0;color:#59687b;font-size:14px;line-height:1.65}
-.single-family-page .sf-price-card-benefit .sf-price-number,
-.single-family-page .sf-price-card-benefit h3{color:#fff}
-.single-family-page .sf-price-card-benefit .sf-price-number small{color:#e8c86f}
-.single-family-page .sf-price-card-benefit p{color:rgba(255,255,255,.76)}
+
+.single-family-page .sf-pricing-video-card{
+  grid-column:1/-1;
+  margin:0;
+  overflow:hidden;
+  border:1px solid #d6e0e8;
+  border-radius:22px;
+  background:var(--sf-deep);
+  box-shadow:0 18px 42px rgba(16,38,63,.16);
+}
+
+.single-family-page .sf-pricing-video-card video{
+  display:block;
+  width:100%;
+  aspect-ratio:16/9;
+  object-fit:cover;
+  background:#08182b;
+}
+
+.single-family-page .sf-pricing-video-card figcaption{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding:20px 24px;
+  color:#fff;
+  background:linear-gradient(135deg,#1c416f,#10263f);
+}
+
+.single-family-page .sf-pricing-video-card figcaption strong{
+  font:700 22px/1.15 "Plus Jakarta Sans",Arial,sans-serif;
+}
+
+.single-family-page .sf-pricing-video-card figcaption span{
+  max-width:520px;
+  color:rgba(255,255,255,.75);
+  font-size:13px;
+  line-height:1.5;
+  text-align:right;
+}
 
 .single-family-page .sf-pricing-note{
   display:flex;
@@ -399,6 +434,9 @@
   .single-family-page .service-card{min-height:330px;padding:26px;border-radius:18px}
   .single-family-page .sf-pricing-grid{margin-top:30px}
   .single-family-page .sf-price-card{padding:26px;border-radius:18px}
+  .single-family-page .sf-pricing-video-card{border-radius:18px}
+  .single-family-page .sf-pricing-video-card figcaption{align-items:flex-start;flex-direction:column;padding:18px 20px}
+  .single-family-page .sf-pricing-video-card figcaption span{text-align:left}
   .single-family-page .sf-price-number{font-size:64px}
   .single-family-page .sf-price-card h3{margin-top:20px}
   .single-family-page .sf-pricing-note{padding:20px}
