@@ -17,7 +17,7 @@ const logo = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 113" role
   </svg>
   <path d="M123.5 15v83" fill="none" stroke="#374a6a" stroke-width="2"/>
   <text x="139" y="64" fill="#374a6a" font-family="Avenir Next, Montserrat, Arial, sans-serif" font-size="42" font-weight="400" letter-spacing="1">J R Grace</text>
-  <text x="347" y="86" fill="#374a6a" font-family="Avenir Next, Montserrat, Arial, sans-serif" font-size="13" font-weight="600" letter-spacing="2.4">REALTY</text>
+  <text x="139" y="91" fill="#374a6a" font-family="Avenir Next, Montserrat, Arial, sans-serif" font-size="15" font-weight="500" textLength="204" lengthAdjust="spacing">REALTY</text>
 </svg>
 `;
 
