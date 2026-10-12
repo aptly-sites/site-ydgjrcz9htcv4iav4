@@ -10,7 +10,7 @@ const navigation = await readFile(path.join(root, "global-property-nav.js"), "ut
 assert.match(logo, /^<svg[^>]+viewBox="0 0 450 113"/);
 assert.match(logo, /J R Grace Realty/);
 assert.match(logo, /#374a6a/);
-assert.match(logo, /<text x="139" y="94"[^>]+font-size="20"[^>]+font-weight="700"[^>]+textLength="204"[^>]+>REALTY<\/text>/);
+assert.match(logo, /<text x="166" y="94"[^>]+font-size="20"[^>]+font-weight="700"[^>]+textLength="150"[^>]+>REALTY<\/text>/);
 assert.doesNotMatch(logo, /<rect[^>]+(?:width="450"|width="100%")/);
 
 assert.match(navigation, /\/assets\/logo\.svg/);
