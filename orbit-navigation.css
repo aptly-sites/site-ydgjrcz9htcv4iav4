@@ -192,6 +192,19 @@ html.jr-orbit-lock body{overflow:hidden}
   transition:clip-path .72s cubic-bezier(.16,.84,.25,1),opacity .15s ease,visibility 0s;
 }
 
+html.jr-route-departing .jr-orbit-menu{
+  visibility:hidden!important;
+  opacity:0!important;
+  clip-path:circle(0 at clamp(86px,12vw,170px) 63px)!important;
+  pointer-events:none!important;
+  transition:none!important;
+}
+
+html.jr-route-departing .jr-orbit-ring{
+  opacity:0!important;
+  animation:none!important;
+}
+
 .jr-orbit-menu.from-float{clip-path:circle(0 at calc(100% - 62px) calc(100% - 150px))}
 .jr-orbit-menu.from-float.open{clip-path:circle(155vmax at calc(100% - 62px) calc(100% - 150px))}
 
