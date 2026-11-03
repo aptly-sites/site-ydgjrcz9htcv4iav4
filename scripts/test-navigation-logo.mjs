@@ -25,6 +25,10 @@ assert.match(navigation, /orbitStylesheet\?\.addEventListener\("load", releaseOr
 assert.match(navigation, /classList\.add\("jr-route-departing"\)/);
 assert.doesNotMatch(transitionStyles, /@view-transition\s*\{\s*navigation\s*:\s*auto/);
 assert.match(orbitStyles, /html\.jr-route-departing \.jr-orbit-menu/);
+assert.match(orbitStyles, /--jr-menu-bar-width:24px/);
+assert.match(orbitStyles, /width:var\(--jr-menu-bar-width\)/);
+assert.match(orbitStyles, /min-width:var\(--jr-menu-bar-width\)/);
+assert.match(orbitStyles, /max-width:var\(--jr-menu-bar-width\)/);
 
 const siteFiles = (await readdir(root)).filter(name => /\.(?:html|css|js)$/.test(name));
 for (const name of siteFiles) {

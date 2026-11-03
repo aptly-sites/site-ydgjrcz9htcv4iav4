@@ -68,8 +68,10 @@ html.jr-orbit-lock body{overflow:hidden}
 }
 
 .jr-orbit-header-trigger{
+  --jr-menu-bar-width:24px;
   display:grid;
   align-content:center;
+  justify-items:center;
   gap:5px;
   width:48px;
   height:48px;
@@ -84,8 +86,11 @@ html.jr-orbit-lock body{overflow:hidden}
 
 .jr-orbit-header-trigger span{
   display:block;
-  width:100%;
+  width:var(--jr-menu-bar-width);
+  min-width:var(--jr-menu-bar-width);
+  max-width:var(--jr-menu-bar-width);
   height:2px;
+  justify-self:center;
   border-radius:99px;
   background:currentColor;
   transition:transform .25s ease,opacity .2s ease;
@@ -399,7 +404,7 @@ html.jr-route-departing .jr-orbit-ring{
   .jr-global-header.jr-orbit-header{min-height:88px}
   .jr-orbit-header-row{min-height:88px;gap:12px;padding:10px 0}
   .jr-orbit-brand-group{gap:9px;padding:6px 12px 6px 6px}
-  .jr-orbit-header-trigger{width:42px;height:42px;padding:0 10px;gap:4px}
+  .jr-orbit-header-trigger{--jr-menu-bar-width:22px;width:42px;height:42px;padding:0 10px;gap:4px}
   .jr-orbit-header-trigger[aria-expanded="true"]{top:22px;left:20px;z-index:30;background:#fff;box-shadow:0 10px 28px rgba(11,31,55,.16)}
   .jr-orbit-header-trigger[aria-expanded="true"]+.jr-orbit-brand{margin-left:48px}
   .jr-orbit-header-trigger[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg)}
@@ -510,6 +515,7 @@ html.jr-route-departing .jr-orbit-ring{
 
 @media(max-width:380px){
   .jr-orbit-brand img{width:112px!important}
+  .jr-orbit-header-trigger{--jr-menu-bar-width:18px;width:36px;height:36px;padding:0 9px}
   .jr-mobile-menu-shell{width:92vw;padding-right:22px;padding-left:22px}
   .jr-mobile-menu-link>strong{font-size:19px}
 }
