@@ -59,3 +59,11 @@
 @media(prefers-reduced-motion:reduce){
   ::view-transition-old(root),::view-transition-new(root){animation:none}
 }
+/* Keep each page's fallback header from painting before the shared navigation replaces it. */
+html:not([data-jr-global-nav-ready="true"]) body>.topbar,
+html:not([data-jr-global-nav-ready="true"]) body>header,
+html:not([data-jr-global-nav-ready="true"]) body>.jr-sticky-chrome:not(.jr-global-chrome){
+  visibility:hidden!important;
+  animation:jr-nav-boot-fallback 0s 2s forwards;
+}
+@keyframes jr-nav-boot-fallback{to{visibility:visible}}

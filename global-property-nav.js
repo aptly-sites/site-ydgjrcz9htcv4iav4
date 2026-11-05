@@ -2,7 +2,7 @@
   if (document.documentElement.dataset.jrGlobalNavReady === "true") return;
   document.documentElement.dataset.jrGlobalNavReady = "true";
 
-  const version = "20261103-2";
+  const version = "20261105-1";
   const analyticsId = "G-S2M075EJ1V";
   const scriptUrl = document.currentScript?.src || location.href;
   const assetUrl = name => `${new URL(name, scriptUrl).href}?v=${version}`;
@@ -56,7 +56,7 @@
 
   ensureAnalytics();
 
-  ensureStylesheet("global-property-nav.css");
+  const globalNavigationStylesheet = ensureStylesheet("global-property-nav.css");
   ensureStylesheet("navigation-scroll-fix.css");
   ensureStylesheet("mobile-site.css");
   ensureStylesheet("info-pages.css");
@@ -267,6 +267,7 @@
   const insertionPoint = originalChrome || originalTopbar || originalHeader;
   const chrome = document.createElement("div");
   chrome.className = "jr-sticky-chrome jr-global-chrome";
+  chrome.style.visibility = "hidden";
   chrome.innerHTML = `<header class="jr-global-header jr-orbit-header"><div class="jr-global-shell jr-orbit-header-row"><div class="jr-orbit-brand-group"><button class="jr-orbit-header-trigger jr-orbit-menu-trigger" type="button" aria-label="Open website navigation" aria-controls="jr-site-navigation" aria-expanded="false"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span></button><a class="jr-orbit-brand" href="/index.html" aria-label="J R Grace Realty home"><img src="/assets/logo.svg?v=20261011-3" alt="J R Grace Realty"></a></div><div class="jr-orbit-utility" aria-label="Contact and account links"><div class="jr-orbit-utility-stack jr-orbit-contact-stack"><a href="tel:2547775577"><small>Phone</small><strong>254-777-5577</strong></a><a href="mailto:hello@jrgrace.com"><small>Email</small><strong>hello@jrgrace.com</strong></a></div><span class="jr-orbit-utility-divider" aria-hidden="true"></span><div class="jr-orbit-utility-stack jr-orbit-portal-stack"><a href="https://jrgrace.owa.rentmanager.com/"><small>Portal</small><strong>Owner Portal</strong></a><a href="https://jrgrace.twa.rentmanager.com/"><small>Portal</small><strong>Resident Portal</strong></a></div></div></div><nav id="jr-site-navigation" class="jr-orbit-menu" style="display:none!important" aria-label="Main navigation" aria-hidden="true"><div class="jr-orbit-field">${orbitMarkup}</div><p class="jr-orbit-hint">Select a ring to explore</p><div class="jr-mobile-menu-shell"><img class="jr-mobile-menu-watermark" src="/assets/mark.svg?v=20261005-2" alt=""><section class="jr-mobile-menu-utility" aria-label="Contact and portal links"><p>Contact &amp; portals</p><a href="tel:2547775577"><small>Phone</small><strong>254-777-5577</strong><i aria-hidden="true">→</i></a><a href="mailto:hello@jrgrace.com"><small>Email</small><strong>hello@jrgrace.com</strong><i aria-hidden="true">→</i></a><div class="jr-mobile-portal-links"><a href="https://jrgrace.owa.rentmanager.com/"><small>Portal</small><strong>Owner</strong><i aria-hidden="true">↗</i></a><a href="https://jrgrace.twa.rentmanager.com/"><small>Portal</small><strong>Resident</strong><i aria-hidden="true">↗</i></a></div></section><div class="jr-mobile-menu-divider" aria-hidden="true"></div><section class="jr-mobile-menu-links" aria-label="Website sections"><p>Explore</p>${mobileMenuMarkup}</section></div></nav><button class="jr-orbit-float-trigger jr-orbit-menu-trigger" type="button" aria-label="Open website navigation" aria-controls="jr-site-navigation" aria-expanded="false"><img src="/assets/mark.svg?v=20261005-2" alt=""><span class="jr-orbit-float-label" aria-hidden="true">Menu</span></button></header>`;
   resolveLocalRootPaths(chrome);
   insertionPoint.parentElement.insertBefore(chrome, insertionPoint);
@@ -278,14 +279,30 @@
 
   let header = chrome.querySelector(".jr-global-header");
   let nav = chrome.querySelector(".jr-orbit-menu");
-  let orbitMenuReleased = false;
-  const releaseOrbitMenu = () => {
-    if (orbitMenuReleased) return;
-    orbitMenuReleased = true;
+  const criticalNavigationStylesheets = [globalNavigationStylesheet, orbitStylesheet].filter(Boolean);
+  const stylesheetReady = stylesheet => {
+    try {
+      return Boolean(stylesheet.sheet);
+    } catch {
+      return false;
+    }
+  };
+  let navigationChromeReleased = false;
+  const releaseNavigationChrome = () => {
+    if (navigationChromeReleased) return;
+    if (!criticalNavigationStylesheets.every(stylesheet => stylesheetReady(stylesheet) || stylesheet.dataset.jrStyleFailed === "true")) return;
+    navigationChromeReleased = true;
+    chrome.style.removeProperty("visibility");
     nav.style.removeProperty("display");
   };
-  orbitStylesheet?.addEventListener("load", releaseOrbitMenu, { once: true });
-  if (orbitStylesheet?.sheet) releaseOrbitMenu();
+  criticalNavigationStylesheets.forEach(stylesheet => {
+    stylesheet.addEventListener("load", releaseNavigationChrome, { once: true });
+    stylesheet.addEventListener("error", () => {
+      stylesheet.dataset.jrStyleFailed = "true";
+      releaseNavigationChrome();
+    }, { once: true });
+  });
+  releaseNavigationChrome();
   const toggles = [...chrome.querySelectorAll(".jr-orbit-menu-trigger")];
   let lastToggle = toggles[0];
   const setNavigationState = open => {
