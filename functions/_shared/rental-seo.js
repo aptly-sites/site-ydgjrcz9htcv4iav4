@@ -278,7 +278,10 @@ export function renderRentalHtml(sourceHtml, listing, allListings, origin) {
   html = setMeta(html, "ogUrl", meta.canonical);
   html = setMeta(html, "twitterTitle", meta.title);
   html = setMeta(html, "twitterDescription", meta.description);
-  if (meta.photos[0]) html = setMeta(html, "ogImage", meta.photos[0]);
+  if (meta.photos[0]) {
+    html = setMeta(html, "ogImage", meta.photos[0]);
+    html = setMeta(html, "twitterImage", meta.photos[0]);
+  }
   const structuredData = JSON.stringify(meta.schema).replace(/</g, "\\u003c");
   html = html.replace("</head>", `<link rel="canonical" id="canonicalUrl" href="${escapeHtml(meta.canonical)}"><script type="application/ld+json" id="listingStructuredData">${structuredData}</script><style>#loading{display:none!important}</style></head>`);
   html = html.replace(/<div id=["']page["']\s+hidden>/i, '<div id="page" data-server-rendered="true">');
