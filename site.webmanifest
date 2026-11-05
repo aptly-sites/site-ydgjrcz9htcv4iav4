@@ -1,0 +1,21 @@
+{
+  "name": "J R Grace Realty",
+  "short_name": "J R Grace",
+  "description": "Property management and rental homes across Waco and Central Texas.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#f8f5ec",
+  "theme_color": "#374a6a",
+  "icons": [
+    {
+      "src": "/assets/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
