@@ -19,15 +19,15 @@ export async function onRequestGet({ request, env }) {
         status: 301,
         headers: {
           "Cache-Control": "public, max-age=300",
-          Location: new URL(canonicalPath, requestUrl).href,
+          Location: new URL(canonicalPath, "https://www.jrgrace.com").href,
         },
       });
     }
 
     const assetResponse = await env.ASSETS.fetch(new URL("/rental-detail.html", requestUrl));
     if (!assetResponse.ok) return unavailableResponse(503, "Rental details are temporarily unavailable.");
-    const canonical = new URL(canonicalPath, requestUrl).href;
-    const html = renderRentalHtml(await assetResponse.text(), listing, listings, requestUrl.origin);
+    const canonical = new URL(canonicalPath, "https://www.jrgrace.com").href;
+    const html = renderRentalHtml(await assetResponse.text(), listing, listings, "https://www.jrgrace.com");
     return new Response(html, {
       status: 200,
       headers: {

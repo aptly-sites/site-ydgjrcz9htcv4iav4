@@ -4,16 +4,16 @@ J R Grace Realty provides professional property management and rental homes acro
 
 ## Primary pages
 
-- Home: https://site-ydgjrcz9htcv4iav4.pages.dev/
-- Current rental search: https://site-ydgjrcz9htcv4iav4.pages.dev/rental-search.html
-- Rent affordability calculator: https://site-ydgjrcz9htcv4iav4.pages.dev/rent-affordability-calculator
-- Main XML sitemap: https://site-ydgjrcz9htcv4iav4.pages.dev/sitemap.xml
-- Live rental-listing sitemap: https://site-ydgjrcz9htcv4iav4.pages.dev/sitemap-rentals.xml
-- Self-management cost guide: https://site-ydgjrcz9htcv4iav4.pages.dev/self-managing-vs-property-manager-waco.html
-- Single-family property management: https://site-ydgjrcz9htcv4iav4.pages.dev/single-family-property-management.html
-- Multi-family property management: https://site-ydgjrcz9htcv4iav4.pages.dev/multi-family-property-management.html
-- Tenant placement only: https://site-ydgjrcz9htcv4iav4.pages.dev/tenant-placement.html
-- Property management service areas: https://site-ydgjrcz9htcv4iav4.pages.dev/service-areas.html
+- Home: https://www.jrgrace.com/
+- Current rental search: https://www.jrgrace.com/rental-search
+- Rent affordability calculator: https://www.jrgrace.com/rent-affordability-calculator
+- Main XML sitemap: https://www.jrgrace.com/sitemap.xml
+- Live rental-listing sitemap: https://www.jrgrace.com/sitemap-rentals.xml
+- Self-management cost guide: https://www.jrgrace.com/self-managing-vs-property-manager-waco
+- Single-family property management: https://www.jrgrace.com/single-family-property-management
+- Multi-family property management: https://www.jrgrace.com/multi-family-property-management
+- Tenant placement only: https://www.jrgrace.com/tenant-placement
+- Property management service areas: https://www.jrgrace.com/service-areas
 
 ## Local service areas
 

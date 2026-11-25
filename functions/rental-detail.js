@@ -9,7 +9,7 @@ export async function onRequestGet({ request }) {
       status: 301,
       headers: {
         "Cache-Control": "public, max-age=300",
-        Location: new URL(listingPath(listing), requestUrl).href,
+        Location: new URL(listingPath(listing), "https://www.jrgrace.com").href,
       },
     });
   } catch (error) {

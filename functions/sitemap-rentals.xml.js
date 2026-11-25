@@ -15,7 +15,7 @@ export async function onRequestGet({ request }) {
     const requestUrl = new URL(request.url);
     const listings = await fetchListings();
     const urls = listings.map((listing) => {
-      const location = new URL(listingPath(listing), requestUrl.origin).href;
+      const location = new URL(listingPath(listing), "https://www.jrgrace.com").href;
       const modified = listing.updatedAt || listing.createdAt;
       const lastmod = modified && !Number.isNaN(Date.parse(modified))
         ? `<lastmod>${new Date(modified).toISOString().slice(0, 10)}</lastmod>`

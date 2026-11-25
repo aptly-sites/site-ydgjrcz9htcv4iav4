@@ -59,7 +59,7 @@ try {
     env,
   });
   assert.equal(canonicalResponse.status, 200);
-  assert.equal(canonicalResponse.headers.get("Link"), `<https://example.test${expectedPath}>; rel="canonical"`);
+  assert.equal(canonicalResponse.headers.get("Link"), `<https://www.jrgrace.com${expectedPath}>; rel="canonical"`);
   assert.match(await canonicalResponse.text(), /1017 South 16th Street, Waco, TX for Rent/);
 
   const staleSlugResponse = await renderCanonicalRental({
@@ -67,19 +67,19 @@ try {
     env,
   });
   assert.equal(staleSlugResponse.status, 301);
-  assert.equal(staleSlugResponse.headers.get("Location"), `https://example.test${expectedPath}`);
+  assert.equal(staleSlugResponse.headers.get("Location"), `https://www.jrgrace.com${expectedPath}`);
 
   const legacyResponse = await redirectLegacyRental({
     request: new Request("https://example.test/rental-detail?id=listingABC123"),
   });
   assert.equal(legacyResponse.status, 301);
-  assert.equal(legacyResponse.headers.get("Location"), `https://example.test${expectedPath}`);
+  assert.equal(legacyResponse.headers.get("Location"), `https://www.jrgrace.com${expectedPath}`);
 
   const sitemapResponse = await renderRentalSitemap({
     request: new Request("https://example.test/sitemap-rentals.xml"),
   });
   assert.equal(sitemapResponse.status, 200);
-  assert.match(await sitemapResponse.text(), new RegExp(`<loc>https://example\\.test${expectedPath}<\\/loc>`));
+  assert.match(await sitemapResponse.text(), new RegExp(`<loc>https://www\\.jrgrace\\.com${expectedPath}<\\/loc>`));
 } finally {
   globalThis.fetch = originalFetch;
 }

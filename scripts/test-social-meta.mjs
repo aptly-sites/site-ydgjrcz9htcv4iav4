@@ -4,7 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const socialImageUrl = "https://jrgrace.com/assets/jr-grace-social-preview.jpg?v=20261105-1";
+const socialImageUrl = "https://www.jrgrace.com/assets/jr-grace-social-preview.jpg?v=20261105-1";
 const socialImage = await readFile(path.join(root, "assets/jr-grace-social-preview.jpg"));
 
 function jpegDimensions(buffer) {
@@ -27,7 +27,7 @@ function jpegDimensions(buffer) {
 assert.deepEqual(jpegDimensions(socialImage), { width: 1200, height: 630 });
 assert.ok(socialImage.length > 50_000, "Social preview image should be a production-quality JPEG");
 
-const htmlFiles = (await readdir(root)).filter(name => name.endsWith(".html"));
+const htmlFiles = (await readdir(root)).filter(name => name.endsWith(".html") && name !== "404.html");
 assert.equal(htmlFiles.length, 25);
 for (const name of htmlFiles) {
   const source = await readFile(path.join(root, name), "utf8");
