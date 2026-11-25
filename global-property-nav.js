@@ -2,7 +2,7 @@
   if (document.documentElement.dataset.jrGlobalNavReady === "true") return;
   document.documentElement.dataset.jrGlobalNavReady = "true";
 
-  const version = "20261105-1";
+  const version = "20261124-1";
   const analyticsId = "G-S2M075EJ1V";
   const scriptUrl = document.currentScript?.src || location.href;
   const assetUrl = name => `${new URL(name, scriptUrl).href}?v=${version}`;
@@ -55,6 +55,8 @@
   };
 
   ensureAnalytics();
+  ensureStylesheet("accessibility.css");
+  ensureScript("accessibility.js");
 
   const globalNavigationStylesheet = ensureStylesheet("global-property-nav.css");
   ensureStylesheet("navigation-scroll-fix.css");
@@ -268,7 +270,8 @@
   const chrome = document.createElement("div");
   chrome.className = "jr-sticky-chrome jr-global-chrome";
   chrome.style.visibility = "hidden";
-  chrome.innerHTML = `<header class="jr-global-header jr-orbit-header"><div class="jr-global-shell jr-orbit-header-row"><div class="jr-orbit-brand-group"><button class="jr-orbit-header-trigger jr-orbit-menu-trigger" type="button" aria-label="Open website navigation" aria-controls="jr-site-navigation" aria-expanded="false"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span></button><a class="jr-orbit-brand" href="/index.html" aria-label="J R Grace Realty home"><img src="/assets/logo.svg?v=20261011-3" alt="J R Grace Realty"></a></div><div class="jr-orbit-utility" aria-label="Contact and account links"><div class="jr-orbit-utility-stack jr-orbit-contact-stack"><a href="tel:2547775577"><small>Phone</small><strong>254-777-5577</strong></a><a href="mailto:hello@jrgrace.com"><small>Email</small><strong>hello@jrgrace.com</strong></a></div><span class="jr-orbit-utility-divider" aria-hidden="true"></span><div class="jr-orbit-utility-stack jr-orbit-portal-stack"><a href="https://jrgrace.owa.rentmanager.com/"><small>Portal</small><strong>Owner Portal</strong></a><a href="https://jrgrace.twa.rentmanager.com/"><small>Portal</small><strong>Resident Portal</strong></a></div></div></div><nav id="jr-site-navigation" class="jr-orbit-menu" style="display:none!important" aria-label="Main navigation" aria-hidden="true"><div class="jr-orbit-field">${orbitMarkup}</div><p class="jr-orbit-hint">Select a ring to explore</p><div class="jr-mobile-menu-shell"><img class="jr-mobile-menu-watermark" src="/assets/mark.svg?v=20261005-2" alt=""><section class="jr-mobile-menu-utility" aria-label="Contact and portal links"><p>Contact &amp; portals</p><a href="tel:2547775577"><small>Phone</small><strong>254-777-5577</strong><i aria-hidden="true">→</i></a><a href="mailto:hello@jrgrace.com"><small>Email</small><strong>hello@jrgrace.com</strong><i aria-hidden="true">→</i></a><div class="jr-mobile-portal-links"><a href="https://jrgrace.owa.rentmanager.com/"><small>Portal</small><strong>Owner</strong><i aria-hidden="true">↗</i></a><a href="https://jrgrace.twa.rentmanager.com/"><small>Portal</small><strong>Resident</strong><i aria-hidden="true">↗</i></a></div></section><div class="jr-mobile-menu-divider" aria-hidden="true"></div><section class="jr-mobile-menu-links" aria-label="Website sections"><p>Explore</p>${mobileMenuMarkup}</section></div></nav><button class="jr-orbit-float-trigger jr-orbit-menu-trigger" type="button" aria-label="Open website navigation" aria-controls="jr-site-navigation" aria-expanded="false"><img src="/assets/mark.svg?v=20261005-2" alt=""><span class="jr-orbit-float-label" aria-hidden="true">Menu</span></button></header>`;
+  const accessibilityEntry = variant => `<button type="button" class="jr-accessibility-entry jr-accessibility-entry-${variant}" aria-haspopup="dialog" aria-controls="jr-accessibility-panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="4" r="2"/><path d="M4 9l8 2 8-2M12 11v5m0 0-5 6m5-6 5 6"/></svg><span>Accessibility</span></button>`;
+  chrome.innerHTML = `<header class="jr-global-header jr-orbit-header"><div class="jr-global-shell jr-orbit-header-row"><div class="jr-orbit-brand-group"><button class="jr-orbit-header-trigger jr-orbit-menu-trigger" type="button" aria-label="Open website navigation" aria-controls="jr-site-navigation" aria-expanded="false"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span></button><a class="jr-orbit-brand" href="/index.html" aria-label="J R Grace Realty home"><img src="/assets/logo.svg?v=20261011-3" alt="J R Grace Realty"></a></div><div class="jr-orbit-utility" aria-label="Contact and account links"><div class="jr-orbit-utility-stack jr-orbit-contact-stack"><a href="tel:2547775577"><small>Phone</small><strong>254-777-5577</strong></a><a href="mailto:hello@jrgrace.com"><small>Email</small><strong>hello@jrgrace.com</strong></a></div><span class="jr-orbit-utility-divider" aria-hidden="true"></span><div class="jr-orbit-utility-stack jr-orbit-portal-stack"><a href="https://jrgrace.owa.rentmanager.com/"><small>Portal</small><strong>Owner Portal</strong></a><a href="https://jrgrace.twa.rentmanager.com/"><small>Portal</small><strong>Resident Portal</strong></a></div></div></div><nav id="jr-site-navigation" class="jr-orbit-menu" style="display:none!important" aria-label="Main navigation" aria-hidden="true">${accessibilityEntry("desktop")}<div class="jr-orbit-field">${orbitMarkup}</div><p class="jr-orbit-hint">Select a ring to explore</p><div class="jr-mobile-menu-shell"><img class="jr-mobile-menu-watermark" src="/assets/mark.svg?v=20261005-2" alt=""><section class="jr-mobile-menu-utility" aria-label="Contact and portal links"><p>Contact &amp; portals</p><a href="tel:2547775577"><small>Phone</small><strong>254-777-5577</strong><i aria-hidden="true">→</i></a><a href="mailto:hello@jrgrace.com"><small>Email</small><strong>hello@jrgrace.com</strong><i aria-hidden="true">→</i></a><div class="jr-mobile-portal-links"><a href="https://jrgrace.owa.rentmanager.com/"><small>Portal</small><strong>Owner</strong><i aria-hidden="true">↗</i></a><a href="https://jrgrace.twa.rentmanager.com/"><small>Portal</small><strong>Resident</strong><i aria-hidden="true">↗</i></a></div></section><div class="jr-mobile-menu-divider" aria-hidden="true"></div><section class="jr-mobile-menu-links" aria-label="Website sections"><p>Explore</p>${mobileMenuMarkup}</section>${accessibilityEntry("mobile")}</div></nav><button class="jr-orbit-float-trigger jr-orbit-menu-trigger" type="button" aria-label="Open website navigation" aria-controls="jr-site-navigation" aria-expanded="false"><img src="/assets/mark.svg?v=20261005-2" alt=""><span class="jr-orbit-float-label" aria-hidden="true">Menu</span></button></header>`;
   resolveLocalRootPaths(chrome);
   insertionPoint.parentElement.insertBefore(chrome, insertionPoint);
   if (originalChrome) originalChrome.remove();
@@ -307,6 +310,7 @@
   let lastToggle = toggles[0];
   const setNavigationState = open => {
     nav.classList.toggle("open", open);
+    if (open) document.dispatchEvent(new Event("jr:navigation-opened"));
     toggles.forEach(toggle => {
       toggle.setAttribute("aria-expanded", String(open));
       toggle.setAttribute("aria-label", open ? "Close website navigation" : "Open website navigation");
@@ -357,6 +361,11 @@
       lastToggle?.focus();
     }
   });
+
+  chrome.querySelectorAll('.jr-accessibility-entry').forEach(button => button.addEventListener('click', () => {
+    closeNavigation();
+    document.dispatchEvent(new CustomEvent('jr:open-accessibility', { detail: { returnFocus: lastToggle } }));
+  }));
 
   const fetchPage = url => {
     const key = `${url.pathname}${url.search}`;
